@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteY="81dp">
+
+    <Button
+        android:id="@+id/SubscribeBtn"
+        android:layout_width="109dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="160dp"
+        android:text="subscribe"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/GuestBtn"
+        app:layout_constraintTop_toBottomOf="@+id/GuestBtn" />
+
+    <Button
+        android:id="@+id/GuestBtn"
+        android:layout_width="103dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="127dp"
+        android:layout_marginLeft="127dp"
+        android:layout_marginTop="171dp"
+        android:layout_marginBottom="33dp"
+        android:text="Guest"
+        app:layout_constraintBottom_toTopOf="@+id/SubscribeBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>

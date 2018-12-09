@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileActivity">
+
+    <Button
+        android:id="@+id/MyIDBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="21dp"
+        android:text="MyID"
+        app:layout_constraintBottom_toTopOf="@+id/SubscribeBtn"
+        app:layout_constraintStart_toStartOf="@+id/SubscribeBtn" />
+
+    <Button
+        android:id="@+id/SubscribeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="22dp"
+        android:text="Subscribe"
+        app:layout_constraintBottom_toTopOf="@+id/LogoutBtn"
+        app:layout_constraintStart_toStartOf="@+id/LogoutBtn" />
+
+    <Button
+        android:id="@+id/LogoutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="38dp"
+        android:text="Logout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">精妙健康管理</string>
+    <string name="connect_device">Connected</string>
+    <string name="history">History</string>
+    <string name="main_selection">Main</string>
+    <string name="manual">Connected</string>
+    <string name="profile">Profile</string>
+    <string name="questionnaire">Questionnaire</string>
+    <string name="record">Record</string>
+    <string name="subscribe">Kit Store</string>
+</resources>
