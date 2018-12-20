@@ -8,4 +8,8 @@
     <string name="questionnaire">Questionnaire</string>
     <string name="record">Record</string>
     <string name="subscribe">Kit Store</string>
+    <string-array name="device">
+        <item>血壓機</item>
+        <item>體重計</item>
+    </string-array>
 </resources>
