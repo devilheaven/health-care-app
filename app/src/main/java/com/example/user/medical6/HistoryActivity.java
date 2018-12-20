@@ -1,12 +1,12 @@
-package com.example.history;
+package com.example.user.medical6;
 
+import android.support.v7.app.AppCompatActivity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Bundle;
 
-public class historyactivity extends SQLiteOpenHelper {
-    private dbProfile test = null;
-
+public class HistoryActivity extends SQLiteOpenHelper {
     public static final String TABLE_c = "customer";  //資料表名稱
     public static final String TABLE_e = "examine";  //資料表名稱
     //客戶資料表
@@ -25,7 +25,7 @@ public class historyactivity extends SQLiteOpenHelper {
 
     private final static int DATABASE_VERSION = 1;  //資料庫版本
 
-    public historyactivity(Context context) {
+    public HistoryActivity(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
