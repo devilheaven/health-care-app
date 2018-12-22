@@ -4,168 +4,151 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_dark"
-    tools:context=".ProfileActivity"
-    tools:layout_editor_absoluteX="5dp"
-    tools:layout_editor_absoluteY="81dp">
+    tools:context=".ProfileActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="384dp"
-        android:layout_height="161dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-        <Button
-            android:id="@+id/MyIDBtn"
-            android:layout_width="358dp"
-            android:layout_height="49dp"
-            android:width="5dp"
-            android:accessibilityHeading="false"
-            android:background="@drawable/my_button_color"
-            android:radius="9dp"
-            android:shape="ring"
-            android:text="MyID"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp"
-            tools:layout_editor_absoluteX="13dp"
-            tools:layout_editor_absoluteY="330dp" />
-
-        <Button
-            android:id="@+id/SubscribeBtn"
-            android:layout_width="358dp"
-            android:layout_height="46dp"
-            android:background="@drawable/my_button_color"
-            android:text="Subscribe"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp"
-            tools:layout_editor_absoluteX="13dp"
-            tools:layout_editor_absoluteY="392dp" />
-
-        <Button
-            android:id="@+id/LogoutBtn"
-            android:layout_width="358dp"
-            android:layout_height="48dp"
-            android:background="@drawable/my_button_color"
-            android:text="Logout"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp"
-            tools:layout_editor_absoluteX="13dp"
-            tools:layout_editor_absoluteY="448dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="31dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="17dp"
-        android:background="@drawable/my_button_shape"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="Login As"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:layout_marginBottom="15dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView2"
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Login As"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Guest"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="ID"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:gravity="center_horizontal"
+                android:text="None"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Current Subscription"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="29dp"
+                android:gravity="center_horizontal"
+                android:text=" None"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="TextView"
+                android:textSize="20sp"
+                tools:text="Version" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="0.0.1.Alpha"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="Guest"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            <Button
+                android:id="@+id/MyIDBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:width="5dp"
+                android:accessibilityHeading="false"
+                android:background="@android:color/darker_gray"
+                android:radius="9dp"
+                android:shape="ring"
+                android:text="MyID"
+                android:textSize="30sp" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="ID"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            <Button
+                android:id="@+id/SubscribeBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@android:color/darker_gray"
+                android:text="Subscribe"
+                android:textColor="@android:color/background_dark"
+                android:textSize="30sp" />
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:gravity="center_horizontal"
-            android:text="None"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="Current Subscription"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="match_parent"
-            android:layout_height="29dp"
-            android:gravity="center_horizontal"
-            android:text=" None"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/textView16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="TextView"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            tools:text="Version" />
-
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="0.0.1.Alpha"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            <Button
+                android:id="@+id/LogoutBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@android:color/darker_gray"
+                android:text="Logout"
+                android:textSize="30sp" />
+        </LinearLayout>
 
     </LinearLayout>
-
 </android.support.constraint.ConstraintLayout>
