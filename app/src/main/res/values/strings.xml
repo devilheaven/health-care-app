@@ -12,4 +12,12 @@
         <item>血壓機</item>
         <item>體重計</item>
     </string-array>
+    <string-array name="BIState">
+        <item>飯後</item>
+        <item>飯前</item>
+    </string-array>
+    <string-array name="month">
+        <item>November</item>
+        <item>December</item>
+    </string-array>
 </resources>
