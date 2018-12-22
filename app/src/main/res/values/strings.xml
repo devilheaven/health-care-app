@@ -3,10 +3,13 @@
     <string name="connect_device">Connected</string>
     <string name="history">History</string>
     <string name="main_selection">Main</string>
-    <string name="manual">Connected</string>
+    <string name="manual">Manual</string>
     <string name="profile">Profile</string>
     <string name="questionnaire">Questionnaire</string>
     <string name="record">Record</string>
     <string name="subscribe">Kit Store</string>
-
+    <string-array name="device">
+        <item>血壓機</item>
+        <item>體重計</item>
+    </string-array>
 </resources>
