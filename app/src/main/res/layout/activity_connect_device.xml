@@ -23,7 +23,7 @@
             android:layout_columnSpan="3"
             android:layout_gravity="fill"
             android:dropDownWidth="wrap_content"
-            android:visibility="visible"></Spinner>
+            android:visibility="visible"> </Spinner>
 
         <TextView
             android:id="@+id/textBluetoothStat"
