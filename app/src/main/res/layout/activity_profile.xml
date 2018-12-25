@@ -8,13 +8,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="31dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:orientation="vertical">
+        android:layout_height="512dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="20dp">
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -111,6 +107,21 @@
                 android:textSize="20sp" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/txvInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="TextView" />
+
+        <EditText
+            android:id="@+id/etxtContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
@@ -125,6 +136,7 @@
                 android:width="5dp"
                 android:accessibilityHeading="false"
                 android:background="@android:color/darker_gray"
+                android:onClick="btnOnClick"
                 android:radius="9dp"
                 android:shape="ring"
                 android:text="MyID"
