@@ -8,36 +8,35 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="512dp"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="20dp">
+        android:gravity="center">
 
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="vertical"
+            android:orientation="vertical">
+            <!--
             app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent">-->
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="Login As"
-                android:textSize="20sp" />
+                android:gravity="center"
+                android:text="Login As" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="Guest"
-                android:textSize="20sp" />
+                android:gravity="center"
+                android:text="Guest" />
 
             <TextView
                 android:id="@+id/textView13"
@@ -49,17 +48,15 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="ID"
-                android:textSize="20sp" />
+                android:gravity="center"
+                android:text="ID" />
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
-                android:gravity="center_horizontal"
-                android:text="None"
-                android:textSize="20sp" />
+                android:gravity="center"
+                android:text="None" />
 
             <TextView
                 android:id="@+id/textView14"
@@ -71,17 +68,15 @@
                 android:id="@+id/textView12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="Current Subscription"
-                android:textSize="20sp" />
+                android:gravity="center"
+                android:text="Current Subscription" />
 
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:gravity="center_horizontal"
-                android:text=" None"
-                android:textSize="20sp" />
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text=" None"/>
 
             <TextView
                 android:id="@+id/textView16"
@@ -93,35 +88,34 @@
                 android:id="@+id/textView10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:text="TextView"
-                android:textSize="20sp"
                 tools:text="Version" />
 
             <TextView
                 android:id="@+id/textView17"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="0.0.1.Alpha"
-                android:textSize="20sp" />
+                android:gravity="center"
+                android:text="0.0.1.Alpha" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/txvInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center_horizontal"
-            android:text="TextView" />
-
-        <EditText
-            android:id="@+id/etxtContent"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            android:orientation="vertical" >
+            <TextView
+                android:id="@+id/txvInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="TextView" />
 
+            <EditText
+                android:id="@+id/etxtContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName" />
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
@@ -132,34 +126,22 @@
                 android:id="@+id/MyIDBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:width="5dp"
-                android:accessibilityHeading="false"
-                android:background="@android:color/darker_gray"
-                android:onClick="btnOnClick"
-                android:radius="9dp"
-                android:shape="ring"
                 android:text="MyID"
-                android:textSize="30sp" />
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/SubscribeBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:background="@android:color/darker_gray"
                 android:text="Subscribe"
-                android:textColor="@android:color/background_dark"
-                android:textSize="30sp" />
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/LogoutBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:background="@android:color/darker_gray"
                 android:text="Logout"
-                android:textSize="30sp" />
+                android:textAllCaps="false" />
         </LinearLayout>
 
     </LinearLayout>
