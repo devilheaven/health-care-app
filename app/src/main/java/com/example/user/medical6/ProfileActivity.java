@@ -79,8 +79,9 @@ public class ProfileActivity extends AppCompatActivity {
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES); //設定條碼格式
         integrator.setPrompt("掃描QR Code"); //設定掃描時提示文字
         integrator.setCameraId(0);//設定使用後相機讀取QR Code
-        integrator.setBeepEnabled(false);//關閉提示音
+        integrator.setBeepEnabled(true);//提示音
         integrator.setBarcodeImageEnabled(false);//設定掃描圖檔不要存檔，掃完即丟掉
+        integrator.setOrientationLocked(false);
         integrator.initiateScan();//起到掃描功能
     }
 }
