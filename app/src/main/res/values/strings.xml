@@ -20,4 +20,8 @@
         <item>November</item>
         <item>December</item>
     </string-array>
+    <string-array name="testDevice">
+        <item>BloodShade3000</item>
+        <item>BodyWeight3000</item>
+    </string-array>
 </resources>
