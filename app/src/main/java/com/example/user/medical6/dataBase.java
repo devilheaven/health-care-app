@@ -15,11 +15,11 @@ class dataBase extends SQLiteOpenHelper{
     public static final String height = "身高";
     public static final String sex = "性別";
     //檢驗資料表
-    public static final String num = "檢驗編號";
+    public static final String num = "_id";
     public static final String time = "時間";
     public static final String weight = "體重";
     public static final String sbp = "收縮壓";
-    public static final String pbp = "舒張壓";
+    public static final String dbp = "舒張壓";
     public static final String hr= "心律";
     public static final String idnum= "客戶代碼";
     private final static String DATABASE_NAME = "sql.db";  //資料庫名稱
@@ -30,8 +30,9 @@ class dataBase extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        final String customer = "CREATE TABLE " + TABLE_c + " (" +id + " INTEGER PRIMARY KEY , " + height + " VARCHAR(32), " + sex + " VARCHAR(5));";
-        final String examine = "CREATE TABLE " + TABLE_e  + " (" +num + " INTEGER PRIMARY KEY , " + time + " VARCHAR(32), " + weight + " VARCHAR(32), "+ sbp + " VARCHAR(32), "+ pbp + " VARCHAR(32), "+ hr + " VARCHAR(32), " + idnum + " VARCHAR(32));";
+        final String customer = "CREATE TABLE " + TABLE_c + " (" +id + " INTEGER PRIMARY KEY AUTOINCREMENT , " + height + " VARCHAR(32), " + sex + " VARCHAR(5));";
+        //time TimeStamp NOT NULL DEFAULT (datetime('now','localtime')) 世界時間
+        final String examine = "CREATE TABLE " + TABLE_e  + " (" +num + " INTEGER PRIMARY KEY AUTOINCREMENT , " + time + " TimeStamp NOT NULL DEFAULT (datetime('now','localtime')), " + weight + " VARCHAR(32), "+ sbp + " VARCHAR(32), "+ dbp + " VARCHAR(32), "+ hr + " VARCHAR(32), " + idnum + " VARCHAR(32));";
 
         db.execSQL(customer);
         db.execSQL(examine);
