@@ -15,15 +15,14 @@
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="4"
-            android:rowCount="8">
+            android:columnCount="4">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_row="0"
                 android:layout_column="0"
-                android:text="1.�ʧO  �G " />
+                android:text="1.性別  : " />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -36,13 +35,13 @@
                     android:id="@+id/rbMale"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="�k" />
+                    android:text="男" />
 
                 <RadioButton
                     android:id="@+id/rbFmale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="�k" />
+                    android:text="女" />
             </RadioGroup>
 
             <TextView
@@ -50,7 +49,8 @@
                 android:layout_height="wrap_content"
                 android:layout_row="1"
                 android:layout_column="0"
-                android:text="2.�ͤ�   : " />
+                android:text="2.生日  : " />
+
             <EditText
                 android:id="@+id/birth"
                 android:layout_width="match_parent"
@@ -58,13 +58,15 @@
                 android:layout_row="1"
                 android:layout_column="1"
                 android:layout_columnSpan="2"
-                android:inputType="date"/>
+                android:inputType="date" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="2"
                 android:layout_column="0"
-                android:text="3.�~��   : "/>
+                android:text="3.年齡  : " />
+
             <EditText
                 android:id="@+id/age"
                 android:layout_width="match_parent"
@@ -72,13 +74,15 @@
                 android:layout_row="2"
                 android:layout_column="1"
                 android:layout_columnSpan="2"
-                android:inputType="number"/>
+                android:inputType="number" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="3"
                 android:layout_column="0"
-                android:text="4.����   : "/>
+                android:text="4.身高  : " />
+
             <EditText
                 android:id="@+id/hight"
                 android:layout_width="match_parent"
@@ -86,13 +90,15 @@
                 android:layout_row="3"
                 android:layout_column="1"
                 android:layout_columnSpan="2"
-                android:inputType="numberDecimal"/>
+                android:inputType="numberDecimal" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="4"
                 android:layout_column="0"
-                android:text="5.�魫   : "/>
+                android:text="5.體重  : " />
+
             <EditText
                 android:id="@+id/wight"
                 android:layout_width="match_parent"
@@ -100,13 +106,14 @@
                 android:layout_row="4"
                 android:layout_column="1"
                 android:layout_columnSpan="2"
-                android:inputType="number"/>
+                android:inputType="number" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="5"
                 android:layout_column="0"
-                android:text="6. BMI   : "/>
+                android:text="6. BMI   : " />
 
             <EditText
                 android:layout_width="match_parent"
@@ -115,31 +122,606 @@
                 android:layout_column="1"
                 android:layout_columnSpan="2"
                 android:inputType="number" />
+
             <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="6"
-            android:layout_column="0"
-            android:text="7.�Ш|�{��  : "/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="6"
+                android:layout_column="0"
+                android:text="7.教育程度  : " />
+
             <Spinner
-                android:id="@+id/sprang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:entries="@array/frequence_1" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="7"
                 android:layout_column="0"
-                android:text="8.�a�x���J  : "/>
-            <EditText
-                android:id="@+id/mon"
+                android:text="8.家庭收入  : " />
+
+            <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_row="7"
+                android:entries="@array/frequence_2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="8"
+                android:layout_column="0"
+                android:text="9.您有抽菸習慣嗎?  : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/frequence_3" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="9"
+                android:layout_column="0"
+                android:text="10.您有飲酒習慣嗎?  : " />
+
+            <Spinner
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/frequence_4" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="10"
+                android:layout_column="0"
+                android:text="11.您平均每天睡幾個小時?  : " />
+
+            <Spinner
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/frequence_5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="11"
+                android:layout_column="0"
+                android:text="12.您是否常熬夜?  : " />
+
+            <Spinner
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/frequence_6" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="12"
+                android:layout_column="0"
+                android:text="13.您是否有午睡的習慣?  : " />
+
+            <Spinner
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/frequence_7" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="13"
+                android:layout_column="0"
+                android:text="14.您是否有運動的習慣?  : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/frequence_8" />
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="14"
+                android:layout_column="0"
+                android:text="15.第二型糖尿病  : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/cancer_1" />
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="15"
+                android:layout_column="0"
+                android:text="確診日期  : " />
+            <EditText
+                android:id="@+id/cancer1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="15"
                 android:layout_column="1"
                 android:layout_columnSpan="2"
-                android:inputType="number"/>
+                android:inputType="date" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="16"
+                android:layout_column="0"
+                android:text="17.心臟病  : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/cancer_2" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="17"
+                android:layout_column="0"
+                android:text="確診日期  : " />
+            <EditText
+                android:id="@+id/cancer2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="17"
+                android:layout_column="1"
+                android:layout_columnSpan="2"
+                android:inputType="date" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="18"
+                android:layout_column="0"
+                android:text="18.高血壓  : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/cancer_3" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="19"
+                android:layout_column="0"
+                android:text="確診日期  : " />
+            <EditText
+                android:id="@+id/cancer3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="19"
+                android:layout_column="1"
+                android:layout_columnSpan="2"
+                android:inputType="date" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="20"
+                android:layout_column="0"
+                android:text="19.中風  : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/cancer_4" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="21"
+                android:layout_column="0"
+                android:text="確診日期  : " />
+            <EditText
+                android:id="@+id/cancer4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="21"
+                android:layout_column="1"
+                android:layout_columnSpan="2"
+                android:inputType="date" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="22"
+                android:layout_column="0"
+                android:text="20.胃潰瘍  : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/cancer_5" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="23"
+                android:layout_column="0"
+                android:text="確診日期  : " />
+            <EditText
+                android:id="@+id/cancer5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="23"
+                android:layout_column="1"
+                android:layout_columnSpan="2"
+                android:inputType="date" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="24"
+                android:layout_column="0"
+                android:text="21.十二指腸潰瘍  : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/cancer_6" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="25"
+                android:layout_column="0"
+                android:text="確診日期  : " />
+            <EditText
+                android:id="@+id/cancer6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="25"
+                android:layout_column="1"
+                android:layout_columnSpan="2"
+                android:inputType="date" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="26"
+                android:layout_column="0"
+                android:text="22.胃癌  : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/cancer_7" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="27"
+                android:layout_column="0"
+                android:text="確診日期  : " />
+            <EditText
+                android:id="@+id/cancer7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="27"
+                android:layout_column="1"
+                android:layout_columnSpan="2"
+                android:inputType="date" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="28"
+                android:layout_column="0"
+                android:text="23.大腸癌  : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/cancer_8" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="30"
+                android:layout_column="0"
+                android:text="確診日期  : " />
+            <EditText
+                android:id="@+id/cancer8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="30"
+                android:layout_column="1"
+                android:layout_columnSpan="2"
+                android:inputType="date" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="31"
+                android:layout_column="0"
+                android:text="24.胃食道逆流  : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/cancer_9" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="32"
+                android:layout_column="0"
+                android:text="確診日期  : " />
+            <EditText
+                android:id="@+id/cancer10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="32"
+                android:layout_column="1"
+                android:layout_columnSpan="2"
+                android:inputType="date" />
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="33"
+            android:layout_column="0"
+            android:text="25.最近一個月內有無服用抗生素  : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/cancer_10" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="34"
+                android:layout_column="0"
+                android:text="26.本籍 : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/per_1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="35"
+                android:layout_column="0"
+                android:text="27.父、母、兄弟、姊妹、兒子、女兒有無胃潰瘍 : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/per_2" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="36"
+                android:layout_column="0"
+                android:text="28.父、母、兄弟、姊妹、兒子、女兒有無十二指腸潰瘍 : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/per_3" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="37"
+                android:layout_column="0"
+                android:text="29.父、母、兄弟、姊妹、兒子、女兒有無胃癌 : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/per_4" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="38"
+                android:layout_column="0"
+                android:text="30.父、母、兄弟、姊妹、兒子、女兒有無大腸癌 : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/per_5" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="39"
+                android:layout_column="0"
+                android:text="31.父、母、兄弟、姊妹、兒子、女兒有無胃食道逆流 : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/per_6" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="40"
+                android:layout_column="0"
+                android:text="31.父、母、兄弟、姊妹、兒子、女兒有無其他消化道相關疾病 : " />
+
+           <EditText
+            android:id="@+id/per7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_row="40"
+            android:layout_column="1"
+            android:layout_columnSpan="2"
+            android:inputType="date" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="41"
+                android:layout_column="0"
+                android:text="32.請問您吃乾式米飯類（如：糙米飯、紫米，五穀雜糧等）的頻率為？ : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/eat_1" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="42"
+                android:layout_column="0"
+                android:text="33.請問您吃米飯類（如：白飯、炒飯、壽司等）的頻率為？ : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/eat_2" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="43"
+                android:layout_column="0"
+                android:text="34.請問您吃麵類（如：麵條、米粉、冬粉等）的頻率為？ : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/eat_3" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="44"
+                android:layout_column="0"
+                android:text="35.請問您吃奶類（如：鮮奶、優酪乳、起司、豆漿等）的頻率為? : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/eat_4" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="45"
+                android:layout_column="0"
+                android:text="35.請問您吃蔬菜類（如：淺/深色蔬菜、海產植物類、醃漬蔬菜類）的頻率為？ : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/eat_5" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="46"
+                android:layout_column="0"
+                android:text="36.請問您吃堅果製品類（如：花生、腰果、核桃等）的頻率為？ : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/eat_6" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="47"
+                android:layout_column="0"
+                android:text="37.請問您吃新鮮水果類的頻率為？ : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/eat_7" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="48"
+                android:layout_column="0"
+                android:text="38.請問您吃海鮮類（含所有魚類、貝類）的頻率為？ : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/eat_8" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="49"
+                android:layout_column="0"
+                android:text="39.請問您吃肉類（如：雞、猪、牛、絞肉等）的頻率為？ : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/eat_9" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="50"
+                android:layout_column="0"
+                android:text="40.請問您吃內臟類（如：豬肝）的頻率為？ : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/eat_10" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="51"
+                android:layout_column="0"
+                android:text="41.請問您喝飲料類（如：碳酸飲料、運動飲料、奶等）的頻率為？ : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/eat_11" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="52"
+                android:layout_column="0"
+                android:text="42.請問您喝咖啡類（如：即溶/自製咖啡、市售咖啡飲料、拿鐵等）的頻率為？ : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/eat_12" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="53"
+                android:layout_column="0"
+                android:text="43.請問您喝含茶葉成分飲料（如：紅/綠/烏龍茶、客家擂茶等）的頻率為？ : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/eat_13" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="54"
+                android:layout_column="0"
+                android:text="44.請問您吃甜食（如：冰淇淋、餅乾、蛋糕）的頻率為？ : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/eat_14" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="55"
+                android:layout_column="0"
+                android:text="45.請問您平常喝酒的頻率為？ : " />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/eat_15" />
+
+
+
+            
 
 
         </GridLayout>

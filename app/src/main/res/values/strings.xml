@@ -8,4 +8,242 @@
     <string name="questionnaire">Questionnaire</string>
     <string name="record">Record</string>
     <string name="subscribe">Kit Store</string>
+
+    <string-array name="frequence_1">
+        <item>未受教育</item>
+        <item>小學</item>
+        <item>國(初)中</item>
+        <item>高中(職)</item>
+        <item>大學(專科)</item>
+        <item>研究所以上</item>
+    </string-array>
+
+    <string-array name="frequence_2">
+        <item>困苦</item>
+        <item>尚可</item>
+        <item>小康</item>
+        <item>富裕</item>
+    </string-array>
+    <string-array name="frequence_3">
+        <item>從未抽菸</item>
+        <item>已戒菸</item>
+        <item>目前有抽菸習慣</item>
+    </string-array>
+    <string-array name="frequence_4">
+        <item>從未飲酒</item>
+        <item>已戒酒</item>
+        <item>目前有飲酒習慣</item>
+    </string-array>
+    <string-array name="frequence_5">
+        <item>不到 6 小時</item>
+        <item>6~6.9 小時</item>
+        <item>7~7.9 小時</item>
+        <item>8小時以上</item>
+    </string-array>
+    <string-array name="frequence_6">
+        <item>很少(每週≤1次)</item>
+        <item>偶爾(每週2~4次)</item>
+        <item>經常(每週≥5次)</item>
+    </string-array>
+    <string-array name="frequence_7">
+        <item>很少(每週≤1次)</item>
+        <item>偶爾(每週2~4次)</item>
+        <item>經常(每週≥5次)</item>
+    </string-array>
+    <string-array name="frequence_8">
+        <item>每月≤1次</item>
+        <item>每月2~3次</item>
+        <item>每週1~2次</item>
+        <item>每週3~4次</item>
+        <item>每週≥5次</item>
+    </string-array>
+
+    <string-array name="cancer_1">
+      <item>無</item>
+      <item>有</item>
+    </string-array>
+    <string-array name="cancer_2">
+        <item>無</item>
+        <item>有</item>
+    </string-array>
+    <string-array name="cancer_3">
+        <item>無</item>
+        <item>有</item>
+    </string-array>
+    <string-array name="cancer_4">
+        <item>無</item>
+        <item>有</item>
+    </string-array>
+    <string-array name="cancer_5">
+        <item>無</item>
+        <item>有</item>
+    </string-array>
+    <string-array name="cancer_6">
+        <item>無</item>
+        <item>有</item>
+    </string-array>
+    <string-array name="cancer_7">
+        <item>無</item>
+        <item>有</item>
+    </string-array>
+    <string-array name="cancer_8">
+        <item>無</item>
+        <item>有</item>
+    </string-array>
+    <string-array name="cancer_9">
+        <item>無</item>
+        <item>有</item>
+    </string-array>
+    <string-array name="cancer_10">
+        <item>無</item>
+        <item>有</item>
+    </string-array>
+    <string-array name="per_1">
+        <item>臺灣閩南人</item>
+        <item>臺灣客家人</item>
+        <item>臺灣原住民</item>
+        <item>中國各省份</item>
+        <item>其他</item>
+    </string-array>
+    <string-array name="per_2">
+    <item>無</item>
+    <item>有</item>
+    <item>不詳</item>
+    </string-array>
+    <string-array name="per_3">
+        <item>無</item>
+        <item>有</item>
+        <item>不詳</item>
+    </string-array>
+    <string-array name="per_4">
+        <item>無</item>
+        <item>有</item>
+        <item>不詳</item>
+    </string-array>
+    <string-array name="per_5">
+        <item>無</item>
+        <item>有</item>
+        <item>不詳</item>
+    </string-array>
+    <string-array name="per_6">
+        <item>無</item>
+        <item>有</item>
+        <item>不詳</item>
+    </string-array>
+    <string-array name="eat_1">
+        <item>都沒有吃此類食物</item>
+        <item>每週十次中有一至二次</item>
+        <item>每週十次中有三至五次</item>
+        <item>每週十次中有六至八次</item>
+        <item>每週十次中有八次以上</item>
+    </string-array>
+    <string-array name="eat_2">
+        <item>都沒有吃此類食物</item>
+        <item>每週十次中有一至二次</item>
+        <item>每週十次中有三至五次</item>
+        <item>每週十次中有六至八次</item>
+        <item>每週十次中有八次以上</item>
+    </string-array>
+    <string-array name="eat_3">
+        <item>都沒有吃此類食物</item>
+        <item>每週十次中有一至二次</item>
+        <item>每週十次中有三至五次</item>
+        <item>每週十次中有六至八次</item>
+        <item>每週十次中有八次以上</item>
+    </string-array>
+    <string-array name="eat_4">
+        <item>都沒有吃此類食物</item>
+        <item>每週十次中有一至二次</item>
+        <item>每週十次中有三至五次</item>
+        <item>每週十次中有六至八次</item>
+        <item>每週十次中有八次以上</item>
+    </string-array>
+    <string-array name="eat_5">
+    <item>都沒有吃此類食物</item>
+    <item>每週十次中有一至二次</item>
+    <item>每週十次中有三至五次</item>
+    <item>每週十次中有六至八次</item>
+    <item>每週十次中有八次以上</item>
+</string-array>
+    <string-array name="eat_3">
+    <item>都沒有吃此類食物</item>
+    <item>每週十次中有一至二次</item>
+    <item>每週十次中有三至五次</item>
+    <item>每週十次中有六至八次</item>
+    <item>每週十次中有八次以上</item>
+</string-array>
+    <string-array name="eat_6">
+        <item>都沒有吃此類食物</item>
+        <item>每週十次中有一至二次</item>
+        <item>每週十次中有三至五次</item>
+        <item>每週十次中有六至八次</item>
+        <item>每週十次中有八次以上</item>
+    </string-array>
+    <string-array name="eat_7">
+        <item>都沒有吃此類食物</item>
+        <item>每週十次中有一至二次</item>
+        <item>每週十次中有三至五次</item>
+        <item>每週十次中有六至八次</item>
+        <item>每週十次中有八次以上</item>
+    </string-array>
+    <string-array name="eat_8">
+        <item>都沒有吃此類食物</item>
+        <item>每週十次中有一至二次</item>
+        <item>每週十次中有三至五次</item>
+        <item>每週十次中有六至八次</item>
+        <item>每週十次中有八次以上</item>
+    </string-array>
+    <string-array name="eat_9">
+        <item>都沒有吃此類食物</item>
+        <item>每週十次中有一至二次</item>
+        <item>每週十次中有三至五次</item>
+        <item>每週十次中有六至八次</item>
+        <item>每週十次中有八次以上</item>
+    </string-array>
+    <string-array name="eat_10">
+        <item>都沒有吃此類食物</item>
+        <item>每週十次中有一至二次</item>
+        <item>每週十次中有三至五次</item>
+        <item>每週十次中有六至八次</item>
+        <item>每週十次中有八次以上</item>
+    </string-array>
+    <string-array name="eat_11">
+        <item>都沒有吃此類食物</item>
+        <item>每週十次中有一至二次</item>
+        <item>每週十次中有三至五次</item>
+        <item>每週十次中有六至八次</item>
+        <item>每週十次中有八次以上</item>
+    </string-array>
+    <string-array name="eat_12">
+        <item>都沒有吃此類食物</item>
+        <item>每週十次中有一至二次</item>
+        <item>每週十次中有三至五次</item>
+        <item>每週十次中有六至八次</item>
+        <item>每週十次中有八次以上</item>
+    </string-array>
+    <string-array name="eat_13">
+        <item>都沒有吃此類食物</item>
+        <item>每週十次中有一至二次</item>
+        <item>每週十次中有三至五次</item>
+        <item>每週十次中有六至八次</item>
+        <item>每週十次中有八次以上</item>
+    </string-array>
+    <string-array name="eat_14">
+        <item>都沒有吃此類食物</item>
+        <item>每週十次中有一至二次</item>
+        <item>每週十次中有三至五次</item>
+        <item>每週十次中有六至八次</item>
+        <item>每週十次中有八次以上</item>
+    </string-array>
+    <string-array name="eat_15">
+        <item>都沒有吃此類食物</item>
+        <item>每週十次中有一至二次</item>
+        <item>每週十次中有三至五次</item>
+        <item>每週十次中有六至八次</item>
+        <item>每週十次中有八次以上</item>
+    </string-array>
+
+
+
+
 </resources>
