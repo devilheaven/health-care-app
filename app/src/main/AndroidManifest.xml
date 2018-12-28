@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.user.medical6">
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -20,10 +23,13 @@
         <activity android:name=".ProfileActivity" android:label="@string/profile" />
         <activity android:name=".SubscribeActivity" android:label="@string/subscribe" />
         <activity android:name=".RecordActivity" android:label="@string/record"/>
-        <activity android:name=".ConnectDeviceActivity" android:label="@string/manual" />
+        <activity android:name=".ConnectDeviceActivity" android:label="@string/connect_device" />
         <activity android:name=".ManualActivity" android:label="@string/manual" />
         <activity android:name=".HistoryActivity" android:label="@string/history" />
         <activity android:name=".QuestionnaireActivity" android:label="@string/questionnaire"></activity>
+        <activity android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="fullSensor"
+            tools:replace="screenOrientation" />
     </application>
 
 </manifest>

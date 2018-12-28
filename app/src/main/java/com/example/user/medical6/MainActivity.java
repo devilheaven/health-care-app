@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent=new Intent();
                 intent.setClass(MainActivity.this,MainSelectionActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
 
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent=new Intent();
                 intent.setClass(MainActivity.this,SubscribeActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
     }

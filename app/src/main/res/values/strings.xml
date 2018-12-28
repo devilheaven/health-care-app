@@ -3,11 +3,28 @@
     <string name="connect_device">Connected</string>
     <string name="history">History</string>
     <string name="main_selection">Main</string>
-    <string name="manual">Connected</string>
+    <string name="manual">Manual</string>
     <string name="profile">Profile</string>
     <string name="questionnaire">Questionnaire</string>
     <string name="record">Record</string>
-    <string name="subscribe">Kit Store</string>
+    <string name="subscribe">Subscribe</string>
+  
+    <string-array name="device">
+        <item>血壓機</item>
+        <item>體重計</item>
+    </string-array>
+    <string-array name="BIState">
+        <item>飯後</item>
+        <item>飯前</item>
+    </string-array>
+    <string-array name="month">
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+    <string-array name="testDevice">
+        <item>BloodShade3000</item>
+        <item>BodyWeight3000</item>
+    </string-array>
 
     <string-array name="frequence_1">
         <item>未受教育</item>
@@ -242,8 +259,4 @@
         <item>每週十次中有六至八次</item>
         <item>每週十次中有八次以上</item>
     </string-array>
-
-
-
-
 </resources>

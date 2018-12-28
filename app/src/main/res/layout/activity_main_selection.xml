@@ -4,51 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainSelectionActivity"
-    tools:layout_editor_absoluteY="81dp">
+    tools:context=".MainSelectionActivity">
 
-    <Button
-        android:id="@+id/ProfileBtn"
-        android:layout_width="109dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="97dp"
-        android:layout_marginBottom="42dp"
-        android:text="Profile"
-        app:layout_constraintBottom_toTopOf="@+id/NewRecordBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/NewRecordBtn"
-        android:layout_width="113dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="36dp"
-        android:text="NewRecord"
-        app:layout_constraintBottom_toTopOf="@+id/HistoryBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ProfileBtn" />
+        <Button
+            android:id="@+id/ProfileBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Profile"
+            app:layout_constraintBottom_toTopOf="@+id/NewRecordBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/HistoryBtn"
-        android:layout_width="116dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="37dp"
-        android:text="History"
-        app:layout_constraintBottom_toTopOf="@+id/QuestionnaireBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NewRecordBtn" />
+        <Button
+            android:id="@+id/NewRecordBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="NewRecord"
+            app:layout_constraintBottom_toTopOf="@+id/HistoryBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ProfileBtn" />
 
-    <Button
-        android:id="@+id/QuestionnaireBtn"
-        android:layout_width="138dp"
-        android:layout_height="59dp"
-        android:layout_marginBottom="55dp"
-        android:text="Questionnaire"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HistoryBtn" />
+        <Button
+            android:id="@+id/HistoryBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="History"
+            app:layout_constraintBottom_toTopOf="@+id/QuestionnaireBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/NewRecordBtn" />
+
+        <Button
+            android:id="@+id/QuestionnaireBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Questionnaire"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/HistoryBtn" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

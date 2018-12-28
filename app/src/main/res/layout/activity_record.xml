@@ -6,24 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".RecordActivity">
 
-    <Button
-        android:id="@+id/ConnectDeviceBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="139dp"
-        android:text="ConnectDevice"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/ManualBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="62dp"
-        android:text="Manual"
-        app:layout_constraintStart_toStartOf="@+id/ConnectDeviceBtn"
-        app:layout_constraintTop_toBottomOf="@+id/ConnectDeviceBtn" />
+        <Button
+            android:id="@+id/ConnectDeviceBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ConnectDevice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/ManualBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manual"
+            app:layout_constraintStart_toStartOf="@+id/ConnectDeviceBtn"
+            app:layout_constraintTop_toBottomOf="@+id/ConnectDeviceBtn" />
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
