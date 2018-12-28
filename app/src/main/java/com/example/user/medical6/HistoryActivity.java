@@ -15,7 +15,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 
-public class HistoryActivity extends AppCompatActivity  implements AdapterView.OnItemSelectedListener {
+public class HistoryActivity extends AppCompatActivity  {
     public dataBase DH=null;
     Cursor cur;
     static final String[] FROM=new String[]{time,weight,sbp,dbp,hr};
@@ -29,11 +29,7 @@ public class HistoryActivity extends AppCompatActivity  implements AdapterView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-        Spinner SelectMonth = (Spinner)findViewById(R.id.spinBIMonth);
-        ArrayAdapter<CharSequence> Month = ArrayAdapter.createFromResource(HistoryActivity.this,
-                R.array.month,
-                android.R.layout.simple_spinner_dropdown_item);
-        SelectMonth.setAdapter(Month);
+
 
         Spinner SelectState = (Spinner)findViewById(R.id.spinBIState);
         ArrayAdapter<CharSequence> State = ArrayAdapter.createFromResource(HistoryActivity.this,
@@ -41,7 +37,7 @@ public class HistoryActivity extends AppCompatActivity  implements AdapterView.O
                 android.R.layout.simple_spinner_dropdown_item);
         SelectState.setAdapter(State);
 
-        SelectMonth.setOnItemSelectedListener(this);
+
 
         //讀取資料
         DH=new dataBase(this);
@@ -51,7 +47,7 @@ public class HistoryActivity extends AppCompatActivity  implements AdapterView.O
 
         cur=db.rawQuery(" SELECT  * FROM  examine " ,null);
         adapter=new SimpleCursorAdapter(this,R.layout.item,cur,FROM,new int[] {R.id.txvtime,R.id.txvkg,R.id.txvsbp,R.id.txvdbp,R.id.txvhr},0);
-        lvListall=(ListView)findViewById(R.id.lvListAll);
+        lvListall=(ListView)findViewById(R.id.lvListall);
         lvListall.setAdapter(adapter);
         requery();
 
@@ -66,15 +62,5 @@ public class HistoryActivity extends AppCompatActivity  implements AdapterView.O
     }
 
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        //cur=db.rawQuery(" SELECT  * FROM  examine  WHERE" ,null);
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 }
