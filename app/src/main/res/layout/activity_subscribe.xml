@@ -10,9 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
+        <WebView
+            android:id="@+id/wvSubscribe"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"> </FrameLayout>
+            android:layout_height="match_parent"
+            >
+
+        </WebView>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
