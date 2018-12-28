@@ -20,7 +20,7 @@
         <activity android:name=".ProfileActivity" android:label="@string/profile" />
         <activity android:name=".SubscribeActivity" android:label="@string/subscribe" />
         <activity android:name=".RecordActivity" android:label="@string/record"/>
-        <activity android:name=".ConnectDeviceActivity" android:label="@string/manual" />
+        <activity android:name=".ConnectDeviceActivity" android:label="@string/connect_device" />
         <activity android:name=".ManualActivity" android:label="@string/manual" />
         <activity android:name=".HistoryActivity" android:label="@string/history" />
         <activity android:name=".QuestionnaireActivity" android:label="@string/questionnaire"></activity>
