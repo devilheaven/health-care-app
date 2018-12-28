@@ -182,13 +182,13 @@
     <item>每週十次中有六至八次</item>
     <item>每週十次中有八次以上</item>
 </string-array>
-    <string-array name="eat_3">
-    <item>都沒有吃此類食物</item>
-    <item>每週十次中有一至二次</item>
-    <item>每週十次中有三至五次</item>
-    <item>每週十次中有六至八次</item>
-    <item>每週十次中有八次以上</item>
-</string-array>
+    <!--<string-array name="eat_3">-->
+    <!--<item>都沒有吃此類食物</item>-->
+    <!--<item>每週十次中有一至二次</item>-->
+    <!--<item>每週十次中有三至五次</item>-->
+    <!--<item>每週十次中有六至八次</item>-->
+    <!--<item>每週十次中有八次以上</item>-->
+<!--</string-array>-->
     <string-array name="eat_6">
         <item>都沒有吃此類食物</item>
         <item>每週十次中有一至二次</item>
