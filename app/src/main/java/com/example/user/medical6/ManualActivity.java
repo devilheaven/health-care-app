@@ -30,7 +30,7 @@ public class ManualActivity extends AppCompatActivity {
         editTextWeight = (EditText) findViewById(R.id.editTextWeight);
         editTextHr = (EditText) findViewById(R.id.editTextHr);
         editTextDbp = (EditText) findViewById(R.id.editTextDbp);
-        editTextSbp = (EditText) findViewById(R.id.editTextSbp);
+        editTextSbp = (EditText) findViewById(R.id.editTextSdp);
 
         //SQLiteDatabase db =DH.getReadableDatabase();
         //cur = db.rawQuery(" SELECT weight   FROM examine WHERE sbp=  " + editTextSbp.getText().toString() , null);
@@ -46,7 +46,6 @@ public class ManualActivity extends AppCompatActivity {
             toast.show();
         }
         else{
-
             //values.put(num, );
             //values.put(time,getdate());
             values.put(weight,editTextWeight.getText().toString() );
