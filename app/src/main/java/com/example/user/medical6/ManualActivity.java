@@ -51,12 +51,11 @@ public class ManualActivity extends AppCompatActivity {
                                 mMonth = month;
                                 mDay = dayOfMonth;
                                 dataEdit.setText(new StringBuilder()
-                                        .append(mYear)
-                                        .append("-")
-                                        .append((mMonth + 1) < 10 ? "0"
-                                                + (mMonth + 1) : (mMonth + 1))
-                                        .append("-")
-                                        .append((mDay < 10 ? "0" + mDay : mDay)));
+                                        .append((mMonth + 1) < 10? "0" + (mMonth + 1) : (mMonth + 1))
+                                        .append("/")
+                                        .append((mDay < 10 ? "0" + mDay : mDay))
+                                        .append("/")
+                                        .append((mYear)));
                             }
                         }, calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
 
