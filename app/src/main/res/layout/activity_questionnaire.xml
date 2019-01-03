@@ -564,7 +564,7 @@
                         android:text="確診日期  : " />
 
                     <EditText
-                        android:id="@+id/cancer10"
+                        android:id="@+id/cancer9"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="date" />
