@@ -1,28 +1,67 @@
 package com.example.user.medical6;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.ContentValues;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 //呼叫dataBase類別定義的常數
+import java.util.Calendar;
+
 import static com.example.user.medical6.dataBase.*;
 
 public class ManualActivity extends AppCompatActivity {
+    //new for 1 line
+    private EditText dataEdit;
+    //定義顯示時間套件
+    private Calendar calendar; //通過 Calendar 獲取系統時間
+    private int mYear;
+    private int mMonth;
+    private int mDay;
 
     public dataBase DH=null;
     SQLiteDatabase db;
     Cursor cur;
     public EditText editTextWeight,editTextHr,editTextDbp,editTextSbp;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //new for 1 line
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_manual);
+        dataEdit = (EditText) findViewById(R.id.editTextDate);
+        calendar = Calendar.getInstance();
+        dataEdit.setOnClickListener(new View.OnClickListener() {
+//            @SuppressLint("NewApi")
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(ManualActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                mYear = year;
+                                mMonth = month;
+                                mDay = dayOfMonth;
+                                dataEdit.setText(new StringBuilder()
+                                        .append(mYear)
+                                        .append("-")
+                                        .append((mMonth + 1) < 10 ? "0"
+                                                + (mMonth + 1) : (mMonth + 1))
+                                        .append("-")
+                                        .append((mDay < 10 ? "0" + mDay : mDay)));
+                            }
+                        }, calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+
+            }
+        });
 
         DH=new dataBase(this);
         DH.close();
