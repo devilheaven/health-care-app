@@ -12,6 +12,7 @@ class dataBase extends SQLiteOpenHelper{
     public static final String TABLE_e = "examine";
     //客戶資料表
     public static final String id = "id";
+    public static final String lastName = "lastName";
     public static final String height = "身高";
     public static final String sex = "性別";
     //檢驗資料表
@@ -30,7 +31,7 @@ class dataBase extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        final String customer = "CREATE TABLE " + TABLE_c + " (" +id + " INTEGER PRIMARY KEY AUTOINCREMENT , " + height + " VARCHAR(32), " + sex + " VARCHAR(5));";
+        final String customer = "CREATE TABLE " + TABLE_c + " (" +id + " INTEGER PRIMARY KEY AUTOINCREMENT , "+lastName+ " VARCHAR(32), " + height + " VARCHAR(32), " + sex + " VARCHAR(5));";
         //time TimeStamp NOT NULL DEFAULT (datetime('now','localtime')) 世界時間
         final String examine = "CREATE TABLE " + TABLE_e  + " (" +num + " INTEGER PRIMARY KEY AUTOINCREMENT , " + time + " TimeStamp NOT NULL DEFAULT (datetime('now','localtime')), " + weight + " VARCHAR(32), "+ sbp + " VARCHAR(32), "+ dbp + " VARCHAR(32), "+ hr + " VARCHAR(32), " + idnum + " VARCHAR(32));";
 
