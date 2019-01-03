@@ -12,6 +12,8 @@ class dataBase extends SQLiteOpenHelper{
     public static final String TABLE_e = "examine";
     //客戶資料表
     public static final String id = "id";
+    public static final String subjectId = "subjectId";
+    public static final String idnum1= "guid";
     public static final String lastName = "lastName";
     public static final String height = "身高";
     public static final String sex = "性別";
@@ -22,7 +24,7 @@ class dataBase extends SQLiteOpenHelper{
     public static final String sbp = "收縮壓";
     public static final String dbp = "舒張壓";
     public static final String hr= "心律";
-    public static final String idnum= "客戶代碼";
+    public static final String idnum= "guid";
     private final static String DATABASE_NAME = "sql.db";  //資料庫名稱
 
     public dataBase(Context context) {
@@ -31,7 +33,7 @@ class dataBase extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        final String customer = "CREATE TABLE " + TABLE_c + " (" +id + " INTEGER PRIMARY KEY AUTOINCREMENT , "+lastName+ " VARCHAR(32), " + height + " VARCHAR(32), " + sex + " VARCHAR(5));";
+        final String customer = "CREATE TABLE " + TABLE_c + " (" +id + " INTEGER PRIMARY KEY AUTOINCREMENT , "+subjectId+ " VARCHAR(32), "+idnum1+ " VARCHAR(32), " +lastName+ " VARCHAR(32), " + height + " VARCHAR(32), " + sex + " VARCHAR(5));";
         //time TimeStamp NOT NULL DEFAULT (datetime('now','localtime')) 世界時間
         final String examine = "CREATE TABLE " + TABLE_e  + " (" +num + " INTEGER PRIMARY KEY AUTOINCREMENT , " + time + " TimeStamp NOT NULL DEFAULT (datetime('now','localtime')), " + weight + " VARCHAR(32), "+ sbp + " VARCHAR(32), "+ dbp + " VARCHAR(32), "+ hr + " VARCHAR(32), " + idnum + " VARCHAR(32));";
 
