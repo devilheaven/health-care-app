@@ -147,6 +147,11 @@
         <item>有</item>
         <item>不詳</item>
     </string-array>
+    <string-array name="per_7">
+        <item>無</item>
+        <item>有</item>
+        <item>不詳</item>
+    </string-array>
     <string-array name="eat_1">
         <item>都沒有吃此類食物</item>
         <item>每週十次中有一至二次</item>
