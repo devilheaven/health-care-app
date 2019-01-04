@@ -1,0 +1,21 @@
+
+public class Test{
+    /**
+     *
+     *
+     */
+    private String Date;
+    private double value;
+}
+ 
+/**
+ *
+ */
+public class CompositeIndexBean {
+    /**
+     *
+     *
+     */
+    private String rate;
+    private String Date;
+}
