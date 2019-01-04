@@ -24,6 +24,24 @@
             app:layout_constraintTop_toTopOf="parent">-->
 
             <TextView
+                android:id="@+id/IDTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="ID" />
+
+            <TextView
+                android:id="@+id/txvInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="請掃描 QR Code 登入" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="20dp" />
+
+            <TextView
                 android:id="@+id/LoginTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -36,45 +54,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Guest" />
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="20dp" />
-
-            <TextView
-                 android:id="@+id/IDTitle"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:gravity="center"
-                 android:text="ID" />
-
-            <!-- <TextView
-                android:id="@+id/UserID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="None" />-->
-
-            <TextView
-                android:id="@+id/txvInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="請掃描 QR Code 登入" />
-
-            <EditText
-                android:id="@+id/etxtContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:focusable="false" />
-
-            <!--<TextView
-                android:id="@+id/etxtContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text=" " />-->
 
             <View
                 android:layout_width="fill_parent"
@@ -140,13 +119,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Subscribe"
-                android:textAllCaps="false" />
-
-            <Button
-                android:id="@+id/LogoutBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Logout"
                 android:textAllCaps="false" />
 
         </LinearLayout>

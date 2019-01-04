@@ -70,43 +70,165 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_weight="10"
-                android:gravity="center">
+                android:gravity="center"
+                android:weightSum="2">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="10">
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:weightSum="2">
 
                     <TextView
-                        android:id="@+id/WeightBluetoothRespond"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/Weight"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="100 kg"
+                        android:gravity="right"
+                        android:layout_weight="1"
+                        android:text="100"
                         android:textStyle="bold"
                         android:textSize="30sp"/>
+
+                    <TextView
+                        android:id="@+id/WeightKg"
+                        android:layout_width="11dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="left"
+                        android:layout_weight="1"
+                        android:text=" kg"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:orientation="vertical"
-                    android:layout_weight="10">
+                    android:layout_weight="1"
+                    android:weightSum="3">
 
-                    <View
+                    <LinearLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="5dp" />
-
-                    <TextView
-                        android:id="@+id/BloodBluetoothRespond"
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="收縮壓: 100 mmhg\n舒張壓: 100 mmhg\n心律: 90 bpm"
-                        android:textStyle="bold"
-                        android:textSize="20sp"/>
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:id="@+id/sdpTitle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="收縮壓: "
+                            android:textStyle="bold"
+                            android:textSize="15sp"/>
+
+                        <TextView
+                            android:id="@+id/sdp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="---"
+                            android:textStyle="bold"
+                            android:textSize="15sp"/>
+
+                        <TextView
+                            android:id="@+id/mmhgSdp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:text=" mmHg"
+                            android:textStyle="bold"
+                            android:textSize="15sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:id="@+id/dbpTitle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="舒張壓: "
+                            android:textStyle="bold"
+                            android:textSize="15sp"/>
+
+                        <TextView
+                            android:id="@+id/dbp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="---"
+                            android:textStyle="bold"
+                            android:textSize="15sp"/>
+
+                        <TextView
+                            android:id="@+id/mmhgDbp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:text=" mmHg"
+                            android:textStyle="bold"
+                            android:textSize="15sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:id="@+id/bpmTitle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="心    律: "
+                            android:textStyle="bold"
+                            android:textSize="15sp"/>
+
+                        <TextView
+                            android:id="@+id/bpm"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="---"
+                            android:textStyle="bold"
+                            android:textSize="15sp"/>
+
+                        <TextView
+                            android:id="@+id/bpmS"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:text=" bpm"
+                            android:textStyle="bold"
+                            android:textSize="15sp"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
