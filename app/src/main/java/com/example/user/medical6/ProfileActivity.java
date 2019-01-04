@@ -48,16 +48,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        Button btnLogout = (Button)findViewById(R.id.LogoutBtn);
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent();
-                intent.setClass(ProfileActivity.this,MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
         Button btnSubscribe = (Button)findViewById(R.id.SubscribeBtn);
         btnSubscribe.setOnClickListener(new View.OnClickListener() {
             @Override
