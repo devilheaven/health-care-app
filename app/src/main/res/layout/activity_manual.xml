@@ -161,21 +161,6 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-<<<<<<< HEAD
-            android:layout_row="4"
-            android:layout_column="1"
-            android:layout_columnSpan="2"
-            android:layout_gravity="fill_horizontal"
-            android:inputType="date" />
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="#000000"
-            android:layout_row="5"
-            android:layout_column="0"
-            android:layout_columnSpan="3"/>
-=======
             android:orientation="vertical"
             android:layout_weight="10">
 
@@ -192,7 +177,6 @@
                 android:text="Condition"
                 android:textAlignment="center"
                 android:textStyle="bold" />
->>>>>>> origin/bluetooth
 
             <GridLayout
                 android:layout_width="wrap_content"
