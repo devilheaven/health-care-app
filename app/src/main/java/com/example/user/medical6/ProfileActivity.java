@@ -209,9 +209,9 @@ public class ProfileActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             if ("009".equals(errorCode)){
-                txvInfo.setText("登入成功\n"+cur1.getCount()+"\n ErrorCode:"+errorCode);
+                txvInfo.setText("客戶編號\":\""+cur1.getString(1)+"\t"+cur1.getString(3)+"先生/小姐");
             }else{
-                txvInfo.setText("登入失敗\n"+cur1.getCount()+"\n ErrorCode:"+errorCode);
+                txvInfo.setText("登入失敗");
                 if (cur1.getCount()>0){
                     db.execSQL("delete from customer");
                 }
