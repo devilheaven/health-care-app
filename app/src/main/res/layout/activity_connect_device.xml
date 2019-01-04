@@ -400,13 +400,27 @@
 
         </GridLayout>
 
-        <Button
-            android:id="@+id/switchBluetooth"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:text="Connect Device"
-            android:textAllCaps="false" />
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btnCWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:text="Connect Weight Scale"
+                android:textAllCaps="false" />
+            <Button
+                android:id="@+id/btnCBlood"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:text="Connect Blood"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/deviceGetData"

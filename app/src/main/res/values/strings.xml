@@ -8,6 +8,10 @@
     <string name="questionnaire">Questionnaire</string>
     <string name="record">Record</string>
     <string name="subscribe">Subscribe</string>
+
+    <string name="title_location_permission">請求權限</string>
+    <string name="text_location_permission">若要使用藍芽體重機請允許權限，否則無法使用</string>
+    <string name="ok">好的</string>
   
     <string-array name="device">
         <item>血壓機</item>
