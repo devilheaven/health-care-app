@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 class dataBase extends SQLiteOpenHelper{
     //資料庫版本
-    private final static int DATABASE_VERSION = 1;
+    private final static int DATABASE_VERSION = 2;
     //資料表名稱
     public static final String TABLE_c = "customer";
     public static final String TABLE_e = "examine";

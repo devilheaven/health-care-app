@@ -16,6 +16,9 @@ import android.widget.TextView;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -33,13 +36,12 @@ import javax.net.ssl.X509TrustManager;
 import static com.example.user.medical6.dataBase.*;
 
 public class ProfileActivity extends AppCompatActivity {
-
-    EditText etxtContent;
     TextView txvInfo;
+    // data base 變數宣告
     public dataBase DH=null;
-    Cursor cur;
     SQLiteDatabase db;
     ContentValues values = new ContentValues();
+    Cursor cur1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,6 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        etxtContent = (EditText)findViewById(R.id.etxtContent);
         txvInfo = (TextView) findViewById(R.id.txvInfo);
 
         Button btnMyID = (Button)findViewById(R.id.MyIDBtn);
@@ -93,9 +94,16 @@ public class ProfileActivity extends AppCompatActivity {
             if(result.getContents() == null)
                 txvInfo.setText("取消QR Code讀取作業");
             else{
+                cur1=db.rawQuery(" SELECT *  FROM  customer " ,null);
+                //清除舊資料
+                if (cur1.getCount()>0){
+                    db.execSQL("delete from customer");
+                }
+
+                // QR code result string
                 String resultStr=result.getContents();
-                String UrlLocation = "https://dev.cims.tw/csis/createPatient.do?token=5C3i49C0g1M55O9l5cFNg5lm58lI"; //API位置
                 String[] arrayData = resultStr.split(",");
+                //新增資料
                 values.put(subjectId, arrayData[0]);
                 values.put(idnum1, arrayData[2]);
                 values.put(lastName, arrayData[1]);
@@ -103,47 +111,42 @@ public class ProfileActivity extends AppCompatActivity {
                 values.put(sex, "male");
                 db.insert(TABLE_c, null, values);
 
-                Cursor cur1=db.rawQuery(" SELECT *  FROM  customer " ,null);
-                String jsonString = null;
-
-                if (cur1.getCount()>0){
-                    cur1.moveToLast();
-                    jsonString ="{\"protocolId\":1032,\"subjectId\":\""+cur1.getString(1)+"\",\"lastName\":\""+cur1.getString(3)+"\",\"guid\":\""+cur1.getString(2)+"\"}";
-                }
-
-                String returnData = jsonString;
-
-//                String PostData = "{\"protocolId\" : 1032 ,\"subjectId\" : \"A" +arrayData[0]+"\" ,\"lastName\" : \""+arrayData[1]+"\" , \"guid\" : \""+arrayData[2]+"\"}";
-
-//                etxtContent.setText(PostData);
-//                new PatientsCreate().execute();
-//                String returnData = httpConnectionPost(UrlLocation,PostData);
+//                //查詢資料
+//                cur1=db.rawQuery(" SELECT *  FROM  customer " ,null);
+//                String jsonString = null;
+//                if (cur1.getCount()>0){
+//                    cur1.moveToLast();
+//                    jsonString ="{\"protocolId\":1032,\"subjectId\":\""+cur1.getString(1)+"\",\"lastName\":\""+cur1.getString(3)+"\",\"guid\":\""+cur1.getString(2)+"\"}";
+//                }
+//                String returnData = jsonString;
+//                txvInfo.setText((CharSequence) returnData);
                 new PatientsCreate().execute();
-                txvInfo.setText((CharSequence) returnData);
-                //txvInfo.setText("QR Code讀取完成!");
                 }
         }
         else
             super.onActivityResult(resultCode,resultCode,data); //預設父親類別執行指令
     }
 
+    //api 傳值
     public class PatientsCreate extends AsyncTask<String,Void,String> {
         protected String responsetitle= "";
         protected String responsestring= "";
+        // SQL lite query
+        Cursor cur1 =db.rawQuery(" SELECT *  FROM  customer ORDER BY id DESC " ,null);
 
         @Override
         protected String doInBackground(String... strings) {
-            Cursor cur1=db.rawQuery(" SELECT *  FROM  customer ORDER BY id DESC " ,null);
             String jsonString = "";
-
             if (cur1.getCount()>0){
                 cur1.moveToFirst();
-                jsonString ="{\"protocolId\":1032,\"subjectId\":\""+cur1.getString(1)+"\",\"lastName\":\""+cur1.getString(3)+"\",\"guid\":\""+cur1.getString(2)+"\"}";
+                jsonString ="{\"protocolId\":1000,\"subjectId\":\""+cur1.getString(1)+"\",\"lastName\":\""+cur1.getString(3)+"\",\"guid\":\""+cur1.getString(2)+"\"}";
+//                jsonString ="{\"protocolId\":1032,\"subjectId\":\""+cur1.getString(1)+"\",\"lastName\":\""+cur1.getString(3)+"\",\"guid\":\""+cur1.getString(2)+"\"}";
             }
 
             SSLsetting();
             try {
-                URL url = new URL("https://dev.cims.tw/csis/createPatient.do?token=5C3i49C0g1M55O9l5cFNg5lm58lI");
+                URL url = new URL("https://tlbinfo.cims.tw:8443/csis/createPatient.do?token=5C3i49C0g1M55O9l5cFNg5lm58lI");
+//                URL url = new URL("https://dev.cims.tw/csis/createPatient.do?token=5C3i49C0g1M55O9l5cFNg5lm58lI");
                 HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -191,15 +194,35 @@ public class ProfileActivity extends AppCompatActivity {
                 Log.v("IOException","ERROR");
             }
 
-            return null;
+            return responsestring;
         }
-
         @Override
         protected void onPostExecute(String s) {
+            String errorCode = "";
+            String message = "";
+            try{
+                JSONObject jsonObject = new JSONObject(s);
+                errorCode = jsonObject.getString("Error Code");
+                message = jsonObject.getString("Message");
+            }
+            catch(JSONException e) {
+                e.printStackTrace();
+            }
+            if ("009".equals(errorCode)){
+                txvInfo.setText("登入成功\n"+cur1.getCount()+"\n ErrorCode:"+errorCode);
+            }else{
+                txvInfo.setText("登入失敗\n"+cur1.getCount()+"\n ErrorCode:"+errorCode);
+                if (cur1.getCount()>0){
+                    db.execSQL("delete from customer");
+                }
+
+            }
+
             Log.v("Back",s);
         }
     }
 
+    //SSL 設定 (忽略所有的認證)
     private void SSLsetting() {
         TrustManager[] trustAllCerts = new TrustManager[]{
                 new X509TrustManager() {
@@ -223,6 +246,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    //QR code scanner function
     private void doScanQRCode() //產生QR Code的函數
     {
         IntentIntegrator integrator = new IntentIntegrator(this); //產生intent整合物件
