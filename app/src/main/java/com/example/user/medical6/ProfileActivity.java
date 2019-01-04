@@ -94,13 +94,13 @@ public class ProfileActivity extends AppCompatActivity {
                 String resultStr=result.getContents();
                 String[] arrayData = resultStr.split(",");
                 //新增資料
-                values.put(subjectId, arrayData[0]);
-                values.put(idnum1, arrayData[2]);
-                values.put(lastName, arrayData[1]);
-                values.put(height, "178");
-                values.put(sex, "male");
-                db.insert(TABLE_c, null, values);
-
+                if (arrayData.length == 3){
+                    values.put(subjectId, arrayData[0]);
+                    values.put(idnum1, arrayData[2]);
+                    values.put(lastName, arrayData[1]);
+                    values.put(height, "178");
+                    values.put(sex, "male");
+                    db.insert(TABLE_c, null, values);
 //                //查詢資料
 //                cur1=db.rawQuery(" SELECT *  FROM  customer " ,null);
 //                String jsonString = null;
@@ -110,8 +110,12 @@ public class ProfileActivity extends AppCompatActivity {
 //                }
 //                String returnData = jsonString;
 //                txvInfo.setText((CharSequence) returnData);
-                new PatientsCreate().execute();
+                    new PatientsCreate().execute();
+                }else{
+                    txvInfo.setText("請掃描正確的 QR code");
+//                    txvInfo.setText("請掃描正確的 QR code\n information:"+resultStr);
                 }
+            }
         }
         else
             super.onActivityResult(resultCode,resultCode,data); //預設父親類別執行指令
@@ -199,7 +203,7 @@ public class ProfileActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             if ("009".equals(errorCode)){
-                txvInfo.setText("客戶編號\":\""+cur1.getString(1)+"\t"+cur1.getString(3)+"先生/小姐");
+                txvInfo.setText(cur1.getString(1)+"\t"+cur1.getString(3)+"先生/小姐");
             }else{
                 txvInfo.setText("登入失敗");
                 if (cur1.getCount()>0){
