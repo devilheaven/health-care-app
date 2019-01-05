@@ -362,9 +362,7 @@ public class ConnectDeviceActivity extends AppCompatActivity {
 
         TextView datetext = (TextView) findViewById(R.id.CurrentDate);
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy-HH:mm:ss");
-        Date dt =sdf.parse("01/05/2019-22:36:00");
         calendar = Calendar.getInstance();
-        calendar.setTime(dt);
         Date tdt = calendar.getTime();
         String time = sdf.format(tdt);
         datetext.setText(time);
