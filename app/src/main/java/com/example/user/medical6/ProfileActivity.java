@@ -136,10 +136,19 @@ public class ProfileActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            String jsonString = "";
+            JSONObject jsonString = new JSONObject();
             if (cur1.getCount()>0){
                 cur1.moveToFirst();
-                jsonString ="{\"protocolId\":1000,\"subjectId\":\""+cur1.getString(1)+"\",\"lastName\":\""+cur1.getString(3)+"\",\"guid\":\""+cur1.getString(2)+"\"}";
+//                jsonString ="{\"protocolId\":1000,\"subjectId\":\""+cur1.getString(1)+"\",\"lastName\":\""+cur1.getString(3)+"\",\"guid\":\""+cur1.getString(2)+"\"}";
+                try {
+                    jsonString.put("protocolId",1000);
+                    jsonString.put("subjectId",cur1.getString(1));
+                    jsonString.put("lastName",cur1.getString(3));
+                    jsonString.put("guid",cur1.getString(2));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
 //                jsonString ="{\"protocolId\":1032,\"subjectId\":\""+cur1.getString(1)+"\",\"lastName\":\""+cur1.getString(3)+"\",\"guid\":\""+cur1.getString(2)+"\"}";
             }
 
@@ -159,7 +168,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                 OutputStream os = connection.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-                writer.write(jsonString);
+                writer.write(jsonString.toString());
                 writer.flush();
                 writer.close();
                 InputStream is;

@@ -3,8 +3,10 @@ package com.example.user.medical6;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -20,8 +22,24 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 import org.json.*;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 
 public class QuestionnaireActivity extends AppCompatActivity implements View.OnClickListener,RadioGroup.OnCheckedChangeListener,AdapterView.OnItemSelectedListener {
@@ -38,11 +56,19 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
     private int mDay;
     //宣告sharepreference的儲存名稱 之後會用來存入sharepreference儲存空間
     static final  String result="questionnaire";
+    static final  String result2="questionnaire2";
+    // data base 變數宣告
+    SQLiteDatabase db;
+    ContentValues values = new ContentValues();
+    Cursor cur1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questionnaire);
+        final EditText hight=(EditText)findViewById(R.id.hight);
+        final EditText wight=(EditText)findViewById(R.id.wight);
+        final EditText bmi=(EditText)findViewById(R.id.bmi);
 
         final EditText dataEdit1 = (EditText) findViewById(R.id.birth);
         dataEdit1.setOnClickListener(new View.OnClickListener() {
@@ -127,6 +153,24 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
 
         final Button btngo = (Button) findViewById(R.id.btngo);
         btngo.setOnClickListener(this);
+
+        //讀取資料
+        DH=new dataBase(this);
+        DH.close();
+        db =DH.getReadableDatabase();
+
+        Cursor cur1 =db.rawQuery(" SELECT *  FROM  customer ORDER BY id DESC " ,null);
+        if (cur1.getCount()>0){
+            cur1.moveToFirst();
+            hight.setText(cur1.getString(4));
+        }
+        cur1 =db.rawQuery(" SELECT *  FROM  examine ORDER BY _id DESC " ,null);
+        if (cur1.getCount()>0){
+            cur1.moveToFirst();
+            wight.setText(cur1.getString(2));
+        }
+        Float BMI = Float.parseFloat(wight.getText().toString())/Float.parseFloat(hight.getText().toString())/Float.parseFloat(hight.getText().toString())*10000;
+        bmi.setText(BMI.toString());
     }
 
     private void getDate(final EditText dataEdit,final Calendar calendar){
@@ -271,6 +315,8 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
         //宣告物件 將欄位轉成json
         final EditText age=(EditText)findViewById(R.id.age);
         final EditText hight=(EditText)findViewById(R.id.hight);
+        final EditText wight=(EditText)findViewById(R.id.wight);
+        final EditText bmi=(EditText)findViewById(R.id.bmi);
         final EditText birth = (EditText) findViewById(R.id.birth);
         final EditText cancer1 = (EditText) findViewById(R.id.cancer1);
         final EditText cancer2=(EditText)findViewById(R.id.cancer2);
@@ -371,6 +417,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
 
         //將欄位傳換成json
         JSONObject postData=new JSONObject();
+        JSONObject postData2=new JSONObject();
       try{
           if (rdgsex.getCheckedRadioButtonId()==R.id.rbMale){
               //男性
@@ -383,6 +430,8 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
           postData.put("age",age.getText().toString());
           postData.put("birthday",birth.getText().toString());
           postData.put("height",hight.getText().toString());
+          postData.put("wight",wight.getText().toString());
+          postData.put("bmi",bmi.getText().toString());
           postData.put("TSD_diagnosis_date",cancer1.getText().toString());
           postData.put("heart_disease_diagnosis_date",cancer2.getText().toString());
           postData.put("hypertension_diagnosis_date",cancer3.getText().toString());
@@ -412,42 +461,52 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
           postData.put("colon_cancer",getValue("yesNo",sick4.getSelectedItem().toString()));
           postData.put("gastroesophageal_reflux",getValue("yesNo",overstomach.getSelectedItem().toString()));
           postData.put("using_antibiotics",getValue("yesNo",sick24.getSelectedItem().toString()));
-          postData.put("父、母、兄弟、姊妹、兒子、女兒有無十二指腸潰瘍  ",sick27.getSelectedItem().toString());
-          //
-          postData.put("父、母、兄弟、姊妹、兒子、女兒有無胃癌",sick28.getSelectedItem().toString());
-          postData.put("父、母、兄弟、姊妹、兒子、女兒有無大腸癌",sick29.getSelectedItem().toString());
-          postData.put("父、母、兄弟、姊妹、兒子、女兒有無胃食道逆流 ",sick30.getSelectedItem().toString());
-          postData.put("父、母、兄弟、姊妹、兒子、女兒有無其他消化道相關疾病",sick31.getSelectedItem().toString());
-          postData.put("請問您吃乾式米飯類（如：糙米飯、紫米，五穀雜糧等）的頻率為 ",sick32.getSelectedItem().toString());
-          postData.put("請問您吃米飯類（如：白飯、炒飯、壽司等）的頻率為  ",sick33.getSelectedItem().toString());
-          postData.put("請問您吃麵類（如：麵條、米粉、冬粉等）的頻率為 ",sick34.getSelectedItem().toString());
-          postData.put("請問您吃奶類（如：鮮奶、優酪乳、起司、豆漿等）的頻率為 ",sick35.getSelectedItem().toString());
-          postData.put("請問您吃蔬菜類（如：淺/深色蔬菜、海產植物類、醃漬蔬菜類）的頻率為 ",sick36.getSelectedItem().toString());
-          postData.put("請問您吃堅果製品類（如：花生、腰果、核桃等）的頻率為",sick37.getSelectedItem().toString());
-          postData.put("請問您吃新鮮水果類的頻率為 ",sick38.getSelectedItem().toString());
-          postData.put("請問您吃海鮮類（含所有魚類、貝類）的頻率為  ",sick39.getSelectedItem().toString());
-          postData.put("請問您吃肉類（如：雞、猪、牛、絞肉等）的頻率為 ",sick40.getSelectedItem().toString());
-          postData.put("請問您吃內臟類（如：豬肝）的頻率為 ",sick41.getSelectedItem().toString());
-          postData.put("請問您喝飲料類（如：碳酸飲料、運動飲料、奶等）的頻率為 ",sick42.getSelectedItem().toString());
-          postData.put("請問您喝咖啡類（如：即溶/自製咖啡、市售咖啡飲料、拿鐵等）的頻率為  ",sick43.getSelectedItem().toString());
-          postData.put("請問您喝含茶葉成分飲料（如：紅/綠/烏龍茶、客家擂茶等）的頻率為 ",sick44.getSelectedItem().toString());
-          postData.put("請問您吃甜食（如：冰淇淋、餅乾、蛋糕）的頻率為 ",sick45.getSelectedItem().toString());
-          postData.put("請問您平常喝酒的頻率為 ",sick46.getSelectedItem().toString());
+          postData.put("Birth_location",getValue("Birth_location",sick25.getSelectedItem().toString()));
+          postData.put("family_stomach_ulcer",getValue("yesNoUnknow",sick26.getSelectedItem().toString()));
+          postData.put("family_duodenal_ulcer",getValue("yesNoUnknow",sick27.getSelectedItem().toString()));
+          //yesNoUnknow  food
+          postData.put("family_gastric_ulcer",getValue("yesNoUnknow",sick28.getSelectedItem().toString()));
+          postData.put("family_colorectal_ulcer",getValue("yesNoUnknow",sick29.getSelectedItem().toString()));
+          postData.put("family_gastroesophageal_reflux",getValue("yesNoUnknow",sick30.getSelectedItem().toString()));
+          postData.put("other_gastrointestinal_disease",getValue("yesNoUnknow",sick31.getSelectedItem().toString()));
+
+          postData2.put("Fq_grains",getValue("food",sick32.getSelectedItem().toString()));
+          postData2.put("Fq_rice",getValue("food",sick33.getSelectedItem().toString()));
+          postData2.put("Fq_noodle",getValue("food",sick34.getSelectedItem().toString()));
+          postData2.put("Fq_milk",getValue("food",sick35.getSelectedItem().toString()));
+          postData2.put("Fq_vegetables",getValue("food",sick36.getSelectedItem().toString()));
+          postData2.put("Fq_nuts",getValue("food",sick37.getSelectedItem().toString()));
+          postData2.put("Fq_fruits",getValue("food",sick38.getSelectedItem().toString()));
+          postData2.put("Fq_seafood",getValue("food",sick39.getSelectedItem().toString()));
+          postData2.put("Fq_meat",getValue("food",sick40.getSelectedItem().toString()));
+          postData2.put("Fq_viscera",getValue("food",sick41.getSelectedItem().toString()));
+          postData2.put("Fq_drinks",getValue("food",sick42.getSelectedItem().toString()));
+          postData2.put("Fq_coffee",getValue("food",sick43.getSelectedItem().toString()));
+          postData2.put("Fq_tea",getValue("food",sick44.getSelectedItem().toString()));
+          postData2.put("Fq_dessert",getValue("food",sick45.getSelectedItem().toString()));
+          postData2.put("Fq_alcohol",getValue("food",sick46.getSelectedItem().toString()));
 
       }catch (Exception e){
 
            e.getMessage();
       }
 
-      SharedPreferences SharedPreferences=getSharedPreferences("question",MODE_PRIVATE);
-      //編輯文件
-      SharedPreferences.Editor editor=SharedPreferences.edit();
-      //將json檔案存入字串
-      String a=postData.toString();
-      //存入sharepreference
-      editor.putString(result,a);
-      editor.commit();
+        SharedPreferences SharedPreferences = getSharedPreferences("question",MODE_PRIVATE);
+        SharedPreferences SharedPreferences2 = getSharedPreferences("question2",MODE_PRIVATE);
+        //編輯文件
+        SharedPreferences.Editor editor = SharedPreferences.edit();
+        SharedPreferences.Editor editor2 = SharedPreferences2.edit();
+        //將json檔案存入字串
+        String a = postData.toString();
+        String b = postData2.toString();
+        //存入sharepreference
+        editor.putString(result,a);
+        editor2.putString(result2,b);
 
+        editor.commit();
+        editor2.commit();
+        new question1().execute();
+        new question2().execute();
     }
 
     @Override
@@ -468,5 +527,267 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
 
     public void onClick(View v){
         json();
+    }
+
+    //api 傳值
+    public class question1 extends AsyncTask<String,Void,String> {
+        SharedPreferences SharedPreferences1 = getSharedPreferences("question",MODE_PRIVATE);
+
+        String Json1 =  SharedPreferences1.getString(result,"");
+
+        JSONObject jsonString = new JSONObject();
+
+        protected String responsetitle= "";
+        protected String responsestring= "";
+
+        //定義好時間字串的格式
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        //新增一個Calendar,並且指定時間
+        Calendar calendar = Calendar.getInstance();
+
+        Date tdt=calendar.getTime();//取得加減過後的Date
+
+        //依照設定格式取得字串
+        String time=sdf.format(tdt);
+
+        // SQL lite query
+        Cursor cur1 =db.rawQuery(" SELECT *  FROM  customer ORDER BY id DESC " ,null);
+
+        @Override
+        protected String doInBackground(String... strings) {
+            if (cur1.getCount()>0){
+                cur1.moveToFirst();
+                try {
+                    JSONObject tempJsonArray =new JSONObject(Json1);
+                    jsonString.put("protocolId",1000);
+                    jsonString.put("subjectId",cur1.getString(1));
+                    jsonString.put("formId",2006);
+                    jsonString.put("visit",time);
+                    jsonString.put("datarecord",tempJsonArray)  ;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            SSLsetting();
+            try {
+                URL url = new URL("https://dev.cims.tw/csis/createFormRecord.do?token=Fg7oI5I814N9G0N9omcGeboBj3kB");
+//                URL url = new URL("https://dev.cims.tw/csis/createPatient.do?token=5C3i49C0g1M55O9l5cFNg5lm58lI");
+                HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                connection.setUseCaches(false);
+                connection.setRequestProperty("Content-type","application/json");
+                System.out.println("Now json: "+jsonString);
+
+                OutputStream os = connection.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                writer.write(jsonString.toString());
+                writer.flush();
+                writer.close();
+                InputStream is;
+                try
+                {
+                    is = connection.getInputStream();
+                }
+                catch(IOException exception)
+                {
+                    is = connection.getErrorStream();
+                }
+                BufferedReader in = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                Log.v("Header",connection.getHeaderFields().toString());
+                responsetitle = String.valueOf(connection.getResponseCode())+ " " + connection.getResponseMessage();
+                responsestring = response.toString();
+
+                in.close();
+                os.close();
+                is.close();
+
+                Log.v("Status", responsetitle);
+                Log.v("Content",responsestring);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.v("IOException","ERROR");
+            }
+
+            return responsestring;
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            String errorCode = "";
+            String message = "";
+            try{
+                JSONObject jsonObject = new JSONObject(s);
+                errorCode = jsonObject.getString("Error Code");
+                message = jsonObject.getString("Message");
+            }
+            catch(JSONException e) {
+                e.printStackTrace();
+            }
+            if ("SUCCESS".equals(errorCode)){
+                Log.e("questionnaire1/Back",s);
+            }else if("005".equals(errorCode)){
+                Log.e("questionnaire1/Back","JSON error./t"+s);
+            }else if("007".equals(errorCode)){
+                Log.e("questionnaire1/Back","Invalid protocol./t"+s);
+            }else if("010".equals(errorCode)){
+                Log.e("questionnaire1/Back","Invalid form./t"+s);
+            }else if("011".equals(errorCode)){
+                Log.e("questionnaire1/Back","Invalid date format./t"+s);
+            }else if("012".equals(errorCode)){
+                Log.e("questionnaire1/Back","Patient not found./t"+s);
+            }else{
+                Log.e("questionnaire1/Back",s);
+            }
+            Log.v("Back",s);
+        }
+    }
+    public class question2 extends AsyncTask<String,Void,String> {
+        SharedPreferences SharedPreferences2 = getSharedPreferences("question2",MODE_PRIVATE);
+
+        String Json2 =  SharedPreferences2.getString(result2,"");
+
+        JSONObject jsonString = new JSONObject();
+
+        protected String responsetitle= "";
+        protected String responsestring= "";
+
+        //定義好時間字串的格式
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        //新增一個Calendar,並且指定時間
+        Calendar calendar = Calendar.getInstance();
+
+        Date tdt=calendar.getTime();//取得加減過後的Date
+
+        //依照設定格式取得字串
+        String time=sdf.format(tdt);
+
+        // SQL lite query
+        Cursor cur1 =db.rawQuery(" SELECT *  FROM  customer ORDER BY id DESC " ,null);
+
+        @Override
+        protected String doInBackground(String... strings) {
+            if (cur1.getCount()>0){
+                cur1.moveToFirst();
+                try {
+                    jsonString.put("protocolId",1000);
+                    jsonString.put("subjectId",cur1.getString(1));
+                    jsonString.put("formId",2007);
+                    jsonString.put("visit",time);
+                    jsonString.put("datarecord",Json2)  ;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            SSLsetting();
+            try {
+                URL url = new URL("https://dev.cims.tw/csis/createFormRecord.do?token=Fg7oI5I814N9G0N9omcGeboBj3kB");
+//                URL url = new URL("https://dev.cims.tw/csis/createPatient.do?token=5C3i49C0g1M55O9l5cFNg5lm58lI");
+                HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                connection.setUseCaches(false);
+                connection.setRequestProperty("Content-type","application/json");
+                System.out.println("Now json: "+jsonString);
+
+                OutputStream os = connection.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                writer.write(jsonString.toString());
+                writer.flush();
+                writer.close();
+                InputStream is;
+                try
+                {
+                    is = connection.getInputStream();
+                }
+                catch(IOException exception)
+                {
+                    is = connection.getErrorStream();
+                }
+                BufferedReader in = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                Log.v("Header",connection.getHeaderFields().toString());
+                responsetitle = String.valueOf(connection.getResponseCode())+ " " + connection.getResponseMessage();
+                responsestring = response.toString();
+
+                in.close();
+                os.close();
+                is.close();
+
+                Log.v("Status", responsetitle);
+                Log.v("Content",responsestring);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.v("IOException","ERROR");
+            }
+
+            return responsestring;
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            String errorCode = "";
+            String message = "";
+            try{
+                JSONObject jsonObject = new JSONObject(s);
+                errorCode = jsonObject.getString("Error Code");
+                message = jsonObject.getString("Message");
+            }
+            catch(JSONException e) {
+                e.printStackTrace();
+            }
+            if ("SUCCESS".equals(errorCode)){
+                Log.e("questionnaire2/Back",s);
+            }else if("005".equals(errorCode)){
+                Log.e("questionnaire2/Back","JSON error./t"+s);
+            }else if("007".equals(errorCode)){
+                Log.e("questionnaire2/Back","Invalid protocol./t"+s);
+            }else if("010".equals(errorCode)){
+                Log.e("questionnaire2/Back","Invalid form./t"+s);
+            }else if("011".equals(errorCode)){
+                Log.e("questionnaire2/Back","Invalid date format./t"+s);
+            }else if("012".equals(errorCode)){
+                Log.e("questionnaire2/Back","Patient not found./t"+s);
+            }else{
+                Log.e("questionnaire2/Back",s);
+            }
+            Log.v("Back",s);
+        }
+    }
+    //SSL 設定 (忽略所有的認證)
+    private void SSLsetting() {
+        TrustManager[] trustAllCerts = new TrustManager[]{
+                new X509TrustManager() {
+                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                        return null;
+                    }
+                    public void checkClientTrusted(
+                            java.security.cert.X509Certificate[] certs, String authType) {
+                    }
+                    public void checkServerTrusted(
+                            java.security.cert.X509Certificate[] certs, String authType) {
+                    }
+                }
+        };
+        // Install the all-trusting trust manager
+        try {
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (Exception e) {
+        }
     }
 }
