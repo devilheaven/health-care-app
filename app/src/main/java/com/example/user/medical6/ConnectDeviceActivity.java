@@ -1,7 +1,6 @@
 package com.example.user.medical6;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
@@ -23,12 +22,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.List;
+import android.support.v7.app.AlertDialog;
 
 public class ConnectDeviceActivity extends AppCompatActivity {
     private final static String TAG = ConnectDeviceActivity.class.getSimpleName();
@@ -153,6 +151,7 @@ public class ConnectDeviceActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_dropdown_item);
         SelectDevice.setAdapter(Device);
 
+        checkLocationPermission();
         btnWeight = (Button) findViewById(R.id.btnCWeight);
         btnWeight.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
