@@ -163,13 +163,23 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
         if (cur1.getCount()>0){
             cur1.moveToFirst();
             hight.setText(cur1.getString(4));
+        }else{
+            hight.setText("0");
         }
         cur1 =db.rawQuery(" SELECT *  FROM  examine ORDER BY _id DESC " ,null);
         if (cur1.getCount()>0){
             cur1.moveToFirst();
             wight.setText(cur1.getString(2));
+        }else{
+            wight.setText("0");
         }
-        Float BMI = Float.parseFloat(wight.getText().toString())/Float.parseFloat(hight.getText().toString())/Float.parseFloat(hight.getText().toString())*10000;
+        Float BMI = Float.valueOf(0);
+        if(Float.parseFloat(wight.getText().toString()) != 0 && Float.parseFloat(hight.getText().toString()) != 0){
+            BMI = Float.parseFloat(wight.getText().toString())/Float.parseFloat(hight.getText().toString())/Float.parseFloat(hight.getText().toString())*10000;
+        }else{
+            BMI = Float.valueOf(0);
+        }
+
         bmi.setText(BMI.toString());
     }
 

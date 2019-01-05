@@ -168,11 +168,11 @@ public class ConnectDeviceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect_device);
-        Spinner SelectDevice = (Spinner)findViewById(R.id.deviceSelection);
-        ArrayAdapter<CharSequence> Device = ArrayAdapter.createFromResource(ConnectDeviceActivity.this,
-                R.array.device,
-                android.R.layout.simple_spinner_dropdown_item);
-        SelectDevice.setAdapter(Device);
+//        Spinner SelectDevice = (Spinner)findViewById(R.id.deviceSelection);
+//        ArrayAdapter<CharSequence> Device = ArrayAdapter.createFromResource(ConnectDeviceActivity.this,
+//                R.array.device,
+//                android.R.layout.simple_spinner_dropdown_item);
+//        SelectDevice.setAdapter(Device);
 
         checkLocationPermission();
         btnWeight = (Button) findViewById(R.id.btnCWeight);

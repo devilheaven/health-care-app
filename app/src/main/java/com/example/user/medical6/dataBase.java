@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 class dataBase extends SQLiteOpenHelper{
     //資料庫版本
-    private final static int DATABASE_VERSION = 3;
+    private final static int DATABASE_VERSION = 4;
     //資料表名稱
     public static final String TABLE_c = "customer";
     public static final String TABLE_e = "examine";
@@ -36,7 +36,7 @@ class dataBase extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         final String customer = "CREATE TABLE " + TABLE_c + " (" +id + " INTEGER PRIMARY KEY AUTOINCREMENT , "+subjectId+ " VARCHAR(32), "+idnum1+ " VARCHAR(32), " +lastName+ " VARCHAR(32), " + height + " VARCHAR(32), " + sex + " VARCHAR(5));";
         //time TimeStamp NOT NULL DEFAULT (datetime('now','localtime')) 世界時間
-        final String examine = "CREATE TABLE " + TABLE_e  + " (" +num + " INTEGER PRIMARY KEY AUTOINCREMENT , " + time + " TimeStamp NOT NULL DEFAULT (datetime('now','localtime')), " + weight + " VARCHAR(32), "+ sbp + " VARCHAR(32), "+ dbp + " VARCHAR(32), "+ hr + " VARCHAR(32), " + idnum + " VARCHAR(32));";
+        final String examine = "CREATE TABLE " + TABLE_e  + " (" +num + " INTEGER PRIMARY KEY AUTOINCREMENT , " + time + " TimeStamp , " + weight + " VARCHAR(32), "+ sbp + " VARCHAR(32), "+ dbp + " VARCHAR(32), "+ hr + " VARCHAR(32), " + idnum + " VARCHAR(32));";
 
         db.execSQL(customer);
         db.execSQL(examine);
