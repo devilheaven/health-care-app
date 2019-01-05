@@ -1,5 +1,6 @@
 package com.example.user.medical6;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -112,6 +113,11 @@ public class ProfileActivity extends AppCompatActivity {
 //                txvInfo.setText((CharSequence) returnData);
                     new PatientsCreate().execute();
                 }else{
+                    String mag = "請掃描正確的 QR code";
+                    AlertDialog.Builder bdr = new AlertDialog.Builder(this);
+                    bdr.setMessage(mag);
+                    bdr.setCancelable(true);
+                    bdr.show();
                     txvInfo.setText("請掃描正確的 QR code");
 //                    txvInfo.setText("請掃描正確的 QR code\n information:"+resultStr);
                 }
