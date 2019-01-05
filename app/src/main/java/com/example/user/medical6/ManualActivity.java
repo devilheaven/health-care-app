@@ -19,7 +19,6 @@ import java.util.Calendar;
 import static com.example.user.medical6.dataBase.*;
 
 public class ManualActivity extends AppCompatActivity {
-    //new for 1 line
     private EditText dataEdit;
     //定義顯示時間套件
     private Calendar calendar; //通過 Calendar 獲取系統時間
@@ -35,7 +34,6 @@ public class ManualActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //new for 1 line
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_manual);
         dataEdit = (EditText) findViewById(R.id.editTextDate);
