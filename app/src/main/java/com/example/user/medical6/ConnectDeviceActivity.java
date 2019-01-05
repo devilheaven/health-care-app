@@ -6,7 +6,6 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,14 +14,13 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.icu.text.DateFormat;
-import android.icu.text.SimpleDateFormat;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -31,16 +29,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import android.support.v7.app.AlertDialog;
-
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-import static com.example.user.medical6.dataBase.*;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import java.text.ParseException;
 
 
 public class ConnectDeviceActivity extends AppCompatActivity {
@@ -221,7 +214,11 @@ public class ConnectDeviceActivity extends AppCompatActivity {
                   }
         });
 
-        searchtime();
+        try {
+            searchtime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         searchheight();
 
@@ -361,17 +358,16 @@ public class ConnectDeviceActivity extends AppCompatActivity {
         }
     };
 
-    public void searchtime(){
+    public void searchtime() throws ParseException {
 
         TextView datetext = (TextView) findViewById(R.id.CurrentDate);
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy-HH:mm:ss");
+        Date dt =sdf.parse("01/05/2019-22:36:00");
         calendar = Calendar.getInstance();
-        mYear = calendar.get(Calendar.YEAR);
-        mMonth= calendar.get(Calendar.MONTH);
-        mDay = calendar.get(Calendar.DAY_OF_MONTH);
-        mHour = calendar.get(Calendar.HOUR_OF_DAY);
-        mMinute = calendar.get(Calendar.MINUTE);
-        mSecond = calendar.get(Calendar.SECOND);
-        datetext.setText(mYear + "/" + (mMonth+1) + "/" + mDay + "-" + mHour + ":" + mMinute + ":" + mSecond);
+        calendar.setTime(dt);
+        Date tdt = calendar.getTime();
+        String time = sdf.format(tdt);
+        datetext.setText(time);
 
     }
 
