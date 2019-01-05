@@ -6,12 +6,17 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.icu.text.DateFormat;
+import android.icu.text.SimpleDateFormat;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
@@ -22,11 +27,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Calendar;
 import java.util.List;
 import android.support.v7.app.AlertDialog;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+import static com.example.user.medical6.dataBase.*;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 
 public class ConnectDeviceActivity extends AppCompatActivity {
     private final static String TAG = ConnectDeviceActivity.class.getSimpleName();
@@ -47,6 +62,21 @@ public class ConnectDeviceActivity extends AppCompatActivity {
     private static long mBleScanInterval = 20000;//20000
     private static long mBleScanTimeout = 15000;//15000
     private TextView tvTextWeight;
+
+    private EditText dataEdit;
+    //定義顯示時間套件
+    private Calendar calendar; //通過 Calendar 獲取系統時間
+    private int mYear;
+    private int mMonth;
+    private int mDay;
+    private int mHour;
+    private int mMinute;
+    private int mSecond;
+
+    // data base 變數宣告
+    public dataBase DH=null;
+    Cursor cur;
+    SQLiteDatabase db;
 
     private class xServiceConnection implements ServiceConnection {
 
@@ -188,8 +218,13 @@ public class ConnectDeviceActivity extends AppCompatActivity {
                     tvTextWeight = (TextView) findViewById(R.id.Weight);
                     scanLeDevice(true);
                 }
-            }
+                  }
         });
+
+        searchtime();
+
+        searchheight();
+
     }
 
     private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
@@ -326,5 +361,35 @@ public class ConnectDeviceActivity extends AppCompatActivity {
         }
     };
 
+    public void searchtime(){
 
+        TextView datetext = (TextView) findViewById(R.id.CurrentDate);
+        calendar = Calendar.getInstance();
+        mYear = calendar.get(Calendar.YEAR);
+        mMonth= calendar.get(Calendar.MONTH);
+        mDay = calendar.get(Calendar.DAY_OF_MONTH);
+        mHour = calendar.get(Calendar.HOUR_OF_DAY);
+        mMinute = calendar.get(Calendar.MINUTE);
+        mSecond = calendar.get(Calendar.SECOND);
+        datetext.setText(mYear + "/" + (mMonth+1) + "/" + mDay + "-" + mHour + ":" + mMinute + ":" + mSecond);
+
+    }
+
+    public void searchheight(){
+
+        //讀取資料
+        DH=new dataBase(this);
+        DH.close();
+        db =DH.getReadableDatabase();
+
+        cur=db.rawQuery(" SELECT  height  FROM  customer " ,null);
+
+        EditText HeightText = (EditText) findViewById(R.id.editTextHeight);
+        if(cur.getCount()>0){
+            HeightText.setText(cur.getString(0));
+        }else{
+            HeightText.setHint("請輸入身高");
+        }
+    }
 }
+

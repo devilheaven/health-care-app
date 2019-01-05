@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 class dataBase extends SQLiteOpenHelper{
     //資料庫版本
-    private final static int DATABASE_VERSION = 2;
+    private final static int DATABASE_VERSION = 3;
     //資料表名稱
     public static final String TABLE_c = "customer";
     public static final String TABLE_e = "examine";
@@ -16,15 +16,15 @@ class dataBase extends SQLiteOpenHelper{
     public static final String subjectId = "subjectId";
     public static final String idnum1= "guid";
     public static final String lastName = "lastName";
-    public static final String height = "身高";
-    public static final String sex = "性別";
+    public static final String height = "height";
+    public static final String sex = "gender";
     //檢驗資料表
     public static final String num = "_id";
-    public static final String time = "時間";
-    public static final String weight = "體重";
-    public static final String sbp = "收縮壓";
-    public static final String dbp = "舒張壓";
-    public static final String hr= "心律";
+    public static final String time = "timestamp";
+    public static final String weight = "weight";
+    public static final String sbp = "sbp";
+    public static final String dbp = "dbp";
+    public static final String hr= "hr";
     public static final String idnum= "guid";
     private final static String DATABASE_NAME = "sql.db";  //資料庫名稱
 
