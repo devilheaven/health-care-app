@@ -12,21 +12,29 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import android.support.v7.app.AlertDialog;
+import java.text.ParseException;
+
 
 public class ConnectDeviceActivity extends AppCompatActivity {
     private final static String TAG = ConnectDeviceActivity.class.getSimpleName();
@@ -47,6 +55,21 @@ public class ConnectDeviceActivity extends AppCompatActivity {
     private static long mBleScanInterval = 20000;//20000
     private static long mBleScanTimeout = 15000;//15000
     private TextView tvTextWeight;
+
+    private EditText dataEdit;
+    //定義顯示時間套件
+    private Calendar calendar; //通過 Calendar 獲取系統時間
+    private int mYear;
+    private int mMonth;
+    private int mDay;
+    private int mHour;
+    private int mMinute;
+    private int mSecond;
+
+    // data base 變數宣告
+    public dataBase DH=null;
+    Cursor cur;
+    SQLiteDatabase db;
 
     private class xServiceConnection implements ServiceConnection {
 
@@ -188,8 +211,17 @@ public class ConnectDeviceActivity extends AppCompatActivity {
                     tvTextWeight = (TextView) findViewById(R.id.Weight);
                     scanLeDevice(true);
                 }
-            }
+                  }
         });
+
+        try {
+            searchtime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        searchheight();
+
     }
 
     private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
@@ -326,5 +358,32 @@ public class ConnectDeviceActivity extends AppCompatActivity {
         }
     };
 
+    public void searchtime() throws ParseException {
 
+        TextView datetext = (TextView) findViewById(R.id.CurrentDate);
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy-HH:mm:ss");
+        calendar = Calendar.getInstance();
+        Date tdt = calendar.getTime();
+        String time = sdf.format(tdt);
+        datetext.setText(time);
+
+    }
+
+    public void searchheight(){
+
+        //讀取資料
+        DH=new dataBase(this);
+        DH.close();
+        db =DH.getReadableDatabase();
+
+        cur=db.rawQuery(" SELECT  height  FROM  customer " ,null);
+
+        EditText HeightText = (EditText) findViewById(R.id.editTextHeight);
+        if(cur.getCount()>0){
+            HeightText.setText(cur.getString(0));
+        }else{
+            HeightText.setHint("請輸入身高");
+        }
+    }
 }
+
