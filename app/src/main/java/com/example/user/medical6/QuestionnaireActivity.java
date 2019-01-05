@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import org.json.*;
 import java.util.Calendar;
+import java.util.HashMap;
 
 
 public class QuestionnaireActivity extends AppCompatActivity implements View.OnClickListener,RadioGroup.OnCheckedChangeListener,AdapterView.OnItemSelectedListener {
@@ -147,6 +148,124 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
                 }, calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
+    //get value
+    public String getValue(String model,String key){
+        HashMap<String,Integer> gender = new HashMap<>();
+        gender.put("男",0);
+        gender.put("女",1);
+
+        HashMap<String,Integer> yesNo = new HashMap<>();
+        yesNo.put("無",0);
+        yesNo.put("有",1);
+
+        HashMap<String,Integer> yesNoUnknow = new HashMap<>();
+        yesNoUnknow.put("有",0);
+        yesNoUnknow.put("無",1);
+        yesNoUnknow.put("不詳",2);
+
+        HashMap<String,Integer> educatinlevel = new HashMap<>();
+        educatinlevel.put("未受教育",0);
+        educatinlevel.put("小學",1);
+        educatinlevel.put("國(初)中",2);
+        educatinlevel.put("高中(職)",3);
+        educatinlevel.put("大學(專科)",4);
+        educatinlevel.put("研究所以上",5);
+
+        HashMap<String,Integer> income = new HashMap<>();
+        income.put("困苦",0);
+        income.put("尚可",1);
+        income.put("小康",2);
+        income.put("富裕",3);
+
+        HashMap<String,Integer> smoking_behavior = new HashMap<>();
+        smoking_behavior.put("從未抽菸",0);
+        smoking_behavior.put("已戒菸",1);
+        smoking_behavior.put("目前有抽菸習慣",2);
+
+        HashMap<String,Integer> alcoholism = new HashMap<>();
+        alcoholism.put("從未飲酒",0);
+        alcoholism.put("已戒酒",1);
+        alcoholism.put("偶爾",2);
+        alcoholism.put("目前有飲酒習慣",3);
+
+        HashMap<String,Integer> sleep_hours = new HashMap<>();
+        sleep_hours.put("不到 6 小時",0);
+        sleep_hours.put("6~6.9 小時",1);
+        sleep_hours.put("7~7.9 小時",2);
+        sleep_hours.put("8小時以上",3);
+
+        HashMap<String,Integer> stay_overnight = new HashMap<>();
+        stay_overnight.put("很少(每週≤1次)",0);
+        stay_overnight.put("偶爾(每週2~4次)",1);
+        stay_overnight.put("經常(每週≥5次)",2);
+
+        HashMap<String,Integer> taking_nap = new HashMap<>();
+        taking_nap.put("很少(每週≤1次)",0);
+        taking_nap.put("偶爾(每週2~4次)",1);
+        taking_nap.put("經常(每週≥5次)",2);
+
+        HashMap<String,Integer> exercise_frequency = new HashMap<>();
+        exercise_frequency.put("每月≤1次",0);
+        exercise_frequency.put("每月2~3次",1);
+        exercise_frequency.put("每週1~2次",2);
+        exercise_frequency.put("每週3~4次",3);
+        exercise_frequency.put("每週≥5次",4);
+
+        HashMap<String,Integer> food = new HashMap<>();
+        food.put("都沒有吃此類食物",0);
+        food.put("每週十次中有一至二次",1);
+        food.put("每週十次中有三至五次",2);
+        food.put("每週十次中有六至八次",3);
+        food.put("每週十次中有八次以上",4);
+
+        HashMap<String,Integer> Birth_location = new HashMap<>();
+        Birth_location.put("臺灣閩南人",0);
+        Birth_location.put("臺灣客家人",1);
+        Birth_location.put("臺灣原住民",2);
+        Birth_location.put("中國各省份",3);
+        Birth_location.put("其他",4);
+
+        String value = "";
+        switch (model){
+            case "gender":
+                value = gender.get(key).toString();
+                break;
+            case "educatin_level":
+                value = educatinlevel.get(key).toString();
+                break;
+            case "income":
+                value = income.get(key).toString();
+                break;
+            case "alcoholism":
+                value = alcoholism.get(key).toString();
+                break;
+            case "sleep_hours":
+                value = sleep_hours.get(key).toString();
+                break;
+            case "stay_overnight":
+                value = stay_overnight.get(key).toString();
+                break;
+            case "taking_nap":
+                value = taking_nap.get(key).toString();
+                break;
+            case "exercise_frequency":
+                value = exercise_frequency.get(key).toString();
+                break;
+            case "yesNo":
+                value = yesNo.get(key).toString();
+                break;
+            case "food":
+                value = food.get(key).toString();
+                break;
+            case "Birth_location":
+                value = Birth_location.get(key).toString();
+                break;
+            case "yesNoUnknow":
+                value = yesNoUnknow.get(key).toString();
+                break;
+        }
+        return value;
+    }
 
     public  void  json(){
         //宣告物件 將欄位轉成json
@@ -163,7 +282,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
         final EditText cancer8=(EditText)findViewById(R.id.cancer8);
         final EditText cancer9 = (EditText) findViewById(R.id.cancer9);
 
-        final Spinner lev = (Spinner) findViewById(R.id.lev);
+        final Spinner lev = (Spinner) findViewById(R.id.level);
         final Spinner salary = (Spinner) findViewById(R.id.salary);
         final Spinner smoke = (Spinner) findViewById(R.id.smoke);
         final Spinner drink = (Spinner) findViewById(R.id.drink);
@@ -254,45 +373,47 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
         JSONObject postData=new JSONObject();
       try{
           if (rdgsex.getCheckedRadioButtonId()==R.id.rbMale){
-
-              postData.put("性別",rbMale.getText().toString());
+              //男性
+              postData.put("gender",getValue("gender","男"));
           }
           else {
-
-              postData.put("性別",rbFmale.getText().toString());
+              //女性
+              postData.put("gender",getValue("gender","女"));
           }
-          postData.put("年齡",age.getText().toString());
-          postData.put("生日",birth.getText().toString());
-          postData.put("身高",hight.getText().toString());
-          postData.put("第二型糖尿病確診日期",cancer1.getText().toString());
-          postData.put("心臟病確診日期",cancer2.getText().toString());
-          postData.put("高血壓確診日期",cancer3.getText().toString());
-          postData.put("中風確診日期",cancer4.getText().toString());
-          postData.put("胃潰瘍確診日期",cancer5.getText().toString());
-          postData.put("十二指腸潰瘍確診日期",cancer6.getText().toString());
-          postData.put("胃癌確診日期",cancer7.getText().toString());
-          postData.put("大腸癌確診日期",cancer8.getText().toString());
-          postData.put("胃食道逆流確診日期",cancer9.getText().toString());
+          postData.put("age",age.getText().toString());
+          postData.put("birthday",birth.getText().toString());
+          postData.put("height",hight.getText().toString());
+          postData.put("TSD_diagnosis_date",cancer1.getText().toString());
+          postData.put("heart_disease_diagnosis_date",cancer2.getText().toString());
+          postData.put("hypertension_diagnosis_date",cancer3.getText().toString());
+          postData.put("stroke_diagnosis_date",cancer4.getText().toString());
+          postData.put("gastric_ulcer_diagnosis_date",cancer5.getText().toString());
+          postData.put("duodenal_ulcer_diagnosis_date",cancer6.getText().toString());
+          postData.put("gastric_cancer_diagnosis_date",cancer7.getText().toString());
+          postData.put("colon_cancer_diagnosis_date",cancer8.getText().toString());
+          postData.put("gastroesophageal_reflux_diagnosis_date",cancer9.getText().toString());
 
-          postData.put("教育程度",lev.getSelectedItem().toString());
-          postData.put("家庭收入",salary.getSelectedItem().toString());
-          postData.put("您有抽菸習慣嗎? ",smoke.getSelectedItem().toString());
-          postData.put("您有飲酒習慣嗎?",drink.getSelectedItem().toString());
-          postData.put("您平均每天睡幾個小時? ",hur.getSelectedItem().toString());
-          postData.put("您是否常熬夜? ",overnight.getSelectedItem().toString());
-          postData.put("您是否有午睡的習慣? ",sleep.getSelectedItem().toString());
-          postData.put("您是否有運動的習慣? ",exerice.getSelectedItem().toString());
-          postData.put("您是否有第二型糖尿病? ",candy.getSelectedItem().toString());
-          postData.put("心臟病",heart.getSelectedItem().toString());
-          postData.put("高血壓",blood.getSelectedItem().toString());
-          postData.put("中風 ",sick.getSelectedItem().toString());
-          postData.put("胃潰瘍",stomache.getSelectedItem().toString());
-          postData.put("十二指腸潰瘍 ",sick4.getSelectedItem().toString());
-          postData.put("胃癌  ",overstomach.getSelectedItem().toString());
-          postData.put("大腸癌 ",sick24.getSelectedItem().toString());
-          postData.put("胃食道逆流 ",sick25.getSelectedItem().toString());
-          postData.put("最近一個月內有無服用抗生素 ",sick26.getSelectedItem().toString());
+          postData.put("educatin_level",getValue("educatin_level",lev.getSelectedItem().toString()));
+          postData.put("income",getValue("income",salary.getSelectedItem().toString()));
+          postData.put("smoking_behavior",getValue("smoking_behavior",smoke.getSelectedItem().toString()));
+          postData.put("alcoholism",getValue("alcoholism",drink.getSelectedItem().toString()));
+          postData.put("sleep_hours",getValue("sleep_hours",hur.getSelectedItem().toString()));
+          postData.put("stay_overnight",getValue("stay_overnight",overnight.getSelectedItem().toString()));
+          postData.put("taking_nap",getValue("taking_nap",sleep.getSelectedItem().toString()));
+          postData.put("exercise_frequency",getValue("exercise_frequency",exerice.getSelectedItem().toString()));
+          postData.put("T2D",getValue("yesNo",candy.getSelectedItem().toString()));
+          postData.put("heart_disease",getValue("yesNo",heart.getSelectedItem().toString()));
+          postData.put("hypertention",getValue("yesNo",blood.getSelectedItem().toString()));
+          postData.put("stroke",getValue("yesNo",sick.getSelectedItem().toString()));
+          postData.put("gastric_ulcer",getValue("yesNo",stomache.getSelectedItem().toString()));
+          //duodenal_ulcer sick4.getSelectedItem()有問題
+          postData.put("duodenal_ulcer",getValue("yesNo",sick3.getSelectedItem().toString()));
+          postData.put("gastric_cancer",getValue("yesNo",stomachecan.getSelectedItem().toString()));
+          postData.put("colon_cancer",getValue("yesNo",sick4.getSelectedItem().toString()));
+          postData.put("gastroesophageal_reflux",getValue("yesNo",overstomach.getSelectedItem().toString()));
+          postData.put("using_antibiotics",getValue("yesNo",sick24.getSelectedItem().toString()));
           postData.put("父、母、兄弟、姊妹、兒子、女兒有無十二指腸潰瘍  ",sick27.getSelectedItem().toString());
+          //
           postData.put("父、母、兄弟、姊妹、兒子、女兒有無胃癌",sick28.getSelectedItem().toString());
           postData.put("父、母、兄弟、姊妹、兒子、女兒有無大腸癌",sick29.getSelectedItem().toString());
           postData.put("父、母、兄弟、姊妹、兒子、女兒有無胃食道逆流 ",sick30.getSelectedItem().toString());
@@ -346,7 +467,6 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
     }
 
     public void onClick(View v){
-
         json();
     }
 }

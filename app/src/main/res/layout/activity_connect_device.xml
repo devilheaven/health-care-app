@@ -85,11 +85,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:gravity="right"
                         android:layout_weight="1"
-                        android:text="100"
-                        android:textStyle="bold"
-                        android:textSize="30sp"/>
+                        android:gravity="right"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/WeightKg"

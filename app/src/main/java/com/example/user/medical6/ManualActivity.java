@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,7 +30,7 @@ public class ManualActivity extends AppCompatActivity {
     public dataBase DH=null;
     SQLiteDatabase db;
     Cursor cur;
-    public EditText editTextWeight,editTextHr,editTextDbp,editTextSbp;
+    public EditText editTextWeight,editTextHr,editTextDbp,editTextSbp,editTextHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,6 @@ public class ManualActivity extends AppCompatActivity {
                                         .append(mYear));
                             }
                         }, calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
-
             }
         });
 
@@ -70,6 +70,7 @@ public class ManualActivity extends AppCompatActivity {
         editTextHr = (EditText) findViewById(R.id.editTextHr);
         editTextDbp = (EditText) findViewById(R.id.editTextDbp);
         editTextSbp = (EditText) findViewById(R.id.editTextSdp);
+        editTextHeight = (EditText) findViewById(R.id.editTextHeight);
 
         //SQLiteDatabase db =DH.getReadableDatabase();
         //cur = db.rawQuery(" SELECT weight   FROM examine WHERE sbp=  " + editTextSbp.getText().toString() , null);
@@ -103,22 +104,15 @@ public class ManualActivity extends AppCompatActivity {
         editTextSbp.setText("");
         editTextDbp.setText("");
         editTextHr.setText("");
-
+        editTextHeight.setText("");
     }
     public void uponclick(View view){
-
         add();
-
-
+        delete();
     }
 
     public void deonclick(View view){
-
         delete();
-        //editTextWeight.setText("");
-        SQLiteDatabase db = DH.getReadableDatabase();
-        //cur=db.rawQuery(" SELECT  * FROM examine WHERE _id= 2 " ,null);
-
     }
 
 }
