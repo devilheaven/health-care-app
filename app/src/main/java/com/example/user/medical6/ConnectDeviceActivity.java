@@ -228,6 +228,8 @@ public class ConnectDeviceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SQLiteDatabase db=DH.getWritableDatabase();
                 ContentValues values = new ContentValues();
+                ContentValues values2 = new ContentValues();
+                cur=db.rawQuery(" SELECT " + id + "  FROM  customer " ,null);
 
                 values.put(weight,editTextWeight.getText().toString() );
                 values.put(sbp, editTextSbp.getText().toString());
@@ -235,8 +237,17 @@ public class ConnectDeviceActivity extends AppCompatActivity {
                 values.put(hr, editTextHr.getText().toString());
                 values.put(time, timestamp.getText().toString());
                 values.put(record_status, spinnerDoEat.getSelectedItem().toString());
-                db.insert(TABLE_e, null, values);
 
+                values2.put(height, editTextHeight.getText().toString());
+
+                db.insert(TABLE_e, null, values);
+                
+                if(cur.getCount()>0){
+                    cur.moveToLast();
+                    db.update(TABLE_c,values2,id+"="+cur.getString(0),null);
+                }else{
+                    db.insert(TABLE_c, null, values2);
+                }
                 Toast tos = Toast.makeText(ConnectDeviceActivity.this, "新增成功!"+values, Toast.LENGTH_SHORT);
                 tos.show();
             }
