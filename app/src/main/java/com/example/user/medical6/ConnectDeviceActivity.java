@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.text.SimpleDateFormat;
@@ -38,25 +39,28 @@ import static com.example.user.medical6.dataBase.*;
 
 public class ConnectDeviceActivity extends AppCompatActivity {
     private final static String TAG = ConnectDeviceActivity.class.getSimpleName();
-    private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    private Button btnWeight ,btnSave;
-    private BluetoothAdapter mBluetoothAdapter;
-    private int REQUEST_ENABLE_BT = 1;
-    private BluetoothLeService mBluetoothLeService;
-    private xServiceConnection mServiceConnection;
-    private Handler mHandler;
     private String mBleScanTagId = "";
-
-    private byte[] mPreScanRecord = {0};
-    XenonDecoder mXbDecoder;
-    private boolean mScanning;
     private String mDeviceAddress;
+    private boolean mScanning;
     private boolean mEnableScan = true;
     private static long mBleScanInterval = 20000;//20000
     private static long mBleScanTimeout = 15000;//15000
-    private TextView tvTextWeight;
+    private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
-    private EditText dataEdit;
+    private TextView tvTextWeight;
+    private Spinner spinnerDoEat;
+    private Button btnWeight ,btnSave;
+    private BluetoothLeService mBluetoothLeService;
+    private BluetoothAdapter mBluetoothAdapter;
+    private int REQUEST_ENABLE_BT = 1;
+
+    private xServiceConnection mServiceConnection;
+    private Handler mHandler;
+
+
+    private byte[] mPreScanRecord = {0};
+    XenonDecoder mXbDecoder;
+
     //定義顯示時間套件
     private Calendar calendar; //通過 Calendar 獲取系統時間
 
@@ -176,6 +180,7 @@ public class ConnectDeviceActivity extends AppCompatActivity {
         editTextSbp = (TextView) findViewById(R.id.sdp);
         timestamp = (TextView) findViewById(R.id.CurrentDate);
         editTextHeight = (EditText) findViewById(R.id.editTextHeight);
+        spinnerDoEat = findViewById(R.id.DoEat);
 
 
         checkLocationPermission();
@@ -223,17 +228,17 @@ public class ConnectDeviceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SQLiteDatabase db=DH.getWritableDatabase();
                 ContentValues values = new ContentValues();
-                Log.v("button save","hello");
 
-                values.put(time, timestamp.getText().toString());
-                values.put(height, editTextHeight.getText().toString());
-                values.put(weight, editTextWeight.getText().toString());
-                values.put(hr, editTextHr.getText().toString());
+                values.put(weight,editTextWeight.getText().toString() );
                 values.put(sbp, editTextSbp.getText().toString());
                 values.put(dbp, editTextDbp.getText().toString());
-
+                values.put(hr, editTextHr.getText().toString());
+                values.put(time, timestamp.getText().toString());
+                values.put(record_status, spinnerDoEat.getSelectedItem().toString());
                 db.insert(TABLE_e, null, values);
-                Toast tos = Toast.makeText(ConnectDeviceActivity.this, "新增成功!", Toast.LENGTH_SHORT);
+
+                Toast tos = Toast.makeText(ConnectDeviceActivity.this, "新增成功!"+values, Toast.LENGTH_SHORT);
+                tos.show();
             }
         });
 

@@ -290,6 +290,9 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             case "income":
                 value = income.get(key).toString();
                 break;
+            case "smoking_behavior":
+                value = smoking_behavior.get(key).toString();
+                break;
             case "alcoholism":
                 value = alcoholism.get(key).toString();
                 break;
@@ -438,19 +441,19 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
               postData.put("gender",getValue("gender","女"));
           }
           postData.put("age",age.getText().toString());
-          postData.put("birthday",birth.getText().toString());
+          postData.put("birthday",birth.getText());
           postData.put("height",hight.getText().toString());
-          postData.put("wight",wight.getText().toString());
-          postData.put("bmi",bmi.getText().toString());
-          postData.put("TSD_diagnosis_date",cancer1.getText().toString());
-          postData.put("heart_disease_diagnosis_date",cancer2.getText().toString());
-          postData.put("hypertension_diagnosis_date",cancer3.getText().toString());
-          postData.put("stroke_diagnosis_date",cancer4.getText().toString());
-          postData.put("gastric_ulcer_diagnosis_date",cancer5.getText().toString());
-          postData.put("duodenal_ulcer_diagnosis_date",cancer6.getText().toString());
-          postData.put("gastric_cancer_diagnosis_date",cancer7.getText().toString());
-          postData.put("colon_cancer_diagnosis_date",cancer8.getText().toString());
-          postData.put("gastroesophageal_reflux_diagnosis_date",cancer9.getText().toString());
+          postData.put("weight",wight.getText().toString());
+          postData.put("Body_mass_index",bmi.getText().toString());
+          postData.put("TSD_diagnosis_date",cancer1.getText());
+          postData.put("heart_disease_diagnosis_date",cancer2.getText());
+          postData.put("hypertension_diagnosis_date",cancer3.getText());
+          postData.put("stroke_diagnosis_date",cancer4.getText());
+          postData.put("gastric_ulcer_diagnosis_date",cancer5.getText());
+          postData.put("duodenal_ulcer_diagnosis_date",cancer6.getText());
+          postData.put("gastric_cancer_diagnosis_date",cancer7.getText());
+          postData.put("colon_cancer_diagnosis_date",cancer8.getText());
+          postData.put("gastroesophageal_reflux_diagnosis_date",cancer9.getText());
 
           postData.put("educatin_level",getValue("educatin_level",lev.getSelectedItem().toString()));
           postData.put("income",getValue("income",salary.getSelectedItem().toString()));
@@ -555,13 +558,13 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
         //新增一個Calendar,並且指定時間
         Calendar calendar = Calendar.getInstance();
 
-        Date tdt=calendar.getTime();//取得加減過後的Date
+        Date tdt = calendar.getTime();//取得加減過後的Date
 
         //依照設定格式取得字串
-        String time=sdf.format(tdt);
+        String time = sdf.format(tdt);
 
         // SQL lite query
-        Cursor cur1 =db.rawQuery(" SELECT *  FROM  customer ORDER BY id DESC " ,null);
+        Cursor cur1 = db.rawQuery(" SELECT *  FROM  customer ORDER BY id DESC " ,null);
 
         @Override
         protected String doInBackground(String... strings) {
@@ -571,7 +574,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
                     JSONObject tempJsonArray =new JSONObject(Json1);
                     jsonString.put("protocolId",1000);
                     jsonString.put("subjectId",cur1.getString(1));
-                    jsonString.put("formId",2006);
+                    jsonString.put("formId",1000);
                     jsonString.put("visit",time);
                     jsonString.put("datarecord",tempJsonArray)  ;
                 } catch (JSONException e) {
@@ -580,7 +583,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             }
             SSLsetting();
             try {
-                URL url = new URL("https://dev.cims.tw/csis/createFormRecord.do?token=Fg7oI5I814N9G0N9omcGeboBj3kB");
+                URL url = new URL("https://tlbinfo.cims.tw:8443/csis/createFormRecord.do?token=Fg7oI5I814N9G0N9omcGeboBj3kB");
 //                URL url = new URL("https://dev.cims.tw/csis/createPatient.do?token=5C3i49C0g1M55O9l5cFNg5lm58lI");
                 HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
                 connection.setDoInput(true);
@@ -687,18 +690,19 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             if (cur1.getCount()>0){
                 cur1.moveToFirst();
                 try {
+                    JSONObject tempJsonArray =new JSONObject(Json2);
                     jsonString.put("protocolId",1000);
                     jsonString.put("subjectId",cur1.getString(1));
-                    jsonString.put("formId",2007);
+                    jsonString.put("formId",1001);
                     jsonString.put("visit",time);
-                    jsonString.put("datarecord",Json2)  ;
+                    jsonString.put("datarecord",tempJsonArray)  ;
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
             SSLsetting();
             try {
-                URL url = new URL("https://dev.cims.tw/csis/createFormRecord.do?token=Fg7oI5I814N9G0N9omcGeboBj3kB");
+                URL url = new URL("https://tlbinfo.cims.tw:8443/csis/createFormRecord.do?token=Fg7oI5I814N9G0N9omcGeboBj3kB");
 //                URL url = new URL("https://dev.cims.tw/csis/createPatient.do?token=5C3i49C0g1M55O9l5cFNg5lm58lI");
                 HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
                 connection.setDoInput(true);

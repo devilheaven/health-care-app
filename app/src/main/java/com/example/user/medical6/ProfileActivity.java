@@ -37,7 +37,7 @@ import javax.net.ssl.X509TrustManager;
 import static com.example.user.medical6.dataBase.*;
 
 public class ProfileActivity extends AppCompatActivity {
-    TextView txvInfo;
+    TextView txvInfo,tvLoginType;
     // data base 變數宣告
     public dataBase DH=null;
     SQLiteDatabase db;
@@ -48,6 +48,11 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        //讀取資料
+        DH=new dataBase(this);
+        DH.close();
+        db =DH.getReadableDatabase();
 
         Button btnSubscribe = (Button)findViewById(R.id.SubscribeBtn);
         btnSubscribe.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +65,17 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         txvInfo = (TextView) findViewById(R.id.txvInfo);
+        tvLoginType =(TextView) findViewById(R.id.LoginType);
 
+        cur1 = db.rawQuery(" SELECT *  FROM  customer " ,null);
+        if (cur1.getCount()>0){
+            cur1.moveToFirst();
+            txvInfo.setText(cur1.getString(1)+"\t"+cur1.getString(3)+"先生/小姐");
+            tvLoginType.setText("member");
+        }else{
+            txvInfo.setText("請掃描 QR code");
+            tvLoginType.setText("guest");
+        }
         Button btnMyID = (Button)findViewById(R.id.MyIDBtn);
         btnMyID.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,11 +83,6 @@ public class ProfileActivity extends AppCompatActivity {
                 doScanQRCode(); //掃描QR Code的函數
             }
         });
-
-        //讀取資料
-        DH=new dataBase(this);
-        DH.close();
-        db =DH.getReadableDatabase();
     }
 
     @Override
@@ -80,11 +90,11 @@ public class ProfileActivity extends AppCompatActivity {
     {
         //取得intent回傳結果
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
-        if(result!=null)
-        {
-            if(result.getContents() == null)
+        if(result!=null) {
+            if (result.getContents() == null){
                 txvInfo.setText("取消QR Code讀取作業");
-            else{
+                tvLoginType.setText("guest");
+            }else{
                 cur1=db.rawQuery(" SELECT *  FROM  customer " ,null);
                 //清除舊資料
                 if (cur1.getCount()>0){
@@ -118,6 +128,7 @@ public class ProfileActivity extends AppCompatActivity {
                     bdr.setMessage(mag);
                     bdr.setCancelable(true);
                     bdr.show();
+                    tvLoginType.setText("guest");
                     txvInfo.setText("請掃描正確的 QR code");
 //                    txvInfo.setText("請掃描正確的 QR code\n information:"+resultStr);
                 }
@@ -148,7 +159,6 @@ public class ProfileActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
 //                jsonString ="{\"protocolId\":1032,\"subjectId\":\""+cur1.getString(1)+"\",\"lastName\":\""+cur1.getString(3)+"\",\"guid\":\""+cur1.getString(2)+"\"}";
             }
 
@@ -219,8 +229,10 @@ public class ProfileActivity extends AppCompatActivity {
             }
             if ("009".equals(errorCode)){
                 txvInfo.setText(cur1.getString(1)+"\t"+cur1.getString(3)+"先生/小姐");
+                tvLoginType.setText("member");
             }else{
                 txvInfo.setText("登入失敗");
+                tvLoginType.setText("guest");
                 if (cur1.getCount()>0){
                     db.execSQL("delete from customer");
                 }
