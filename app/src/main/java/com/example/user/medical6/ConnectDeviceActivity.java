@@ -67,7 +67,7 @@ public class ConnectDeviceActivity extends AppCompatActivity {
     private int mSecond;
 
     // data base 變數宣告
-    public dataBase DH=null;
+    dataBase DH=null;
     Cursor cur;
     SQLiteDatabase db;
 
@@ -167,6 +167,10 @@ public class ConnectDeviceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //讀取資料
+        DH=new dataBase(this);
+        DH.close();
+        db =DH.getReadableDatabase();
         setContentView(R.layout.activity_connect_device);
 //        Spinner SelectDevice = (Spinner)findViewById(R.id.deviceSelection);
 //        ArrayAdapter<CharSequence> Device = ArrayAdapter.createFromResource(ConnectDeviceActivity.this,
@@ -370,17 +374,11 @@ public class ConnectDeviceActivity extends AppCompatActivity {
     }
 
     public void searchheight(){
-
-        //讀取資料
-        DH=new dataBase(this);
-        DH.close();
-        db =DH.getReadableDatabase();
-
-        cur=db.rawQuery(" SELECT  height  FROM  customer " ,null);
-
+        cur=db.rawQuery(" SELECT  *  FROM  customer " ,null);
         EditText HeightText = (EditText) findViewById(R.id.editTextHeight);
         if(cur.getCount()>0){
-            HeightText.setText(cur.getString(0));
+            cur.moveToLast();
+            HeightText.setText(cur.getString(4));
         }else{
             HeightText.setHint("請輸入身高");
         }
