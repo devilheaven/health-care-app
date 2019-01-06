@@ -517,6 +517,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
 
         editor.commit();
         editor2.commit();
+        Toast.makeText(this, "送出成功 !", Toast.LENGTH_SHORT).show();
         new question1().execute();
         new question2().execute();
     }

@@ -19,6 +19,16 @@
             android:orientation="vertical"
             android:layout_weight="10">
 
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="228dp"
+                android:layout_marginTop="50dp" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="10dp" />
+
             <ListView
                 android:id="@+id/lvListall"
                 android:layout_width="match_parent"
@@ -28,6 +38,10 @@
             </ListView>
 
         </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="10dp" />
 
         <Button
             android:id="@+id/btnBIRefresh"
