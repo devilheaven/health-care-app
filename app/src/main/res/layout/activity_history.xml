@@ -27,20 +27,7 @@
                 android:scrollbars="vertical">
             </ListView>
 
-            <Spinner
-                android:id="@+id/spinBIState"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </Spinner>
-
         </LinearLayout>
-
-
-        <Button
-            android:id="@+id/btnList"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="列表 / 統計" />
 
         <Button
             android:id="@+id/btnBIRefresh"
