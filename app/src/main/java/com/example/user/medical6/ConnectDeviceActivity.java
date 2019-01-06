@@ -248,7 +248,7 @@ public class ConnectDeviceActivity extends AppCompatActivity {
                 }else{
                     db.insert(TABLE_c, null, values2);
                 }
-                Toast tos = Toast.makeText(ConnectDeviceActivity.this, "新增成功!"+values, Toast.LENGTH_SHORT);
+                Toast tos = Toast.makeText(ConnectDeviceActivity.this, "新增成功!", Toast.LENGTH_SHORT);
                 tos.show();
             }
         });

@@ -79,7 +79,7 @@ public class ManualActivity extends AppCompatActivity {
             values.put(dbp, editTextDbp.getText().toString());
             values.put(hr, editTextHr.getText().toString());
             values.put(time, dataEdit.getText().toString());
-            values.put(height, editTextHeight.getText().toString());
+//            values.put(height, editTextHeight.getText().toString());
             values.put(record_status, spinnerDoEat.getSelectedItem().toString());
             db.insert(TABLE_e, null, values);
             Toast.makeText(this, "新增成功!!", Toast.LENGTH_SHORT).show();
