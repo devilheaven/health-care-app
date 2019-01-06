@@ -59,8 +59,6 @@ public class ManualActivity extends AppCompatActivity {
         //SQLiteDatabase db =DH.getReadableDatabase();
         //cur = db.rawQuery(" SELECT weight   FROM examine WHERE sbp=  " + editTextSbp.getText().toString() , null);
 
-
-
         searchheight();
     }
 
@@ -74,13 +72,23 @@ public class ManualActivity extends AppCompatActivity {
             toast.show();
         }
         else{
+            ContentValues values2 = new ContentValues();
+            cur=db.rawQuery(" SELECT " + id + "  FROM  customer " ,null);
+
             values.put(weight,editTextWeight.getText().toString() );
             values.put(sbp, editTextSbp.getText().toString());
             values.put(dbp, editTextDbp.getText().toString());
             values.put(hr, editTextHr.getText().toString());
             values.put(time, dataEdit.getText().toString());
-//            values.put(height, editTextHeight.getText().toString());
+            values2.put(height, editTextHeight.getText().toString());
             values.put(record_status, spinnerDoEat.getSelectedItem().toString());
+
+            if(cur.getCount()>0){
+                cur.moveToLast();
+                db.update(TABLE_c,values2,id+"="+cur.getString(0),null);
+            }else{
+                db.insert(TABLE_c, null, values2);
+            }
             db.insert(TABLE_e, null, values);
             Toast.makeText(this, "新增成功!!", Toast.LENGTH_SHORT).show();
             delete();
