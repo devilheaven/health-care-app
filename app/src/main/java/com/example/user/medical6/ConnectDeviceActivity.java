@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,11 +36,14 @@ import java.util.Date;
 import java.util.List;
 import java.text.ParseException;
 
+import static com.example.user.medical6.dataBase.*;
+
 
 public class ConnectDeviceActivity extends AppCompatActivity {
     private final static String TAG = ConnectDeviceActivity.class.getSimpleName();
     private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private Button btnWeight;
+    private Button btnSave;
     private BluetoothAdapter mBluetoothAdapter;
     private int REQUEST_ENABLE_BT = 1;
     private BluetoothLeService mBluetoothLeService;
@@ -69,7 +73,10 @@ public class ConnectDeviceActivity extends AppCompatActivity {
     // data base 變數宣告
     public dataBase DH=null;
     Cursor cur;
+    ContentValues values = new ContentValues();
     SQLiteDatabase db;
+
+    public TextView editTextWeight,editTextHr,editTextDbp,editTextSbp,editTextHeight,timestamp;
 
     private class xServiceConnection implements ServiceConnection {
 
@@ -174,6 +181,14 @@ public class ConnectDeviceActivity extends AppCompatActivity {
 //                android.R.layout.simple_spinner_dropdown_item);
 //        SelectDevice.setAdapter(Device);
 
+        editTextWeight = (TextView) findViewById(R.id.Weight);
+        editTextHr = (TextView) findViewById(R.id.bpm);
+        editTextDbp = (TextView) findViewById(R.id.dbp);
+        editTextSbp = (TextView) findViewById(R.id.sdp);
+        timestamp = (TextView) findViewById(R.id.CurrentDate);
+        editTextHeight = (EditText) findViewById(R.id.editTextHeight);
+
+
         checkLocationPermission();
         btnWeight = (Button) findViewById(R.id.btnCWeight);
         btnWeight.setOnClickListener(new View.OnClickListener() {
@@ -213,6 +228,28 @@ public class ConnectDeviceActivity extends AppCompatActivity {
                 }
                   }
         });
+
+        //NEW Start
+
+        btnSave = (Button) findViewById(R.id.Save);
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                SQLiteDatabase db=DH.getWritableDatabase();
+                ContentValues values = new ContentValues();
+
+                values.put(time, timestamp.getText().toString());
+                values.put(height, editTextHeight.getText().toString());
+                values.put(weight, editTextWeight.getText().toString());
+                values.put(hr, editTextHr.getText().toString());
+                values.put(sbp, editTextSbp.getText().toString());
+                values.put(dbp, editTextDbp.getText().toString());
+
+                db.insert(TABLE_e, null, values);
+                Toast tos = Toast.makeText(ConnectDeviceActivity.this, "欄位不能是空白!!", Toast.LENGTH_SHORT);
+            }
+        });
+
+        //NEW End
 
         try {
             searchtime();
