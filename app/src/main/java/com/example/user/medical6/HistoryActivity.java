@@ -45,23 +45,16 @@ public class HistoryActivity extends AppCompatActivity  {
         db =DH.getReadableDatabase();
 
 
-        cur=db.rawQuery(" SELECT  * FROM  examine " ,null);
+        cur=db.rawQuery(" SELECT * FROM  examine LIMIT  20" ,null);
 //        adapter=new SimpleCursorAdapter(this, R.layout.activity_manual, cur, FROM,new int[] { R.id.txvtime, R.id.txvkg, R.id.txvsbp, R.id.txvdbp, R.id.txvhr},0);
         adapter = new SimpleCursorAdapter(this, R.layout.item, cur, FROM,new int[] { R.id.editTextDate, R.id.editTextWeight, R.id.editTextSdp, R.id.editTextDbp, R.id.editTextHr,R.id.DoEat},0);
         lvListall=(ListView)findViewById(R.id.lvListall);
         lvListall.setAdapter(adapter);
         requery();
-
-
     }
 
     public void requery() {
 
-
-
-
     }
-
-
 
 }

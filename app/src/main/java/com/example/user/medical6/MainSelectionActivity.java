@@ -103,19 +103,21 @@ public class MainSelectionActivity extends AppCompatActivity {
                     }
                     SQLiteDatabase db=DH.getWritableDatabase();
                     ContentValues values = new ContentValues();
+                    ContentValues values2 = new ContentValues();
                     try {
-                        values.put("weight", jso.getString("weight"));
-                        values.put("hr", jso.getString("hr"));
-                        values.put("dbp", jso.getString("dbp"));
-                        values.put("sbp", jso.getString("sbp"));
-                        //values.put("height", jso.getString("height"));
-                        //values.put("record_status", jso.getString("record_status"));
-                        values.put("timestamp", jso.getString("timestamp"));
+                        values.put(weight, jso.getString("weight"));
+                        values.put(hr, jso.getString("hr"));
+                        values.put(dbp, jso.getString("dbp"));
+                        values.put(sbp, jso.getString("sbp"));
+//                        values2.put(height, jso.getString("height"));
+                        values.put(record_status, jso.getString("record_status"));
+                        values.put(time, jso.getString("timestamp"));
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                     db.insert(TABLE_e, null, values);
+//                    db.insert(TABLE_c, null, values2);
                 }
                 Toast tos = Toast.makeText(MainSelectionActivity.this, "Data Loaded", Toast.LENGTH_SHORT);
                 tos.show();
