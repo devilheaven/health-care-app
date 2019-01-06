@@ -7,27 +7,31 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 //呼叫dataBase類別定義的常數
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import static com.example.user.medical6.dataBase.*;
 
 public class ManualActivity extends AppCompatActivity {
-    private int mYear;
-    private int mMonth;
-    private int mDay;
+    private EditText editTextWeight,editTextHr,editTextDbp,editTextSbp,editTextHeight,dataEdit;
+
+    //定義顯示時間套件
+    private Calendar calendar; //通過 Calendar 獲取系統時間
 
     public dataBase DH=null;
     SQLiteDatabase db;
     Cursor cur;
 
-    private Calendar calendar;
-    private EditText editTextWeight,editTextHr,editTextDbp,editTextSbp,editTextHeight,dataEdit;
     private Spinner spinnerDoEat;
 
     @Override
@@ -35,30 +39,12 @@ public class ManualActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_manual);
-        dataEdit = (EditText) findViewById(R.id.editTextDate);
-        calendar = Calendar.getInstance();
-        dataEdit.setOnClickListener(new View.OnClickListener() {
-//            @SuppressLint("NewApi")
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(ManualActivity.this,
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                mYear = year;
-                                mMonth = month;
-                                mDay = dayOfMonth;
-                                dataEdit.setText(new StringBuilder()
-                                        .append((mMonth + 1) < 10 ? "0"
-                                                + (mMonth + 1) : (mMonth + 1))
-                                        .append("/")
-                                        .append((mDay < 10 ? "0" + mDay : mDay))
-                                        .append("/")
-                                        .append(mYear));
-                            }
-                        }, calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
+
+        try {
+            searchtime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         DH=new dataBase(this);
         DH.close();
@@ -72,6 +58,10 @@ public class ManualActivity extends AppCompatActivity {
 
         //SQLiteDatabase db =DH.getReadableDatabase();
         //cur = db.rawQuery(" SELECT weight   FROM examine WHERE sbp=  " + editTextSbp.getText().toString() , null);
+
+
+
+        searchheight();
     }
 
     public void add(){
@@ -112,4 +102,33 @@ public class ManualActivity extends AppCompatActivity {
         delete();
     }
 
+    private void fillTextView (int id, String text) {
+        TextView tv = (TextView) findViewById(id);
+        tv.setText(text);
+    }
+
+    private void searchtime() throws ParseException {
+        dataEdit = (EditText) findViewById(R.id.editTextDate);
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy-HH:mm:ss");
+        calendar = Calendar.getInstance();
+        Date tdt = calendar.getTime();
+        String time = sdf.format(tdt);
+        dataEdit.setText(time);
+    }
+
+    public void searchheight(){
+        //讀取資料
+        DH=new dataBase(this);
+        DH.close();
+        db =DH.getReadableDatabase();
+
+        cur=db.rawQuery(" SELECT " + height + "  FROM  customer " ,null);
+        EditText HeightText = (EditText) findViewById(R.id.editTextHeight);
+        if(cur.getCount()>0){
+            cur.moveToLast();
+            HeightText.setText(cur.getString(0));
+        }else{
+            HeightText.setHint("請輸入身高");
+        }
+    }
 }
