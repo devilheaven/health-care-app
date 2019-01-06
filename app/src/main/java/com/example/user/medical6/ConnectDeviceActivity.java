@@ -24,10 +24,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.text.SimpleDateFormat;
@@ -37,16 +35,11 @@ import java.util.List;
 import java.text.ParseException;
 
 import static com.example.user.medical6.dataBase.*;
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/bluetooth
 
 public class ConnectDeviceActivity extends AppCompatActivity {
     private final static String TAG = ConnectDeviceActivity.class.getSimpleName();
     private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    private Button btnWeight;
-    private Button btnSave;
+    private Button btnWeight ,btnSave;
     private BluetoothAdapter mBluetoothAdapter;
     private int REQUEST_ENABLE_BT = 1;
     private BluetoothLeService mBluetoothLeService;
@@ -66,12 +59,6 @@ public class ConnectDeviceActivity extends AppCompatActivity {
     private EditText dataEdit;
     //定義顯示時間套件
     private Calendar calendar; //通過 Calendar 獲取系統時間
-    private int mYear;
-    private int mMonth;
-    private int mDay;
-    private int mHour;
-    private int mMinute;
-    private int mSecond;
 
     // data base 變數宣告
     dataBase DH=null;
@@ -231,13 +218,12 @@ public class ConnectDeviceActivity extends AppCompatActivity {
                   }
         });
 
-        //NEW Start
-
-        btnSave = (Button) findViewById(R.id.Save);
+        btnSave = (Button) findViewById(R.id.btnCSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 SQLiteDatabase db=DH.getWritableDatabase();
                 ContentValues values = new ContentValues();
+                Log.v("button save","hello");
 
                 values.put(time, timestamp.getText().toString());
                 values.put(height, editTextHeight.getText().toString());
@@ -247,11 +233,9 @@ public class ConnectDeviceActivity extends AppCompatActivity {
                 values.put(dbp, editTextDbp.getText().toString());
 
                 db.insert(TABLE_e, null, values);
-                Toast tos = Toast.makeText(ConnectDeviceActivity.this, "欄位不能是空白!!", Toast.LENGTH_SHORT);
+                Toast tos = Toast.makeText(ConnectDeviceActivity.this, "新增成功!", Toast.LENGTH_SHORT);
             }
         });
-
-        //NEW End
 
         try {
             searchtime();
