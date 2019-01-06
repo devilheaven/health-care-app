@@ -58,9 +58,6 @@ public class ManualActivity extends AppCompatActivity {
 
         //SQLiteDatabase db =DH.getReadableDatabase();
         //cur = db.rawQuery(" SELECT weight   FROM examine WHERE sbp=  " + editTextSbp.getText().toString() , null);
-
-
-
         searchheight();
     }
 
