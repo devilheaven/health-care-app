@@ -35,6 +35,7 @@ import java.util.Date;
 import java.util.List;
 import java.text.ParseException;
 
+import static com.example.user.medical6.dataBase.*;
 
 public class ConnectDeviceActivity extends AppCompatActivity {
     private final static String TAG = ConnectDeviceActivity.class.getSimpleName();
@@ -172,11 +173,6 @@ public class ConnectDeviceActivity extends AppCompatActivity {
         DH.close();
         db =DH.getReadableDatabase();
         setContentView(R.layout.activity_connect_device);
-//        Spinner SelectDevice = (Spinner)findViewById(R.id.deviceSelection);
-//        ArrayAdapter<CharSequence> Device = ArrayAdapter.createFromResource(ConnectDeviceActivity.this,
-//                R.array.device,
-//                android.R.layout.simple_spinner_dropdown_item);
-//        SelectDevice.setAdapter(Device);
 
         checkLocationPermission();
         btnWeight = (Button) findViewById(R.id.btnCWeight);
@@ -363,22 +359,20 @@ public class ConnectDeviceActivity extends AppCompatActivity {
     };
 
     public void searchtime() throws ParseException {
-
         TextView datetext = (TextView) findViewById(R.id.CurrentDate);
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy-HH:mm:ss");
         calendar = Calendar.getInstance();
         Date tdt = calendar.getTime();
         String time = sdf.format(tdt);
         datetext.setText(time);
-
     }
 
     public void searchheight(){
-        cur=db.rawQuery(" SELECT  *  FROM  customer " ,null);
+        cur=db.rawQuery(" SELECT " + height + "  FROM  customer " ,null);
         EditText HeightText = (EditText) findViewById(R.id.editTextHeight);
         if(cur.getCount()>0){
             cur.moveToLast();
-            HeightText.setText(cur.getString(4));
+            HeightText.setText(cur.getString(0));
         }else{
             HeightText.setHint("請輸入身高");
         }

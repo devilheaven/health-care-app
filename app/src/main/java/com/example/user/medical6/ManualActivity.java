@@ -1,6 +1,5 @@
 package com.example.user.medical6;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.pm.ActivityInfo;
@@ -9,9 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 //呼叫dataBase類別定義的常數
 import java.util.Calendar;
@@ -19,9 +18,6 @@ import java.util.Calendar;
 import static com.example.user.medical6.dataBase.*;
 
 public class ManualActivity extends AppCompatActivity {
-    private EditText dataEdit;
-    //定義顯示時間套件
-    private Calendar calendar; //通過 Calendar 獲取系統時間
     private int mYear;
     private int mMonth;
     private int mDay;
@@ -29,7 +25,10 @@ public class ManualActivity extends AppCompatActivity {
     public dataBase DH=null;
     SQLiteDatabase db;
     Cursor cur;
-    public EditText editTextWeight,editTextHr,editTextDbp,editTextSbp,editTextHeight;
+
+    private Calendar calendar;
+    private EditText editTextWeight,editTextHr,editTextDbp,editTextSbp,editTextHeight,dataEdit;
+    private Spinner spinnerDoEat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +68,7 @@ public class ManualActivity extends AppCompatActivity {
         editTextDbp = (EditText) findViewById(R.id.editTextDbp);
         editTextSbp = (EditText) findViewById(R.id.editTextSdp);
         editTextHeight = (EditText) findViewById(R.id.editTextHeight);
+        spinnerDoEat= findViewById(R.id.DoEat);
 
         //SQLiteDatabase db =DH.getReadableDatabase();
         //cur = db.rawQuery(" SELECT weight   FROM examine WHERE sbp=  " + editTextSbp.getText().toString() , null);
@@ -84,13 +84,12 @@ public class ManualActivity extends AppCompatActivity {
             toast.show();
         }
         else{
-            //values.put(num, );
-            //values.put(time,getdate());
             values.put(weight,editTextWeight.getText().toString() );
             values.put(sbp, editTextSbp.getText().toString());
             values.put(dbp, editTextDbp.getText().toString());
             values.put(hr, editTextHr.getText().toString());
-            //values.put(idnum, "david@yahoo.com");
+            values.put(time, dataEdit.getText().toString());
+            values.put(record_status, spinnerDoEat.getSelectedItem().toString());
             db.insert(TABLE_e, null, values);
             Toast.makeText(this, "新增成功!!", Toast.LENGTH_SHORT).show();
             delete();
