@@ -60,12 +60,6 @@ public class ConnectDeviceActivity extends AppCompatActivity {
     private EditText dataEdit;
     //定義顯示時間套件
     private Calendar calendar; //通過 Calendar 獲取系統時間
-    private int mYear;
-    private int mMonth;
-    private int mDay;
-    private int mHour;
-    private int mMinute;
-    private int mSecond;
 
     // data base 變數宣告
     dataBase DH=null;
