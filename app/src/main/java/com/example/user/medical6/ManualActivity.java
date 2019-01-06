@@ -1,15 +1,12 @@
 package com.example.user.medical6;
 
-import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -57,11 +54,6 @@ public class ManualActivity extends AppCompatActivity {
         spinnerDoEat= findViewById(R.id.DoEat);
 
         //SQLiteDatabase db =DH.getReadableDatabase();
-        //cur = db.rawQuery(" SELECT weight   FROM examine WHERE sbp=  " + editTextSbp.getText().toString() , null);
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/date
         searchheight();
     }
 
