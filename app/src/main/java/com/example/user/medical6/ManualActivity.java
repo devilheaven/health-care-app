@@ -69,7 +69,7 @@ public class ManualActivity extends AppCompatActivity {
         SQLiteDatabase db=DH.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        if(editTextWeight.getText().toString().matches("") || editTextHr.getText().toString().matches("")|| editTextDbp.getText().toString().matches("")|| editTextSbp.getText().toString().matches("")) {
+        if(editTextWeight.getText().toString().matches("") || editTextHeight.getText().toString().matches("")|| editTextHr.getText().toString().matches("")|| editTextDbp.getText().toString().matches("")|| editTextSbp.getText().toString().matches("")) {
             Toast toast = Toast.makeText(ManualActivity.this, "欄位不能是空白!!", Toast.LENGTH_LONG);
             toast.show();
         }
@@ -79,6 +79,7 @@ public class ManualActivity extends AppCompatActivity {
             values.put(dbp, editTextDbp.getText().toString());
             values.put(hr, editTextHr.getText().toString());
             values.put(time, dataEdit.getText().toString());
+            values.put(height, editTextHeight.getText().toString());
             values.put(record_status, spinnerDoEat.getSelectedItem().toString());
             db.insert(TABLE_e, null, values);
             Toast.makeText(this, "新增成功!!", Toast.LENGTH_SHORT).show();
