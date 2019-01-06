@@ -500,7 +500,6 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
           postData2.put("Fq_alcohol",getValue("food",sick46.getSelectedItem().toString()));
 
       }catch (Exception e){
-
            e.getMessage();
       }
 
@@ -662,6 +661,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             Log.v("Back",s);
         }
     }
+
     public class question2 extends AsyncTask<String,Void,String> {
         SharedPreferences SharedPreferences2 = getSharedPreferences("question2",MODE_PRIVATE);
 

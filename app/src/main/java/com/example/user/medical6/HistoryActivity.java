@@ -30,7 +30,7 @@ public class HistoryActivity extends AppCompatActivity  {
         DH.close();
         db =DH.getReadableDatabase();
 
-        cur=db.rawQuery(" SELECT * FROM  examine LIMIT  20" ,null);
+        cur=db.rawQuery(" SELECT * FROM  examine ORDER BY "+ time+" LIMIT  20 " ,null);
         adapter = new SimpleCursorAdapter(this, R.layout.item, cur, FROM,new int[] { R.id.editTextDate, R.id.editTextWeight, R.id.editTextSdp, R.id.editTextDbp, R.id.editTextHr,R.id.DoEat},0);
         lvListall=(ListView)findViewById(R.id.lvListall);
         lvListall.setAdapter(adapter);
@@ -40,7 +40,7 @@ public class HistoryActivity extends AppCompatActivity  {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cur=db.rawQuery(" SELECT * FROM  examine " ,null);
+                cur=db.rawQuery(" SELECT * FROM  examine ORDER BY "+ time ,null);
                 adapter = new SimpleCursorAdapter(HistoryActivity.this, R.layout.item, cur, FROM,new int[] { R.id.editTextDate, R.id.editTextWeight, R.id.editTextSdp, R.id.editTextDbp, R.id.editTextHr,R.id.DoEat},0);
                 lvListall=(ListView)findViewById(R.id.lvListall);
                 lvListall.setAdapter(adapter);
