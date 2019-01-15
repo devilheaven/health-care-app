@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 //呼叫dataBase類別定義的常數
 import org.json.JSONException;
@@ -30,7 +29,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -42,15 +40,14 @@ import static com.example.user.medical6.dataBase.*;
 public class ManualActivity extends AppCompatActivity {
     private EditText editTextWeight,editTextHr,editTextDbp,editTextSbp,editTextHeight,dataEdit;
 
-    //定義顯示時間套件
-    private Calendar calendar; //通過 Calendar 獲取系統時間
-
     //宣告sharepreference的儲存名稱 之後會用來存入sharepreference儲存空間
     static final  String result = "bodyInformation";
 
     public dataBase DH=null;
     SQLiteDatabase db;
     Cursor cur;
+
+    private appFunction function = new appFunction();
 
     private Spinner spinnerDoEat;
 
@@ -61,7 +58,7 @@ public class ManualActivity extends AppCompatActivity {
         setContentView(R.layout.activity_manual);
 
         try {
-            searchtime();
+            function.searchtime((EditText) findViewById(R.id.editTextDate));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -77,22 +74,21 @@ public class ManualActivity extends AppCompatActivity {
         spinnerDoEat= findViewById(R.id.DoEat);
 
         //SQLiteDatabase db =DH.getReadableDatabase();
-        searchheight();
+        function.searchheight(DH,(EditText) findViewById(R.id.editTextHeight));
     }
 
     public void add(){
-
         SQLiteDatabase db=DH.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        JSONObject postData=new JSONObject();
 
         if(editTextWeight.getText().toString().matches("") || editTextHeight.getText().toString().matches("")|| editTextHr.getText().toString().matches("")|| editTextDbp.getText().toString().matches("")|| editTextSbp.getText().toString().matches("")) {
             Toast toast = Toast.makeText(ManualActivity.this, "欄位不能是空白!!", Toast.LENGTH_LONG);
             toast.show();
         }
         else{
+            JSONObject postData=new JSONObject();
+            ContentValues values = new ContentValues();
             ContentValues values2 = new ContentValues();
+
             cur=db.rawQuery(" SELECT " + id + "  FROM  customer " ,null);
 
             values.put(weight,editTextWeight.getText().toString() );
@@ -100,9 +96,9 @@ public class ManualActivity extends AppCompatActivity {
             values.put(dbp, editTextDbp.getText().toString());
             values.put(hr, editTextHr.getText().toString());
             values.put(time, dataEdit.getText().toString());
-            values2.put(height, editTextHeight.getText().toString());
             values.put(record_status, spinnerDoEat.getSelectedItem().toString());
 
+            values2.put(height, editTextHeight.getText().toString());
 //            postData
             String[] arrayData = dataEdit.getText().toString().split("-");
             try {
@@ -111,7 +107,7 @@ public class ManualActivity extends AppCompatActivity {
                 postData.put("diastolic_bp", editTextDbp.getText().toString());
                 postData.put("systolic_bp", editTextSbp.getText().toString());
                 postData.put("height_cm", editTextHeight.getText().toString());
-                postData.put("record_status", getValue("record_status",spinnerDoEat.getSelectedItem().toString()));
+                postData.put("record_status", function.getValue("record_status",spinnerDoEat.getSelectedItem().toString()));
                 postData.put("record_date", arrayData[0]);
                 postData.put("record_time", arrayData[1]);
             } catch (JSONException e) {
@@ -157,51 +153,6 @@ public class ManualActivity extends AppCompatActivity {
 
     public void deonclick(View view){
         delete();
-    }
-
-    private void fillTextView (int id, String text) {
-        TextView tv = (TextView) findViewById(id);
-        tv.setText(text);
-    }
-
-    private void searchtime() throws ParseException {
-        dataEdit = (EditText) findViewById(R.id.editTextDate);
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy-HH:mm:ss");
-        calendar = Calendar.getInstance();
-        Date tdt = calendar.getTime();
-        String time = sdf.format(tdt);
-        dataEdit.setText(time);
-    }
-
-    public void searchheight(){
-        //讀取資料
-        DH=new dataBase(this);
-        DH.close();
-        db =DH.getReadableDatabase();
-
-        cur=db.rawQuery(" SELECT " + height + "  FROM  customer " ,null);
-        EditText HeightText = (EditText) findViewById(R.id.editTextHeight);
-        if(cur.getCount()>0){
-            cur.moveToLast();
-            HeightText.setText(cur.getString(0));
-        }else{
-            HeightText.setHint("請輸入身高");
-        }
-    }
-
-    //get value
-    public String getValue(String model,String key){
-        HashMap<String,Integer> record_status = new HashMap<>();
-        record_status.put("飯前",1);
-        record_status.put("飯後",2);
-
-        String value = "";
-        switch (model){
-            case "record_status":
-                value = record_status  .get(key).toString();
-                break;
-        }
-        return value;
     }
 
     private class bodyInformation extends AsyncTask<String,Void,String> {

@@ -46,7 +46,6 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.text.ParseException;
 
@@ -312,7 +311,7 @@ public class ConnectDeviceActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        function.searchheight((EditText) findViewById(R.id.editTextHeight));
+        function.searchheight(DH,(EditText) findViewById(R.id.editTextHeight));
     }
 
     private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {

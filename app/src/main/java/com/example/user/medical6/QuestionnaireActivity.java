@@ -44,24 +44,14 @@ import javax.net.ssl.X509TrustManager;
 
 public class QuestionnaireActivity extends AppCompatActivity implements View.OnClickListener,RadioGroup.OnCheckedChangeListener,AdapterView.OnItemSelectedListener {
     public dataBase DH=null;
-    public Button btngo;
-    public RadioGroup rdgsex;
-    public RadioButton rbMale,rbFmale;
-    public EditText hight,birth,age,cancer1,cancer2,cancer3,cancer4,cancer5,cancer6,cancer7,cancer8,cancer9;
-    public Spinner lev,salary,smoke,drink,hur,overnight,sleep,exerice,candy,heart,blood,sick,stomache,sick3,stomachecan,sick4,overstomach,sick24,sick25,sick26,sick27,sick28,sick29,sick30,sick31,sick32,sick33,sick34,sick35,sick36,sick37,sick38,sick39,sick40,sick41,sick42,sick43,sick44,sick45,sick46;
-    //new for 1 line
-    private Calendar  calendar= Calendar.getInstance();
-    private int mYear;
-    private int mMonth;
-    private int mDay;
+    private Calendar  calendar = Calendar.getInstance();
     //宣告sharepreference的儲存名稱 之後會用來存入sharepreference儲存空間
     static final  String result="questionnaire";
     static final  String result2="questionnaire2";
     // data base 變數宣告
     SQLiteDatabase db;
-    ContentValues values = new ContentValues();
-    Cursor cur1;
 
+    appFunction function = new appFunction();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +65,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             //            @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
-                getDate(dataEdit1, calendar);
+                function.getDate(QuestionnaireActivity.this, dataEdit1);
             }
         });
         final EditText dataEdit2 = (EditText) findViewById(R.id.cancer1);
@@ -83,7 +73,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             //            @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
-                getDate(dataEdit2, calendar);
+                function.getDate(QuestionnaireActivity.this, dataEdit2);
             }
         });
         final EditText dataEdit3 = (EditText) findViewById(R.id.cancer2);
@@ -91,7 +81,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             //            @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
-                getDate(dataEdit3, calendar);
+                function.getDate(QuestionnaireActivity.this, dataEdit3);
             }
         });
         final EditText dataEdit4 = (EditText) findViewById(R.id.cancer3);
@@ -99,7 +89,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             //            @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
-                getDate(dataEdit4, calendar);
+                function.getDate(QuestionnaireActivity.this, dataEdit4);
             }
         });
         final EditText dataEdit5 = (EditText) findViewById(R.id.cancer4);
@@ -107,7 +97,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             //            @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
-                getDate(dataEdit5, calendar);
+                function.getDate(QuestionnaireActivity.this, dataEdit5);
             }
         });
         final EditText dataEdit6 = (EditText) findViewById(R.id.cancer5);
@@ -115,7 +105,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             //            @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
-                getDate(dataEdit6,  calendar);
+                function.getDate(QuestionnaireActivity.this, dataEdit6);
             }
         });
         final EditText dataEdit7 = (EditText) findViewById(R.id.cancer6);
@@ -123,7 +113,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             //            @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
-                getDate(dataEdit7,  calendar);
+                function.getDate(QuestionnaireActivity.this, dataEdit7);
             }
         });
         final EditText dataEdit8 = (EditText) findViewById(R.id.cancer7);
@@ -131,7 +121,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             //            @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
-                getDate(dataEdit8,  calendar);
+                function.getDate(QuestionnaireActivity.this, dataEdit8);
             }
         });
         final EditText dataEdit9 = (EditText) findViewById(R.id.cancer8);
@@ -139,7 +129,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             //            @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
-                getDate(dataEdit9,  calendar);
+                function.getDate(QuestionnaireActivity.this, dataEdit9);
             }
         });
         final EditText dataEdit10 = (EditText) findViewById(R.id.cancer9);
@@ -147,7 +137,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             //            @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
-                getDate(dataEdit10,  calendar);
+                function.getDate(QuestionnaireActivity.this, dataEdit10);
             }
         });
 
@@ -181,147 +171,6 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
         }
 
         bmi.setText(BMI.toString());
-    }
-
-    private void getDate(final EditText dataEdit,final Calendar calendar){
-        new DatePickerDialog(QuestionnaireActivity.this,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        mYear = year;
-                        mMonth = month;
-                        mDay = dayOfMonth;
-                        dataEdit.setText(new StringBuilder()
-                                .append((mMonth + 1) < 10 ? "0"
-                                        + (mMonth + 1) : (mMonth + 1))
-                                .append("/")
-                                .append((mDay < 10 ? "0" + mDay : mDay))
-                                .append("/")
-                                .append(mYear));
-                    }
-                }, calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
-    }
-
-    //get value
-    public String getValue(String model,String key){
-        HashMap<String,Integer> gender = new HashMap<>();
-        gender.put("男",0);
-        gender.put("女",1);
-
-        HashMap<String,Integer> yesNo = new HashMap<>();
-        yesNo.put("無",0);
-        yesNo.put("有",1);
-
-        HashMap<String,Integer> yesNoUnknow = new HashMap<>();
-        yesNoUnknow.put("有",0);
-        yesNoUnknow.put("無",1);
-        yesNoUnknow.put("不詳",2);
-
-        HashMap<String,Integer> educatinlevel = new HashMap<>();
-        educatinlevel.put("未受教育",0);
-        educatinlevel.put("小學",1);
-        educatinlevel.put("國(初)中",2);
-        educatinlevel.put("高中(職)",3);
-        educatinlevel.put("大學(專科)",4);
-        educatinlevel.put("研究所以上",5);
-
-        HashMap<String,Integer> income = new HashMap<>();
-        income.put("困苦",0);
-        income.put("尚可",1);
-        income.put("小康",2);
-        income.put("富裕",3);
-
-        HashMap<String,Integer> smoking_behavior = new HashMap<>();
-        smoking_behavior.put("從未抽菸",0);
-        smoking_behavior.put("已戒菸",1);
-        smoking_behavior.put("目前有抽菸習慣",2);
-
-        HashMap<String,Integer> alcoholism = new HashMap<>();
-        alcoholism.put("從未飲酒",0);
-        alcoholism.put("已戒酒",1);
-        alcoholism.put("偶爾",2);
-        alcoholism.put("目前有飲酒習慣",3);
-
-        HashMap<String,Integer> sleep_hours = new HashMap<>();
-        sleep_hours.put("不到 6 小時",0);
-        sleep_hours.put("6~6.9 小時",1);
-        sleep_hours.put("7~7.9 小時",2);
-        sleep_hours.put("8小時以上",3);
-
-        HashMap<String,Integer> stay_overnight = new HashMap<>();
-        stay_overnight.put("很少(每週≤1次)",0);
-        stay_overnight.put("偶爾(每週2~4次)",1);
-        stay_overnight.put("經常(每週≥5次)",2);
-
-        HashMap<String,Integer> taking_nap = new HashMap<>();
-        taking_nap.put("很少(每週≤1次)",0);
-        taking_nap.put("偶爾(每週2~4次)",1);
-        taking_nap.put("經常(每週≥5次)",2);
-
-        HashMap<String,Integer> exercise_frequency = new HashMap<>();
-        exercise_frequency.put("每月≤1次",0);
-        exercise_frequency.put("每月2~3次",1);
-        exercise_frequency.put("每週1~2次",2);
-        exercise_frequency.put("每週3~4次",3);
-        exercise_frequency.put("每週≥5次",4);
-
-        HashMap<String,Integer> food = new HashMap<>();
-        food.put("都沒有吃此類食物",0);
-        food.put("每週十次中有一至二次",1);
-        food.put("每週十次中有三至五次",2);
-        food.put("每週十次中有六至八次",3);
-        food.put("每週十次中有八次以上",4);
-
-        HashMap<String,Integer> Birth_location = new HashMap<>();
-        Birth_location.put("臺灣閩南人",0);
-        Birth_location.put("臺灣客家人",1);
-        Birth_location.put("臺灣原住民",2);
-        Birth_location.put("中國各省份",3);
-        Birth_location.put("其他",4);
-
-        String value = "";
-        switch (model){
-            case "gender":
-                value = gender.get(key).toString();
-                break;
-            case "educatin_level":
-                value = educatinlevel.get(key).toString();
-                break;
-            case "income":
-                value = income.get(key).toString();
-                break;
-            case "smoking_behavior":
-                value = smoking_behavior.get(key).toString();
-                break;
-            case "alcoholism":
-                value = alcoholism.get(key).toString();
-                break;
-            case "sleep_hours":
-                value = sleep_hours.get(key).toString();
-                break;
-            case "stay_overnight":
-                value = stay_overnight.get(key).toString();
-                break;
-            case "taking_nap":
-                value = taking_nap.get(key).toString();
-                break;
-            case "exercise_frequency":
-                value = exercise_frequency.get(key).toString();
-                break;
-            case "yesNo":
-                value = yesNo.get(key).toString();
-                break;
-            case "food":
-                value = food.get(key).toString();
-                break;
-            case "Birth_location":
-                value = Birth_location.get(key).toString();
-                break;
-            case "yesNoUnknow":
-                value = yesNoUnknow.get(key).toString();
-                break;
-        }
-        return value;
     }
 
     public  void  json(){
@@ -434,11 +283,11 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
       try{
           if (rdgsex.getCheckedRadioButtonId()==R.id.rbMale){
               //男性
-              postData.put("gender",getValue("gender","男"));
+              postData.put("gender",function.getValue("gender","男"));
           }
           else {
               //女性
-              postData.put("gender",getValue("gender","女"));
+              postData.put("gender",function.getValue("gender","女"));
           }
           postData.put("age",age.getText().toString());
           postData.put("birthday",birth.getText());
@@ -455,49 +304,49 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
           postData.put("colon_cancer_diagnosis_date",cancer8.getText());
           postData.put("gastroesophageal_reflux_diagnosis_date",cancer9.getText());
 
-          postData.put("educatin_level",getValue("educatin_level",lev.getSelectedItem().toString()));
-          postData.put("income",getValue("income",salary.getSelectedItem().toString()));
-          postData.put("smoking_behavior",getValue("smoking_behavior",smoke.getSelectedItem().toString()));
-          postData.put("alcoholism",getValue("alcoholism",drink.getSelectedItem().toString()));
-          postData.put("sleep_hours",getValue("sleep_hours",hur.getSelectedItem().toString()));
-          postData.put("stay_overnight",getValue("stay_overnight",overnight.getSelectedItem().toString()));
-          postData.put("taking_nap",getValue("taking_nap",sleep.getSelectedItem().toString()));
-          postData.put("exercise_frequency",getValue("exercise_frequency",exerice.getSelectedItem().toString()));
-          postData.put("T2D",getValue("yesNo",candy.getSelectedItem().toString()));
-          postData.put("heart_disease",getValue("yesNo",heart.getSelectedItem().toString()));
-          postData.put("hypertention",getValue("yesNo",blood.getSelectedItem().toString()));
-          postData.put("stroke",getValue("yesNo",sick.getSelectedItem().toString()));
-          postData.put("gastric_ulcer",getValue("yesNo",stomache.getSelectedItem().toString()));
+          postData.put("educatin_level",function.getValue("educatin_level",lev.getSelectedItem().toString()));
+          postData.put("income",function.getValue("income",salary.getSelectedItem().toString()));
+          postData.put("smoking_behavior",function.getValue("smoking_behavior",smoke.getSelectedItem().toString()));
+          postData.put("alcoholism",function.getValue("alcoholism",drink.getSelectedItem().toString()));
+          postData.put("sleep_hours",function.getValue("sleep_hours",hur.getSelectedItem().toString()));
+          postData.put("stay_overnight",function.getValue("stay_overnight",overnight.getSelectedItem().toString()));
+          postData.put("taking_nap",function.getValue("taking_nap",sleep.getSelectedItem().toString()));
+          postData.put("exercise_frequency",function.getValue("exercise_frequency",exerice.getSelectedItem().toString()));
+          postData.put("T2D",function.getValue("yesNo",candy.getSelectedItem().toString()));
+          postData.put("heart_disease",function.getValue("yesNo",heart.getSelectedItem().toString()));
+          postData.put("hypertention",function.getValue("yesNo",blood.getSelectedItem().toString()));
+          postData.put("stroke",function.getValue("yesNo",sick.getSelectedItem().toString()));
+          postData.put("gastric_ulcer",function.getValue("yesNo",stomache.getSelectedItem().toString()));
           //duodenal_ulcer sick4.getSelectedItem()有問題
-          postData.put("duodenal_ulcer",getValue("yesNo",sick3.getSelectedItem().toString()));
-          postData.put("gastric_cancer",getValue("yesNo",stomachecan.getSelectedItem().toString()));
-          postData.put("colon_cancer",getValue("yesNo",sick4.getSelectedItem().toString()));
-          postData.put("gastroesophageal_reflux",getValue("yesNo",overstomach.getSelectedItem().toString()));
-          postData.put("using_antibiotics",getValue("yesNo",sick24.getSelectedItem().toString()));
-          postData.put("Birth_location",getValue("Birth_location",sick25.getSelectedItem().toString()));
-          postData.put("family_stomach_ulcer",getValue("yesNoUnknow",sick26.getSelectedItem().toString()));
-          postData.put("family_duodenal_ulcer",getValue("yesNoUnknow",sick27.getSelectedItem().toString()));
+          postData.put("duodenal_ulcer",function.getValue("yesNo",sick3.getSelectedItem().toString()));
+          postData.put("gastric_cancer",function.getValue("yesNo",stomachecan.getSelectedItem().toString()));
+          postData.put("colon_cancer",function.getValue("yesNo",sick4.getSelectedItem().toString()));
+          postData.put("gastroesophageal_reflux",function.getValue("yesNo",overstomach.getSelectedItem().toString()));
+          postData.put("using_antibiotics",function.getValue("yesNo",sick24.getSelectedItem().toString()));
+          postData.put("Birth_location",function.getValue("Birth_location",sick25.getSelectedItem().toString()));
+          postData.put("family_stomach_ulcer",function.getValue("yesNoUnknow",sick26.getSelectedItem().toString()));
+          postData.put("family_duodenal_ulcer",function.getValue("yesNoUnknow",sick27.getSelectedItem().toString()));
           //yesNoUnknow  food
-          postData.put("family_gastric_ulcer",getValue("yesNoUnknow",sick28.getSelectedItem().toString()));
-          postData.put("family_colorectal_ulcer",getValue("yesNoUnknow",sick29.getSelectedItem().toString()));
-          postData.put("family_gastroesophageal_reflux",getValue("yesNoUnknow",sick30.getSelectedItem().toString()));
-          postData.put("other_gastrointestinal_disease",getValue("yesNoUnknow",sick31.getSelectedItem().toString()));
+          postData.put("family_gastric_ulcer",function.getValue("yesNoUnknow",sick28.getSelectedItem().toString()));
+          postData.put("family_colorectal_ulcer",function.getValue("yesNoUnknow",sick29.getSelectedItem().toString()));
+          postData.put("family_gastroesophageal_reflux",function.getValue("yesNoUnknow",sick30.getSelectedItem().toString()));
+          postData.put("other_gastrointestinal_disease",function.getValue("yesNoUnknow",sick31.getSelectedItem().toString()));
 
-          postData2.put("Fq_grains",getValue("food",sick32.getSelectedItem().toString()));
-          postData2.put("Fq_rice",getValue("food",sick33.getSelectedItem().toString()));
-          postData2.put("Fq_noodle",getValue("food",sick34.getSelectedItem().toString()));
-          postData2.put("Fq_milk",getValue("food",sick35.getSelectedItem().toString()));
-          postData2.put("Fq_vegetables",getValue("food",sick36.getSelectedItem().toString()));
-          postData2.put("Fq_nuts",getValue("food",sick37.getSelectedItem().toString()));
-          postData2.put("Fq_fruits",getValue("food",sick38.getSelectedItem().toString()));
-          postData2.put("Fq_seafood",getValue("food",sick39.getSelectedItem().toString()));
-          postData2.put("Fq_meat",getValue("food",sick40.getSelectedItem().toString()));
-          postData2.put("Fq_viscera",getValue("food",sick41.getSelectedItem().toString()));
-          postData2.put("Fq_drinks",getValue("food",sick42.getSelectedItem().toString()));
-          postData2.put("Fq_coffee",getValue("food",sick43.getSelectedItem().toString()));
-          postData2.put("Fq_tea",getValue("food",sick44.getSelectedItem().toString()));
-          postData2.put("Fq_dessert",getValue("food",sick45.getSelectedItem().toString()));
-          postData2.put("Fq_alcohol",getValue("food",sick46.getSelectedItem().toString()));
+          postData2.put("Fq_grains",function.getValue("food",sick32.getSelectedItem().toString()));
+          postData2.put("Fq_rice",function.getValue("food",sick33.getSelectedItem().toString()));
+          postData2.put("Fq_noodle",function.getValue("food",sick34.getSelectedItem().toString()));
+          postData2.put("Fq_milk",function.getValue("food",sick35.getSelectedItem().toString()));
+          postData2.put("Fq_vegetables",function.getValue("food",sick36.getSelectedItem().toString()));
+          postData2.put("Fq_nuts",function.getValue("food",sick37.getSelectedItem().toString()));
+          postData2.put("Fq_fruits",function.getValue("food",sick38.getSelectedItem().toString()));
+          postData2.put("Fq_seafood",function.getValue("food",sick39.getSelectedItem().toString()));
+          postData2.put("Fq_meat",function.getValue("food",sick40.getSelectedItem().toString()));
+          postData2.put("Fq_viscera",function.getValue("food",sick41.getSelectedItem().toString()));
+          postData2.put("Fq_drinks",function.getValue("food",sick42.getSelectedItem().toString()));
+          postData2.put("Fq_coffee",function.getValue("food",sick43.getSelectedItem().toString()));
+          postData2.put("Fq_tea",function.getValue("food",sick44.getSelectedItem().toString()));
+          postData2.put("Fq_dessert",function.getValue("food",sick45.getSelectedItem().toString()));
+          postData2.put("Fq_alcohol",function.getValue("food",sick46.getSelectedItem().toString()));
 
       }catch (Exception e){
            e.getMessage();

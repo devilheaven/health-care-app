@@ -15,31 +15,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        GuestBtn=(Button)findViewById(R.id.GuestBtn);
-
-
-        Button btn1=(Button)findViewById(R.id.GuestBtn);
-        btn1.setOnClickListener(new View.OnClickListener() {
+        GuestBtn = (Button)findViewById(R.id.GuestBtn);
+        GuestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent();
                 intent.setClass(MainActivity.this,MainSelectionActivity.class);
                 startActivity(intent);
-                //finish();
             }
         });
 
-        SubscribeBtn=(Button)findViewById(R.id.SubscribeBtn);
-
-
-        Button btn2=(Button)findViewById(R.id.SubscribeBtn);
-        btn2.setOnClickListener(new View.OnClickListener() {
+        SubscribeBtn = (Button)findViewById(R.id.SubscribeBtn);
+        SubscribeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent();
                 intent.setClass(MainActivity.this,SubscribeActivity.class);
                 startActivity(intent);
-                //finish();
             }
         });
     }

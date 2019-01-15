@@ -14,10 +14,8 @@ public class RecordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
 
-        Button btn1=(Button)findViewById(R.id.ConnectDeviceBtn);
         ConnectDeviceBtn=(Button)findViewById(R.id.ConnectDeviceBtn);
-
-        btn1.setOnClickListener(new View.OnClickListener() {
+        ConnectDeviceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent();
@@ -25,11 +23,9 @@ public class RecordActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //---------------------------
-        Button btn2=(Button)findViewById(R.id.ManualBtn);
-        ConnectDeviceBtn=(Button)findViewById(R.id.ManualBtn);
 
-        btn2.setOnClickListener(new View.OnClickListener() {
+        ManualBtn=(Button)findViewById(R.id.ManualBtn);
+        ManualBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent();
