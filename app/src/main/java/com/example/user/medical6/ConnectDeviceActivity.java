@@ -80,6 +80,8 @@ public class ConnectDeviceActivity extends AppCompatActivity {
     //宣告sharepreference的儲存名稱 之後會用來存入sharepreference儲存空間
     static final  String result = "bodyInformation";
 
+    appFunction function = new appFunction();
+
     private byte[] mPreScanRecord = {0};
     XenonDecoder mXbDecoder;
 
@@ -274,7 +276,7 @@ public class ConnectDeviceActivity extends AppCompatActivity {
                     postData.put("diastolic_bp", editTextDbp.getText().toString());
                     postData.put("systolic_bp", editTextSbp.getText().toString());
                     postData.put("height_cm", editTextHeight.getText().toString());
-                    postData.put("record_status", getValue("record_status",spinnerDoEat.getSelectedItem().toString()));
+                    postData.put("record_status", function.getValue("record_status",spinnerDoEat.getSelectedItem().toString()));
                     postData.put("record_date", arrayData[0]);
                     postData.put("record_time", arrayData[1]);
                 } catch (JSONException e) {
@@ -306,13 +308,11 @@ public class ConnectDeviceActivity extends AppCompatActivity {
         });
 
         try {
-            searchtime();
+            function.searchtime((TextView) findViewById(R.id.CurrentDate));
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        searchheight();
-
+        function.searchheight((EditText) findViewById(R.id.editTextHeight));
     }
 
     private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
@@ -448,41 +448,6 @@ public class ConnectDeviceActivity extends AppCompatActivity {
             }
         }
     };
-
-    public void searchtime() throws ParseException {
-        TextView datetext = (TextView) findViewById(R.id.CurrentDate);
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy-HH:mm:ss");
-        calendar = Calendar.getInstance();
-        Date tdt = calendar.getTime();
-        String time = sdf.format(tdt);
-        datetext.setText(time);
-    }
-
-    public void searchheight(){
-        cur=db.rawQuery(" SELECT " + height + "  FROM  customer " ,null);
-        EditText HeightText = (EditText) findViewById(R.id.editTextHeight);
-        if(cur.getCount()>0){
-            cur.moveToLast();
-            HeightText.setText(cur.getString(0));
-        }else{
-            HeightText.setHint("請輸入身高");
-        }
-    }
-
-    //get value
-    public String getValue(String model,String key){
-        HashMap<String,Integer> record_status = new HashMap<>();
-        record_status.put("飯前",1);
-        record_status.put("飯後",2);
-
-        String value = "";
-        switch (model){
-            case "record_status":
-                value = record_status  .get(key).toString();
-                break;
-        }
-        return value;
-    }
 
     private class bodyInformation extends AsyncTask<String,Void,String> {
         SharedPreferences SharedPreferences2 = getSharedPreferences("bodyInformation",MODE_PRIVATE);
