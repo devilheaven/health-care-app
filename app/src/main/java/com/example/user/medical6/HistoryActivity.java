@@ -63,11 +63,11 @@ public class HistoryActivity extends AppCompatActivity  {
     private void setLineChart(){
         LineChart lineChart=(LineChart)findViewById(R.id.chart);
         //line1
-        Cursor c = db.rawQuery(" SELECT * FROM  examine ORDER BY "+ time+" LIMIT  10 " ,null);
+        Cursor c = db.rawQuery(" SELECT * FROM  examine ORDER BY "+ time +" LIMIT  10 " ,null);
         ArrayList<Entry> entries1=new ArrayList<>(); //建立資料串列
         c.moveToFirst();
-        for (int i=0; i<=(c.getCount()-1);i++){
-            entries1.add(new Entry(Float.valueOf(c.getString(c.getColumnIndex("hr"))),i));
+        for (int i = 0; i<=(c.getCount()-1);i++){
+            entries1.add( new Entry(Float.valueOf( c.getString( c.getColumnIndex("hr") ) ),i) );
             c.moveToNext();
         };
 

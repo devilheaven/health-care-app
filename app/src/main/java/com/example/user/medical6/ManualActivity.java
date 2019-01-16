@@ -58,12 +58,13 @@ public class ManualActivity extends AppCompatActivity {
         setContentView(R.layout.activity_manual);
 
         try {
-            function.searchtime((EditText) findViewById(R.id.editTextDate));
+            dataEdit = (EditText) findViewById(R.id.editTextDate);
+            function.searchtime(dataEdit);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        DH=new dataBase(this);
+        DH = new dataBase(this);
         DH.close();
 
         editTextWeight = (EditText) findViewById(R.id.editTextWeight);
@@ -78,7 +79,7 @@ public class ManualActivity extends AppCompatActivity {
     }
 
     public void add(){
-        SQLiteDatabase db=DH.getWritableDatabase();
+        db = DH.getWritableDatabase();
 
         if(editTextWeight.getText().toString().matches("") || editTextHeight.getText().toString().matches("")|| editTextHr.getText().toString().matches("")|| editTextDbp.getText().toString().matches("")|| editTextSbp.getText().toString().matches("")) {
             Toast toast = Toast.makeText(ManualActivity.this, "欄位不能是空白!!", Toast.LENGTH_LONG);
