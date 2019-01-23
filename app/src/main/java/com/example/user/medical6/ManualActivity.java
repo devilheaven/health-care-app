@@ -5,10 +5,8 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -17,23 +15,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.URL;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 import static com.example.user.medical6.dataBase.*;
 
@@ -41,7 +23,7 @@ public class ManualActivity extends AppCompatActivity {
     private EditText editTextWeight,editTextHr,editTextDbp,editTextSbp,editTextHeight,dataEdit;
 
     //宣告sharepreference的儲存名稱 之後會用來存入sharepreference儲存空間
-    static final  String result = "bodyInformation";
+    static final  String result = "result";
 
     public dataBase DH=null;
     SQLiteDatabase db;
@@ -126,7 +108,11 @@ public class ManualActivity extends AppCompatActivity {
             editor.putString(result,a);
 
             editor.commit();
-            new bodyInformation().execute();
+
+            APIFunction API = new APIFunction();
+            String urlAddress = "https://tlbinfo.cims.tw:8443/csis/createFormRecord.do?token=Fg7oI5I814N9G0N9omcGeboBj3kB";
+//               String urlAddress = "https://dev.cims.tw/csis/createPatient.do?token=5C3i49C0g1M55O9l5cFNg5lm58lI";
+            API.questionAPIconnect(ManualActivity.this, urlAddress, getSharedPreferences("bodyInformation",MODE_PRIVATE),1000, 1020);
 
             if(cur.getCount()>0){
                 cur.moveToLast();
@@ -154,149 +140,5 @@ public class ManualActivity extends AppCompatActivity {
 
     public void deonclick(View view){
         delete();
-    }
-
-    private class bodyInformation extends AsyncTask<String,Void,String> {
-        SharedPreferences SharedPreferences2 = getSharedPreferences("bodyInformation",MODE_PRIVATE);
-
-        String Json2 =  SharedPreferences2.getString(result,"");
-
-        JSONObject jsonString = new JSONObject();
-
-        protected String responsetitle= "";
-        protected String responsestring= "";
-
-        //定義好時間字串的格式
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        //新增一個Calendar,並且指定時間
-        Calendar calendar = Calendar.getInstance();
-
-        Date tdt=calendar.getTime();//取得加減過後的Date
-
-        //依照設定格式取得字串
-        String time=sdf.format(tdt);
-
-        // SQL lite query
-        Cursor cur1 =db.rawQuery(" SELECT *  FROM  customer ORDER BY id DESC " ,null);
-
-        @Override
-        protected String doInBackground(String... strings) {
-            if (cur1.getCount()>0){
-                cur1.moveToFirst();
-                try {
-                    JSONObject tempJsonArray =new JSONObject(Json2);
-                    jsonString.put("protocolId",1000);
-                    jsonString.put("subjectId",cur1.getString(1));
-                    jsonString.put("formId",1020);
-                    jsonString.put("visit",time);
-                    jsonString.put("datarecord",tempJsonArray)  ;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            SSLsetting();
-            try {
-                URL url = new URL("https://tlbinfo.cims.tw:8443/csis/createFormRecord.do?token=Fg7oI5I814N9G0N9omcGeboBj3kB");
-//                URL url = new URL("https://dev.cims.tw/csis/createPatient.do?token=5C3i49C0g1M55O9l5cFNg5lm58lI");
-                HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.setDoOutput(true);
-                connection.setRequestMethod("POST");
-                connection.setUseCaches(false);
-                connection.setRequestProperty("Content-type","application/json");
-                System.out.println("Now json: "+jsonString);
-
-                OutputStream os = connection.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-                writer.write(jsonString.toString());
-                writer.flush();
-                writer.close();
-                InputStream is;
-                try
-                {
-                    is = connection.getInputStream();
-                }
-                catch(IOException exception)
-                {
-                    is = connection.getErrorStream();
-                }
-                BufferedReader in = new BufferedReader(new InputStreamReader(is,"UTF-8"));
-                String inputLine;
-                StringBuilder response = new StringBuilder();
-
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                Log.v("Header",connection.getHeaderFields().toString());
-                responsetitle = String.valueOf(connection.getResponseCode())+ " " + connection.getResponseMessage();
-                responsestring = response.toString();
-
-                in.close();
-                os.close();
-                is.close();
-
-                Log.v("Status", responsetitle);
-                Log.v("Content",responsestring);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.v("IOException","ERROR");
-            }
-
-            return responsestring;
-        }
-        @Override
-        protected void onPostExecute(String s) {
-            String errorCode = "";
-            String message = "";
-            try{
-                JSONObject jsonObject = new JSONObject(s);
-                errorCode = jsonObject.getString("Error Code");
-                message = jsonObject.getString("Message");
-            }
-            catch(JSONException e) {
-                e.printStackTrace();
-            }
-            if ("SUCCESS".equals(errorCode)){
-                Log.e("bodyInformation/Back",s);
-            }else if("005".equals(errorCode)){
-                Log.e("bodyInformation/Back","JSON error./t"+s);
-            }else if("007".equals(errorCode)){
-                Log.e("bodyInformation/Back","Invalid protocol./t"+s);
-            }else if("010".equals(errorCode)){
-                Log.e("bodyInformation/Back","Invalid form./t"+s);
-            }else if("011".equals(errorCode)){
-                Log.e("bodyInformation/Back","Invalid date format./t"+s);
-            }else if("012".equals(errorCode)){
-                Log.e("bodyInformation/Back","Patient not found./t"+s);
-            }else{
-                Log.e("bodyInformation/Back",s);
-            }
-            Log.v("Back",s);
-        }
-    }
-
-    //SSL 設定 (忽略所有的認證)
-    private void SSLsetting() {
-        TrustManager[] trustAllCerts = new TrustManager[]{
-                new X509TrustManager() {
-                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                        return null;
-                    }
-                    public void checkClientTrusted(
-                            java.security.cert.X509Certificate[] certs, String authType) {
-                    }
-                    public void checkServerTrusted(
-                            java.security.cert.X509Certificate[] certs, String authType) {
-                    }
-                }
-        };
-        // Install the all-trusting trust manager
-        try {
-            SSLContext sc = SSLContext.getInstance("SSL");
-            sc.init(null, trustAllCerts, new java.security.SecureRandom());
-            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-        } catch (Exception e) {
-        }
     }
 }

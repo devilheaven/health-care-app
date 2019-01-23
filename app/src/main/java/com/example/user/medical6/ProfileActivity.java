@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -50,9 +49,20 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         //讀取資料
-        DH=new dataBase(this);
+        DH = new dataBase(this);
         DH.close();
-        db =DH.getReadableDatabase();
+        db = DH.getReadableDatabase();
+
+        txvInfo = (TextView) findViewById(R.id.txvInfo);
+        tvLoginType = (TextView) findViewById(R.id.LoginType);
+
+        Button btnMyID = (Button)findViewById(R.id.MyIDBtn);
+        btnMyID.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doScanQRCode(); //掃描QR Code的函數
+            }
+        });
 
         Button btnSubscribe = (Button)findViewById(R.id.SubscribeBtn);
         btnSubscribe.setOnClickListener(new View.OnClickListener() {
@@ -64,9 +74,6 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        txvInfo = (TextView) findViewById(R.id.txvInfo);
-        tvLoginType =(TextView) findViewById(R.id.LoginType);
-
         cur1 = db.rawQuery(" SELECT *  FROM  customer " ,null);
         if (cur1.getCount()>0){
             cur1.moveToFirst();
@@ -76,13 +83,6 @@ public class ProfileActivity extends AppCompatActivity {
             txvInfo.setText("請掃描 QR code");
             tvLoginType.setText("guest");
         }
-        Button btnMyID = (Button)findViewById(R.id.MyIDBtn);
-        btnMyID.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                doScanQRCode(); //掃描QR Code的函數
-            }
-        });
     }
 
     @Override
@@ -112,16 +112,10 @@ public class ProfileActivity extends AppCompatActivity {
                     values.put(height, "178");
                     values.put(sex, "male");
                     db.insert(TABLE_c, null, values);
-//                //查詢資料
-//                cur1=db.rawQuery(" SELECT *  FROM  customer " ,null);
-//                String jsonString = null;
-//                if (cur1.getCount()>0){
-//                    cur1.moveToLast();
-//                    jsonString ="{\"protocolId\":1032,\"subjectId\":\""+cur1.getString(1)+"\",\"lastName\":\""+cur1.getString(3)+"\",\"guid\":\""+cur1.getString(2)+"\"}";
-//                }
-//                String returnData = jsonString;
-//                txvInfo.setText((CharSequence) returnData);
-                    new PatientsCreate().execute();
+
+                    APIFunction API = new APIFunction();
+                    API.memberAPIconnect(this,"https://tlbinfo.cims.tw:8443/csis/createPatient.do?token=5C3i49C0g1M55O9l5cFNg5lm58lI",txvInfo,tvLoginType);
+//                    API.memberAPIconnect(this,"https://dev.cims.tw/csis/createPatient.do?token=5C3i49C0g1M55O9l5cFNg5lm58lI",txvInfo,tvLoginType);
                 }else{
                     String mag = "請掃描正確的 QR code";
                     AlertDialog.Builder bdr = new AlertDialog.Builder(this);
@@ -136,135 +130,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
         else
             super.onActivityResult(resultCode,resultCode,data); //預設父親類別執行指令
-    }
-
-    //api 傳值
-    public class PatientsCreate extends AsyncTask<String,Void,String> {
-        protected String responsetitle= "";
-        protected String responsestring= "";
-        // SQL lite query
-        Cursor cur1 =db.rawQuery(" SELECT *  FROM  customer ORDER BY id DESC " ,null);
-
-        @Override
-        protected String doInBackground(String... strings) {
-            JSONObject jsonString = new JSONObject();
-            if (cur1.getCount()>0){
-                cur1.moveToFirst();
-//                jsonString ="{\"protocolId\":1000,\"subjectId\":\""+cur1.getString(1)+"\",\"lastName\":\""+cur1.getString(3)+"\",\"guid\":\""+cur1.getString(2)+"\"}";
-                try {
-                    jsonString.put("protocolId",1000);
-                    jsonString.put("subjectId",cur1.getString(1));
-                    jsonString.put("lastName",cur1.getString(3));
-                    jsonString.put("guid",cur1.getString(2));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-//                jsonString ="{\"protocolId\":1032,\"subjectId\":\""+cur1.getString(1)+"\",\"lastName\":\""+cur1.getString(3)+"\",\"guid\":\""+cur1.getString(2)+"\"}";
-            }
-
-            SSLsetting();
-            try {
-                URL url = new URL("https://tlbinfo.cims.tw:8443/csis/createPatient.do?token=5C3i49C0g1M55O9l5cFNg5lm58lI");
-//                URL url = new URL("https://dev.cims.tw/csis/createPatient.do?token=5C3i49C0g1M55O9l5cFNg5lm58lI");
-                HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.setDoOutput(true);
-                connection.setRequestMethod("POST");
-                connection.setUseCaches(false);
-                connection.setRequestProperty("Content-type","application/json");
-
-//                jsonString ="{\"protocolId\":1032,\"subjectId\":\"A001\",\"lastName\":\"劉\",\"guid\":\"PSEUDO-LQKZRBQ2\"}";
-                System.out.println("Now json: "+jsonString);
-
-                OutputStream os = connection.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-                writer.write(jsonString.toString());
-                writer.flush();
-                writer.close();
-                InputStream is;
-                try
-                {
-                    is = connection.getInputStream();
-                }
-                catch(IOException exception)
-                {
-                    is = connection.getErrorStream();
-                }
-                BufferedReader in = new BufferedReader(new InputStreamReader(is,"UTF-8"));
-                String inputLine;
-                StringBuilder response = new StringBuilder();
-
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                Log.v("Header",connection.getHeaderFields().toString());
-                responsetitle = String.valueOf(connection.getResponseCode())+ " " + connection.getResponseMessage();
-                responsestring = response.toString();
-
-                in.close();
-                os.close();
-                is.close();
-
-                Log.v("Status", responsetitle);
-                Log.v("Content",responsestring);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.v("IOException","ERROR");
-            }
-
-            return responsestring;
-        }
-        @Override
-        protected void onPostExecute(String s) {
-            String errorCode = "";
-            String message = "";
-            try{
-                JSONObject jsonObject = new JSONObject(s);
-                errorCode = jsonObject.getString("Error Code");
-                message = jsonObject.getString("Message");
-            }
-            catch(JSONException e) {
-                e.printStackTrace();
-            }
-            if ("009".equals(errorCode)){
-                txvInfo.setText(cur1.getString(1)+"\t"+cur1.getString(3)+"先生/小姐");
-                tvLoginType.setText("member");
-            }else{
-                txvInfo.setText("登入失敗");
-                tvLoginType.setText("guest");
-                if (cur1.getCount()>0){
-                    db.execSQL("delete from customer");
-                }
-
-            }
-
-            Log.v("Back",s);
-        }
-    }
-
-    //SSL 設定 (忽略所有的認證)
-    private void SSLsetting() {
-        TrustManager[] trustAllCerts = new TrustManager[]{
-                new X509TrustManager() {
-                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                        return null;
-                    }
-                    public void checkClientTrusted(
-                            java.security.cert.X509Certificate[] certs, String authType) {
-                    }
-                    public void checkServerTrusted(
-                            java.security.cert.X509Certificate[] certs, String authType) {
-                    }
-                }
-        };
-        // Install the all-trusting trust manager
-        try {
-            SSLContext sc = SSLContext.getInstance("SSL");
-            sc.init(null, trustAllCerts, new java.security.SecureRandom());
-            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-        } catch (Exception e) {
-        }
     }
 
     //QR code scanner function

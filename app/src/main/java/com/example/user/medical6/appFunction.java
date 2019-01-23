@@ -10,6 +10,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -206,4 +209,46 @@ public class appFunction extends AppCompatActivity {
         }
         return value;
     }
+    JSONObject memberJson (int protocolId, String subjectId, String lastName, String guid){
+        JSONObject jsonString = new JSONObject();
+        try {
+            jsonString.put("protocolId",protocolId);
+            jsonString.put("subjectId",subjectId);
+            jsonString.put("lastName",lastName);
+            jsonString.put("guid",guid);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonString;
+    }
+    JSONObject questionnariesJson (int protocolId, String subjectId, String formId, String answer){
+        //定義好時間字串的格式
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        //新增一個Calendar,並且指定時間
+        Calendar calendar = Calendar.getInstance();
+
+        Date tdt = calendar.getTime();//取得加減過後的Date
+
+        //依照設定格式取得字串
+        String time = sdf.format(tdt);
+
+        // SQL lite query
+        Cursor cur1 = db.rawQuery(" SELECT *  FROM  customer ORDER BY id DESC " ,null);
+        JSONObject jsonString = new JSONObject();
+        if (cur1.getCount()>0){
+            cur1.moveToFirst();
+            try {
+                JSONObject tempJsonArray =new JSONObject(answer);
+                jsonString.put("protocolId",protocolId);
+                jsonString.put("subjectId",subjectId);
+                jsonString.put("formId",formId);
+                jsonString.put("visit",time);
+                jsonString.put("datarecord",tempJsonArray)  ;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return jsonString;
+    }
+
 }

@@ -1,20 +1,12 @@
 package com.example.user.medical6;
 
-import android.app.DatePickerDialog;
-import android.content.ContentValues;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import static com.example.user.medical6.dataBase.*;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.RadioButton;
@@ -23,32 +15,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import org.json.*;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-
-
 public class QuestionnaireActivity extends AppCompatActivity implements View.OnClickListener,RadioGroup.OnCheckedChangeListener,AdapterView.OnItemSelectedListener {
-    public dataBase DH=null;
-    private Calendar  calendar = Calendar.getInstance();
     //宣告sharepreference的儲存名稱 之後會用來存入sharepreference儲存空間
-    static final  String result="questionnaire";
-    static final  String result2="questionnaire2";
+    static final  String result="result";
     // data base 變數宣告
+    dataBase DH = null;
     SQLiteDatabase db;
 
     appFunction function = new appFunction();
@@ -175,19 +146,19 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
 
     public  void  json(){
         //宣告物件 將欄位轉成json
-        final EditText age=(EditText)findViewById(R.id.age);
-        final EditText hight=(EditText)findViewById(R.id.hight);
-        final EditText wight=(EditText)findViewById(R.id.wight);
-        final EditText bmi=(EditText)findViewById(R.id.bmi);
+        final EditText age = (EditText)findViewById(R.id.age);
+        final EditText hight = (EditText)findViewById(R.id.hight);
+        final EditText wight = (EditText)findViewById(R.id.wight);
+        final EditText bmi = (EditText)findViewById(R.id.bmi);
         final EditText birth = (EditText) findViewById(R.id.birth);
         final EditText cancer1 = (EditText) findViewById(R.id.cancer1);
-        final EditText cancer2=(EditText)findViewById(R.id.cancer2);
-        final EditText cancer3=(EditText)findViewById(R.id.cancer3);
+        final EditText cancer2 = (EditText)findViewById(R.id.cancer2);
+        final EditText cancer3 = (EditText)findViewById(R.id.cancer3);
         final EditText cancer4 = (EditText) findViewById(R.id.cancer4);
-        final EditText cancer5=(EditText)findViewById(R.id.cancer5);
-        final EditText cancer6=(EditText)findViewById(R.id.cancer6);
+        final EditText cancer5 = (EditText)findViewById(R.id.cancer5);
+        final EditText cancer6 = (EditText)findViewById(R.id.cancer6);
         final EditText cancer7 = (EditText) findViewById(R.id.cancer7);
-        final EditText cancer8=(EditText)findViewById(R.id.cancer8);
+        final EditText cancer8 = (EditText)findViewById(R.id.cancer8);
         final EditText cancer9 = (EditText) findViewById(R.id.cancer9);
 
         final Spinner lev = (Spinner) findViewById(R.id.level);
@@ -317,7 +288,6 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
           postData.put("hypertention",function.getValue("yesNo",blood.getSelectedItem().toString()));
           postData.put("stroke",function.getValue("yesNo",sick.getSelectedItem().toString()));
           postData.put("gastric_ulcer",function.getValue("yesNo",stomache.getSelectedItem().toString()));
-          //duodenal_ulcer sick4.getSelectedItem()有問題
           postData.put("duodenal_ulcer",function.getValue("yesNo",sick3.getSelectedItem().toString()));
           postData.put("gastric_cancer",function.getValue("yesNo",stomachecan.getSelectedItem().toString()));
           postData.put("colon_cancer",function.getValue("yesNo",sick4.getSelectedItem().toString()));
@@ -352,7 +322,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
            e.getMessage();
       }
 
-        SharedPreferences SharedPreferences = getSharedPreferences("question",MODE_PRIVATE);
+        SharedPreferences SharedPreferences = getSharedPreferences("question1",MODE_PRIVATE);
         SharedPreferences SharedPreferences2 = getSharedPreferences("question2",MODE_PRIVATE);
         //編輯文件
         SharedPreferences.Editor editor = SharedPreferences.edit();
@@ -362,13 +332,18 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
         String b = postData2.toString();
         //存入sharepreference
         editor.putString(result,a);
-        editor2.putString(result2,b);
+        editor2.putString(result,b);
 
         editor.commit();
         editor2.commit();
         Toast.makeText(this, "送出成功 !", Toast.LENGTH_SHORT).show();
-        new question1().execute();
-        new question2().execute();
+
+        APIFunction API = new APIFunction();
+        String urlAddress = "https://tlbinfo.cims.tw:8443/csis/createFormRecord.do?token=Fg7oI5I814N9G0N9omcGeboBj3kB";
+//        String urlAddress = "https://dev.cims.tw/csis/createPatient.do?token=5C3i49C0g1M55O9l5cFNg5lm58lI";
+
+        API.questionAPIconnect(this, urlAddress, getSharedPreferences("question1",MODE_PRIVATE),1000, 1000);
+        API.questionAPIconnect(this, urlAddress, getSharedPreferences("question2",MODE_PRIVATE),1000, 1001);
     }
 
     @Override
@@ -389,269 +364,5 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
 
     public void onClick(View v){
         json();
-    }
-
-    //api 傳值
-    public class question1 extends AsyncTask<String,Void,String> {
-        SharedPreferences SharedPreferences1 = getSharedPreferences("question",MODE_PRIVATE);
-
-        String Json1 =  SharedPreferences1.getString(result,"");
-
-        JSONObject jsonString = new JSONObject();
-
-        protected String responsetitle= "";
-        protected String responsestring= "";
-
-        //定義好時間字串的格式
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        //新增一個Calendar,並且指定時間
-        Calendar calendar = Calendar.getInstance();
-
-        Date tdt = calendar.getTime();//取得加減過後的Date
-
-        //依照設定格式取得字串
-        String time = sdf.format(tdt);
-
-        // SQL lite query
-        Cursor cur1 = db.rawQuery(" SELECT *  FROM  customer ORDER BY id DESC " ,null);
-
-        @Override
-        protected String doInBackground(String... strings) {
-            if (cur1.getCount()>0){
-                cur1.moveToFirst();
-                try {
-                    JSONObject tempJsonArray =new JSONObject(Json1);
-                    jsonString.put("protocolId",1000);
-                    jsonString.put("subjectId",cur1.getString(1));
-                    jsonString.put("formId",1000);
-                    jsonString.put("visit",time);
-                    jsonString.put("datarecord",tempJsonArray)  ;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            SSLsetting();
-            try {
-                URL url = new URL("https://tlbinfo.cims.tw:8443/csis/createFormRecord.do?token=Fg7oI5I814N9G0N9omcGeboBj3kB");
-//                URL url = new URL("https://dev.cims.tw/csis/createPatient.do?token=5C3i49C0g1M55O9l5cFNg5lm58lI");
-                HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.setDoOutput(true);
-                connection.setRequestMethod("POST");
-                connection.setUseCaches(false);
-                connection.setRequestProperty("Content-type","application/json");
-                System.out.println("Now json: "+jsonString);
-
-                OutputStream os = connection.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-                writer.write(jsonString.toString());
-                writer.flush();
-                writer.close();
-                InputStream is;
-                try
-                {
-                    is = connection.getInputStream();
-                }
-                catch(IOException exception)
-                {
-                    is = connection.getErrorStream();
-                }
-                BufferedReader in = new BufferedReader(new InputStreamReader(is,"UTF-8"));
-                String inputLine;
-                StringBuilder response = new StringBuilder();
-
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                Log.v("Header",connection.getHeaderFields().toString());
-                responsetitle = String.valueOf(connection.getResponseCode())+ " " + connection.getResponseMessage();
-                responsestring = response.toString();
-
-                in.close();
-                os.close();
-                is.close();
-
-                Log.v("Status", responsetitle);
-                Log.v("Content",responsestring);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.v("IOException","ERROR");
-            }
-
-            return responsestring;
-        }
-        @Override
-        protected void onPostExecute(String s) {
-            String errorCode = "";
-            String message = "";
-            try{
-                JSONObject jsonObject = new JSONObject(s);
-                errorCode = jsonObject.getString("Error Code");
-                message = jsonObject.getString("Message");
-            }
-            catch(JSONException e) {
-                e.printStackTrace();
-            }
-            if ("SUCCESS".equals(errorCode)){
-                Log.e("questionnaire1/Back",s);
-            }else if("005".equals(errorCode)){
-                Log.e("questionnaire1/Back","JSON error./t"+s);
-            }else if("007".equals(errorCode)){
-                Log.e("questionnaire1/Back","Invalid protocol./t"+s);
-            }else if("010".equals(errorCode)){
-                Log.e("questionnaire1/Back","Invalid form./t"+s);
-            }else if("011".equals(errorCode)){
-                Log.e("questionnaire1/Back","Invalid date format./t"+s);
-            }else if("012".equals(errorCode)){
-                Log.e("questionnaire1/Back","Patient not found./t"+s);
-            }else{
-                Log.e("questionnaire1/Back",s);
-            }
-            Log.v("Back",s);
-        }
-    }
-
-    public class question2 extends AsyncTask<String,Void,String> {
-        SharedPreferences SharedPreferences2 = getSharedPreferences("question2",MODE_PRIVATE);
-
-        String Json2 =  SharedPreferences2.getString(result2,"");
-
-        JSONObject jsonString = new JSONObject();
-
-        protected String responsetitle= "";
-        protected String responsestring= "";
-
-        //定義好時間字串的格式
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        //新增一個Calendar,並且指定時間
-        Calendar calendar = Calendar.getInstance();
-
-        Date tdt=calendar.getTime();//取得加減過後的Date
-
-        //依照設定格式取得字串
-        String time=sdf.format(tdt);
-
-        // SQL lite query
-        Cursor cur1 =db.rawQuery(" SELECT *  FROM  customer ORDER BY id DESC " ,null);
-
-        @Override
-        protected String doInBackground(String... strings) {
-            if (cur1.getCount()>0){
-                cur1.moveToFirst();
-                try {
-                    JSONObject tempJsonArray =new JSONObject(Json2);
-                    jsonString.put("protocolId",1000);
-                    jsonString.put("subjectId",cur1.getString(1));
-                    jsonString.put("formId",1001);
-                    jsonString.put("visit",time);
-                    jsonString.put("datarecord",tempJsonArray)  ;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            SSLsetting();
-            try {
-                URL url = new URL("https://tlbinfo.cims.tw:8443/csis/createFormRecord.do?token=Fg7oI5I814N9G0N9omcGeboBj3kB");
-//                URL url = new URL("https://dev.cims.tw/csis/createPatient.do?token=5C3i49C0g1M55O9l5cFNg5lm58lI");
-                HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.setDoOutput(true);
-                connection.setRequestMethod("POST");
-                connection.setUseCaches(false);
-                connection.setRequestProperty("Content-type","application/json");
-                System.out.println("Now json: "+jsonString);
-
-                OutputStream os = connection.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-                writer.write(jsonString.toString());
-                writer.flush();
-                writer.close();
-                InputStream is;
-                try
-                {
-                    is = connection.getInputStream();
-                }
-                catch(IOException exception)
-                {
-                    is = connection.getErrorStream();
-                }
-                BufferedReader in = new BufferedReader(new InputStreamReader(is,"UTF-8"));
-                String inputLine;
-                StringBuilder response = new StringBuilder();
-
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                Log.v("Header",connection.getHeaderFields().toString());
-                responsetitle = String.valueOf(connection.getResponseCode())+ " " + connection.getResponseMessage();
-                responsestring = response.toString();
-
-                in.close();
-                os.close();
-                is.close();
-
-                Log.v("Status", responsetitle);
-                Log.v("Content",responsestring);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.v("IOException","ERROR");
-            }
-
-            return responsestring;
-        }
-        @Override
-        protected void onPostExecute(String s) {
-            String errorCode = "";
-            String message = "";
-            try{
-                JSONObject jsonObject = new JSONObject(s);
-                errorCode = jsonObject.getString("Error Code");
-                message = jsonObject.getString("Message");
-            }
-            catch(JSONException e) {
-                e.printStackTrace();
-            }
-            if ("SUCCESS".equals(errorCode)){
-                Log.e("questionnaire2/Back",s);
-            }else if("005".equals(errorCode)){
-                Log.e("questionnaire2/Back","JSON error./t"+s);
-            }else if("007".equals(errorCode)){
-                Log.e("questionnaire2/Back","Invalid protocol./t"+s);
-            }else if("010".equals(errorCode)){
-                Log.e("questionnaire2/Back","Invalid form./t"+s);
-            }else if("011".equals(errorCode)){
-                Log.e("questionnaire2/Back","Invalid date format./t"+s);
-            }else if("012".equals(errorCode)){
-                Log.e("questionnaire2/Back","Patient not found./t"+s);
-            }else{
-                Log.e("questionnaire2/Back",s);
-            }
-            Log.v("Back",s);
-        }
-    }
-    //SSL 設定 (忽略所有的認證)
-    private void SSLsetting() {
-        TrustManager[] trustAllCerts = new TrustManager[]{
-                new X509TrustManager() {
-                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                        return null;
-                    }
-                    public void checkClientTrusted(
-                            java.security.cert.X509Certificate[] certs, String authType) {
-                    }
-                    public void checkServerTrusted(
-                            java.security.cert.X509Certificate[] certs, String authType) {
-                    }
-                }
-        };
-        // Install the all-trusting trust manager
-        try {
-            SSLContext sc = SSLContext.getInstance("SSL");
-            sc.init(null, trustAllCerts, new java.security.SecureRandom());
-            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-        } catch (Exception e) {
-        }
     }
 }
