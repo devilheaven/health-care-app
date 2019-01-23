@@ -277,19 +277,19 @@ public class APIFunction {
                 e.printStackTrace();
             }
             if ("SUCCESS".equals(errorCode)){
-                Log.e("bodyInformation/Back",s);
+                Log.e("question/Back",s);
             }else if("005".equals(errorCode)){
-                Log.e("bodyInformation/Back","JSON error./t"+s);
+                Log.e("question/Back","JSON error./t"+s);
             }else if("007".equals(errorCode)){
-                Log.e("bodyInformation/Back","Invalid protocol./t"+s);
+                Log.e("question/Back","Invalid protocol./t"+s);
             }else if("010".equals(errorCode)){
-                Log.e("bodyInformation/Back","Invalid form./t"+s);
+                Log.e("question/Back","Invalid form./t"+s);
             }else if("011".equals(errorCode)){
-                Log.e("bodyInformation/Back","Invalid date format./t"+s);
+                Log.e("question/Back","Invalid date format./t"+s);
             }else if("012".equals(errorCode)){
-                Log.e("bodyInformation/Back","Patient not found./t"+s);
+                Log.e("question/Back","Patient not found./t"+s);
             }else{
-                Log.e("bodyInformation/Back",s);
+                Log.e("question/Back",s);
             }
             Log.v("Back",s);
         }
