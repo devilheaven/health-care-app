@@ -6,8 +6,12 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -221,6 +225,7 @@ public class appFunction extends AppCompatActivity {
         }
         return jsonString;
     }
+
     JSONObject questionnariesJson (int protocolId, String subjectId, String formId, String answer){
         //定義好時間字串的格式
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -249,6 +254,56 @@ public class appFunction extends AppCompatActivity {
             }
         }
         return jsonString;
+    }
+
+    JSONObject getObjectValue(Context context, String objectMap, String splitSymbol){
+        JSONObject jsonValue = new JSONObject();
+
+        String[] tempObjectArray = objectMap.split(splitSymbol);
+
+
+        for (int i = 0; i < tempObjectArray.length; i++){
+            String[] tempOptionName = tempObjectArray[i].split("-");
+//            int objectId = getResources().getIdentifier(tempObjectArray[i], "id", context.getPackageName());
+            switch (tempOptionName[2]){
+                case "spinner":
+                    Log.e("question/id", String.valueOf(Integer.parseInt(tempOptionName[3])));
+                    Spinner tempSpinnerObject;
+                    tempSpinnerObject = (Spinner)findViewById(Integer.valueOf(tempOptionName[3]).intValue());/*
+                    String id = String.valueOf(tempSpinnerObject.getSelectedItemPosition());
+                    try {
+                        jsonValue.put(tempOptionName[1],id);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }*/
+                    break;
+                case "radioGroup":
+                    Log.e("question/id", String.valueOf(Integer.parseInt(tempOptionName[3])));/*
+                    RadioGroup tempRadioGroupObject;
+                    tempRadioGroupObject = (RadioGroup)findViewById(Integer.parseInt(tempOptionName[3]));
+                    RadioButton tempRadioButtonObject =findViewById(tempRadioGroupObject.getCheckedRadioButtonId());
+                    String[] tempRadioSelected = tempRadioButtonObject.getText().toString().split("-");
+                    try {
+                        jsonValue.put(tempOptionName[1],tempRadioSelected[0]);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }*/
+                    break;
+                case "editText":
+                    Log.e("question/id", String.valueOf(Integer.parseInt(tempOptionName[3])));
+                    /*
+                    EditText tempEditTextObject;
+                    tempEditTextObject = (EditText)findViewById(Integer.parseInt(tempOptionName[3]));
+                    String value = tempEditTextObject.getText().toString();
+                    try {
+                        jsonValue.put(tempOptionName[1],value);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }*/
+                    break;
+            }
+        }
+        return jsonValue;
     }
 
 }
