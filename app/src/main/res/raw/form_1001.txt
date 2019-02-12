@@ -1,0 +1,54 @@
+#DataType:eating_frequency,DROPDOWN, Text, 0=都沒有吃此類食物, 1=每週十次中有一至二次, 2=每週十次中有三至五次, 3=每週十次中有六至八次, 4=每週十次中有八次以上
+#InternalCode:f_cht_1948
+問卷_PART2
+[主食飲食頻率]
+=1005
+#Grid:4, 3
+#GridLabel:2, 1, 1., Right
+#GridLabel:2, 2, 請問您吃乾式米飯類（如：糙米飯、紫米，五穀雜糧等）的頻率為？, Left
+#GridLabel:3, 2, 請問您吃米飯類（如：白飯、炒飯、壽司等）的頻率為？, Left
+#GridLabel:3, 1, 2., Right
+#GridLabel:4, 2, 請問您吃麵類（如：麵條、米粉、冬粉等）的頻率為？, Left
+#GridLabel:4, 1, 3., Right
+請問您吃乾式米飯類（如：糙米飯、紫米，五穀雜糧等）的頻率為？, eating_frequency, Fq_grains,false,true,true#Grid:2,3
+請問您吃米飯類（如：白飯、炒飯、壽司等）的頻率為？, eating_frequency, Fq_rice,false,true,true#Grid:3,3
+請問您吃麵類（如：麵條、米粉、冬粉等）的頻率為？, eating_frequency, Fq_noodle,false,true,true#Grid:4,3
+[一般飲食頻率]
+=1006
+#Grid:13, 3
+#GridLabel:2, 1, 1., Right
+#GridLabel:2, 2, 請問您吃奶類（如：鮮奶、優酪乳、起司、豆漿等）的頻率為?, Left
+#GridLabel:3, 1, 2., Right
+#GridLabel:3, 2, 請問您吃蔬菜類（如：淺/深色蔬菜、海產植物類、醃漬蔬菜類）的頻率為？, Left
+#GridLabel:4, 1, 3., Right
+#GridLabel:4, 2, 請問您吃堅果製品類（如：花生、腰果、核桃等）的頻率為？, Left
+#GridLabel:5, 1, 4., Right
+#GridLabel:5, 2, 請問您吃新鮮水果類的頻率為？, Left
+#GridLabel:6, 1, 5., Right
+#GridLabel:6, 2, 請問您吃海鮮類（含所有魚類、貝類）的頻率為？, Left
+#GridLabel:7, 1, 6., Right
+#GridLabel:7, 2, 請問您吃肉類（如：雞、猪、牛、絞肉等）的頻率為？, Left
+#GridLabel:8, 1, 7., Right
+#GridLabel:8, 2, 請問您吃內臟類（如：豬肝）的頻率為？, Left
+#GridLabel:9, 1, 8., Right
+#GridLabel:9, 2, 請問您喝飲料類（如：碳酸飲料、運動飲料、奶等）的頻率為？, Left
+#GridLabel:10, 1, 9., Right
+#GridLabel:10, 2, 請問您喝咖啡類（如：即溶/自製咖啡、市售咖啡飲料、拿鐵等）的頻率為？, Left
+#GridLabel:11, 1, 10., Right
+#GridLabel:11, 2, 請問您喝含茶葉成分飲料（如：紅/綠/烏龍茶、客家擂茶等）的頻率為？, Left
+#GridLabel:12, 1, 11., Right
+#GridLabel:12, 2, 請問您吃甜食（如：冰淇淋、餅乾、蛋糕）的頻率為？, Left
+#GridLabel:13, 1, 12., Right
+#GridLabel:13, 2, 請問您平常喝酒的頻率為？, Left
+"請問您吃奶類（如：鮮奶、優酪乳、起司、豆漿等）的頻率為? ", eating_frequency, Fq_milk,false,true,true#Grid:2,3
+請問您吃蔬菜類（如：淺/深色蔬菜、海產植物類、醃漬蔬菜類）的頻率為？, eating_frequency, Fq_vegetables,false,true,true#Grid:3,3
+"請問您吃堅果製品類（如：花生、腰果、核桃等）的頻率為？ ", eating_frequency, Fq_nuts,false,true,true#Grid:4,3
+"請問您吃新鮮水果類的頻率為？ ", eating_frequency, Fq_fruits,false,true,true#Grid:5,3
+"請問您吃海鮮類（含所有魚類、貝類）的頻率為？ ", eating_frequency, Fq_seafood,false,true,true#Grid:6,3
+請問您吃肉類（如：雞、猪、牛、絞肉等）的頻率為？, eating_frequency, Fq_meat,false,true,true#Grid:7,3
+請問您吃內臟類（如：豬肝）的頻率為？, eating_frequency, Fq_viscera,false,true,true#Grid:8,3
+請問您喝飲料類（如：碳酸飲料、運動飲料、奶等）的頻率為？, eating_frequency, Fq_drinks,false,true,true#Grid:9,3
+請問您喝咖啡類（如：即溶/自製咖啡、市售咖啡飲料、拿鐵等）的頻率為？, eating_frequency, Fq_coffee,false,true,true#Grid:10,3
+請問您喝含茶葉成分飲料（如：紅/綠/烏龍茶、客家擂茶等）的頻率為？, eating_frequency, Fq_tea,false,true,true#Grid:11,3
+請問您吃甜食（如：冰淇淋、餅乾、蛋糕）的頻率為？, eating_frequency, Fq_dessert,false,true,true#Grid:12,3
+請問您平常喝酒的頻率為？, eating_frequency, Fq_alcohol,false,true,true#Grid:13,3

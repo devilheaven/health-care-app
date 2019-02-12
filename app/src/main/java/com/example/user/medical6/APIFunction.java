@@ -176,7 +176,6 @@ public class APIFunction {
                 }
 
             }
-
             Log.v("Back",s);
         }
     }
@@ -192,7 +191,7 @@ public class APIFunction {
         //新增一個Calendar,並且指定時間
         Calendar calendar = Calendar.getInstance();
 
-        Date tdt=calendar.getTime();//取得加減過後的Date
+        Date tdt = calendar.getTime();//取得加減過後的Date
 
         //依照設定格式取得字串
         String time=sdf.format(tdt);

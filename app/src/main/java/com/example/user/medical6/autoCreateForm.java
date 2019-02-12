@@ -1,26 +1,29 @@
 package com.example.user.medical6;
 
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 
 class autoCreateForm {
-    static int tempID = 5000;
     appFunction function = new appFunction();
     String createSpinner(Context context, LinearLayout targetLocation, String formId, String dataPointName, String labelName, String optionName, String spiltSymbol){
         LinearLayout groupLayout = new LinearLayout(context);
         Spinner SpTemp = new Spinner(context);
         TextView label = new TextView(context);
         HashMap<Integer,String> optionsMap = new HashMap<Integer, String>();
-
 
         String[] tempOptionName = optionName.split(spiltSymbol);
 
@@ -38,50 +41,15 @@ class autoCreateForm {
         LinearLayout.LayoutParams params = new   LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         label.setText(labelName);
+        SpTemp.setTag(formId + "-" + dataPointName + "-" + "spinner");
         SpTemp.setLayoutParams(params);
-        SpTemp.setId(tempID);
-        tempID++;
-
 
         groupLayout.addView(label);
         groupLayout.addView(SpTemp);
 
         targetLocation.addView(groupLayout);
 
-        return formId + "-" + dataPointName + "-" + "spinner" + "-" + tempID;
-//        String name = SpTemp.getSelectedItem().toString();
-//        String id = optionsMap.get(SpTemp.getSelectedItemPosition());
-    }
-
-    String createRadioButton(Context context, LinearLayout targetLocation, String formId, String dataPointName, String labelName,String optionName, String spiltSymbol){
-        LinearLayout groupLayout = new LinearLayout(context);
-        LinearLayout tempLayout = new LinearLayout(context);
-        TextView label = new TextView(context);
-        RadioGroup btnGroup = new RadioGroup(context);
-
-        String[] tempOptionName = optionName.split(spiltSymbol);
-
-        groupLayout.setOrientation(LinearLayout.VERTICAL);
-        tempLayout.setOrientation(LinearLayout.VERTICAL);
-        btnGroup.setOrientation(LinearLayout.HORIZONTAL);
-
-        for (int i = 0 ; i < tempOptionName.length ; i++){
-            RadioButton btnTemp = new RadioButton(context);
-            btnTemp.setText(tempOptionName[i]);
-            btnGroup.addView(btnTemp);
-        }
-
-        label.setText(labelName);
-        btnGroup.setId(tempID);
-        tempID++;
-
-        tempLayout.addView(btnGroup);
-        groupLayout.addView(label);
-        groupLayout.addView(tempLayout);
-
-        targetLocation.addView(groupLayout);
-
-        return formId + "-" + dataPointName + "-" + "radioGroup" + "-" + tempID;
+        return formId + "-" + dataPointName + "-" + "spinner";
     }
 
     String createEditText(final Context context, LinearLayout targetLocation, String formId, String dataPointName, String labelName, String hint,String Model){
@@ -93,11 +61,9 @@ class autoCreateForm {
         LinearLayout.LayoutParams params = new   LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         label.setText(labelName);
+        etTemp.setTag(formId + "-" + dataPointName + "-" + "editText");
         etTemp.setLayoutParams(params);
         etTemp.setHint(hint);
-        etTemp.setId(tempID);
-        tempID++;
-
 
         switch (Model){
             case "date":
@@ -117,7 +83,35 @@ class autoCreateForm {
         groupLayout.addView(etTemp);
 
         targetLocation.addView(groupLayout);
-        return formId + "-" + dataPointName + "-" + "editText" + "-" + tempID;
+        return formId + "-" + dataPointName + "-" + "editText";
+    }
+
+    String readFromFile(Context context,String FileName) {
+        String ret = "";
+
+        try {
+            InputStream inputStream = context.openFileInput(FileName);
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        return ret;
     }
 }
 

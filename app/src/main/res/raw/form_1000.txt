@@ -1,0 +1,68 @@
+#DataType:text,DROPDOWN
+#DataType:yes_no_unknown,DROPDOWN, Text, 0=有, 1=無, 2=不詳
+#DataType:Birth_location,DROPDOWN, Text, 0=臺灣閩南人, 1=臺灣客家人, 2=臺灣原住民, 3=中國各省份, 4=其他
+#DataType:no_or_yes,DROPDOWN, Text, 0=無, 1=有
+#DataType:exercise_frequency,DROPDOWN, Text, 0=每月≤1次, 1=每月2~3次, 2=每週1~2次, 3=每週3~4次, 4=每週≥5次
+#DataType:taking_nap,DROPDOWN, Text, 0=很少(每週≤1次), 1=偶爾(每週2~4次), 2=經常(每週≥5次)
+#DataType:stay_overnight,DROPDOWN, Text, 0=很少(每週≤1次), 1=偶爾(每週2~4次), 2=經常(每週≥5次)
+#DataType:sleep_hours,DROPDOWN, Text, 0=不到 6 小時, 1=6~6.9 小時, 2=7~7.9 小時, 3=8 小時以上
+#DataType:alcoholism,DROPDOWN, Text, 0=從未飲酒, 1=已戒酒, 2=偶爾, 3=目前有飲酒習慣
+#DataType:smoking_behavior,DROPDOWN, Text, 0=從未抽菸, 1=已戒菸, 2=目前有抽菸習慣
+#DataType:income,DROPDOWN, Text, 0=困苦, 1=尚可, 2=小康, 3=富裕
+#DataType:educatin_level,DROPDOWN, Text, 0=未受教育, 1=小學, 2=國(初)中, 3=高中(職), 4=大學(專科), 5=研究所以上
+#DataType:calculation,DROPDOWN, FormCalculation
+#DataType:decimal,DROPDOWN, Decimal
+#DataType:date,DROPDOWN, Date
+#DataType:gender,DROPDOWN, Text, 0=男, 1=女
+#InternalCode:f_cht_1947
+問卷_PART1
+[基本資料]
+=1040
+性別, gender, gender,false,true,true
+生日, date, birthday,false,true,true
+年齡, decimal, age,false,true,true
+身高, decimal, height,false,true,true
+體重, decimal, weight,false,true,true
+@weight#/((@height#/100)*(@height#/100)), calculation, Body_mass_index,true,true,true
+教育程度, educatin_level, educatin_level,false,true,true
+家庭收入, income, income,false,true,true
+[生活習慣]
+=1041
+"您有抽菸習慣嗎? ", smoking_behavior, smoking_behavior,false,true,true
+您有飲酒習慣嗎?, alcoholism, alcoholism,false,true,true
+"您平均每天睡幾個小時? ", sleep_hours, sleep_hours,false,true,true
+"您是否常熬夜? ", stay_overnight, stay_overnight,false,true,true
+您是否有午睡的習慣?, taking_nap, taking_nap,false,true,true
+"您是否有運動的習慣? ", exercise_frequency, exercise_frequency,false,true,true
+[疾病史]
+=1042
+第二型糖尿病, no_or_yes, T2D,false,true,true
+第二型糖尿病確診日期, date, TSD_diagnosis_date,false,false,true
+心臟病, no_or_yes, heart_disease,false,true,true
+心臟病確診日期, date, heart_disease_diagnosis_date,false,false,true
+高血壓, no_or_yes, hypertention,false,true,true
+高血壓確診日期, date, hypertension_diagnosis_date,false,false,true
+中風, no_or_yes, stroke,false,true,true
+中風確診日期, date, stroke_diagnosis_date,false,false,true
+胃潰瘍, no_or_yes, gastric_ulcer,false,true,true
+胃潰瘍確診日期, date, gastric_ulcer_diagnosis_date,false,false,true
+十二指腸潰瘍, no_or_yes, duodenal_ulcer,false,true,true
+十二指腸潰瘍確診日期, date, duodenal_ulcer_diagnosis_date,false,false,true
+胃癌, no_or_yes, gastric_cancer,false,true,true
+胃癌確診日期, date, gastric_cancer_diagnosis_date,false,false,true
+大腸癌, no_or_yes, colon_cancer,false,true,true
+大腸癌確診日期, date, colon_cancer_diagnosis_date,false,false,true
+胃食道逆流, no_or_yes, gastroesophageal_reflux,false,true,true
+胃食道逆流確診日期, date, gastroesophageal_reflux_diagnosis_date,false,false,true
+[藥物使用史]
+=1043
+最近一個月內有無服用抗生素, no_or_yes, using_antibiotics,false,true,true
+[家族史]
+=1044
+本籍, Birth_location, Birth_location,false,true,true
+父、母、兄弟、姊妹、兒子、女兒有無胃潰瘍, yes_no_unknown, family_stomach_ulcer,false,true,true
+父、母、兄弟、姊妹、兒子、女兒有無十二指腸潰瘍, yes_no_unknown, family_duodenal_ulcer,false,true,true
+父、母、兄弟、姊妹、兒子、女兒有無胃癌, yes_no_unknown, family_gastric_ulcer,false,true,true
+父、母、兄弟、姊妹、兒子、女兒有無大腸癌, yes_no_unknown, family_colorectal_ulcer,false,true,true
+父、母、兄弟、姊妹、兒子、女兒有無胃食道逆流, yes_no_unknown, family_gastroesophageal_reflux,false,true,true
+父、母、兄弟、姊妹、兒子、女兒罹患其他消化道相關疾病, text, other_gastrointestinal_disease,false,false,true
