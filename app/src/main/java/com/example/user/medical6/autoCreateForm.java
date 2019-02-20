@@ -1,7 +1,6 @@
 package com.example.user.medical6;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;

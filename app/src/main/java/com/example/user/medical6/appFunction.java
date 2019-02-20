@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import static com.example.user.medical6.dataBase.*;
+import static com.example.user.medical6.dataBase.subjectId;
 
 public class appFunction extends AppCompatActivity {
     //定義顯示時間套件
@@ -32,7 +33,7 @@ public class appFunction extends AppCompatActivity {
     // data base 變數宣告
     Cursor cur;
     ContentValues values = new ContentValues();
-    SQLiteDatabase db;
+    SQLiteDatabase db = null;
 
     private int mYear;
     private int mMonth;
@@ -113,7 +114,8 @@ public class appFunction extends AppCompatActivity {
         return jsonString;
     }
 
-    JSONObject questionnariesJson (int protocolId, String subjectId, String formId, String answer){
+    JSONObject questionnariesJson (dataBase DH, int protocolId, Integer formId, String answer){
+        db = DH.getReadableDatabase();
         //定義好時間字串的格式
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
         //新增一個Calendar,並且指定時間
@@ -125,14 +127,16 @@ public class appFunction extends AppCompatActivity {
         String time = sdf.format(tdt);
 
         // SQL lite query
-        Cursor cur1 = db.rawQuery(" SELECT *  FROM  customer ORDER BY id DESC " ,null);
+        Cursor cur1 = db.rawQuery(" SELECT " + subjectId + "  FROM  customer ORDER BY id DESC " ,null);
+
+        // SQL lite query
         JSONObject jsonString = new JSONObject();
         if (cur1.getCount()>0){
             cur1.moveToFirst();
             try {
                 JSONObject tempJsonArray =new JSONObject(answer);
                 jsonString.put("protocolId",protocolId);
-                jsonString.put("subjectId",subjectId);
+                jsonString.put("subjectId",cur1.getString(0));
                 jsonString.put("formId",formId);
                 jsonString.put("visit",time);
                 jsonString.put("datarecord",tempJsonArray)  ;

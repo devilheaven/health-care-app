@@ -5,22 +5,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.database.sqlite.SQLiteDatabase;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 import org.json.*;
 
+import java.lang.reflect.Array;
 import java.util.HashMap;
 
-public class QuestionnaireActivity extends AppCompatActivity implements View.OnClickListener,RadioGroup.OnCheckedChangeListener,AdapterView.OnItemSelectedListener {
+public class QuestionnaireActivity extends AppCompatActivity{
     //宣告sharepreference的儲存名稱 之後會用來存入sharepreference儲存空間
     static final  String result = "result";
-    // data base 變數宣告
-    dataBase DH = null;
-    SQLiteDatabase db;
 
     HashMap<Integer,String> objectMap = new HashMap<Integer, String>();
 
@@ -95,9 +90,13 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
 
 //        Log.e("question/hash", String.valueOf(objectMap));
         final Button btngo = (Button) findViewById(R.id.btngo);
-        btngo.setOnClickListener(this);
+        btngo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                json();
+            }
+        });
     }
-
     public  void  json(){
         //將欄位傳換成json
         JSONObject postData = function.getObjectValue((LinearLayout) findViewById(R.id.formList),objectMap.get(1000),",");
@@ -125,25 +124,5 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
 
         API.questionAPIconnect(this, urlAddress, getSharedPreferences("question1",MODE_PRIVATE),1000, 1000);
         API.questionAPIconnect(this, urlAddress, getSharedPreferences("question2",MODE_PRIVATE),1000, 1001);
-    }
-
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-    public void onClick(View v){
-        json();
     }
 }

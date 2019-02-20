@@ -21,9 +21,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -38,7 +35,7 @@ public class APIFunction {
     URL url ;
 
     // data base 變數宣告
-    public dataBase DH=null;
+    public dataBase DH = null;
     SQLiteDatabase db;
     ContentValues values = new ContentValues();
 
@@ -186,34 +183,9 @@ public class APIFunction {
         protected String responsetitle= "";
         protected String responsestring= "";
 
-        //定義好時間字串的格式
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        //新增一個Calendar,並且指定時間
-        Calendar calendar = Calendar.getInstance();
-
-        Date tdt = calendar.getTime();//取得加減過後的Date
-
-        //依照設定格式取得字串
-        String time=sdf.format(tdt);
-
-        // SQL lite query
-        Cursor cur1 = db.rawQuery(" SELECT " + subjectId + "  FROM  customer ORDER BY id DESC " ,null);
-
         @Override
         protected String doInBackground(String... strings) {
-            if (cur1.getCount()>0){
-                cur1.moveToFirst();
-                try {
-                    JSONObject tempJsonArray =new JSONObject(Json);
-                    jsonString.put("protocolId",tempProtocolId);
-                    jsonString.put("subjectId",cur1.getString(0));
-                    jsonString.put("formId",tempFormId);
-                    jsonString.put("visit",time);
-                    jsonString.put("datarecord",tempJsonArray)  ;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
+            jsonString = function.questionnariesJson(DH, tempProtocolId, tempProtocolId, Json);
             SSLsetting();
             try {
                 HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
